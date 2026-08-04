@@ -2,9 +2,6 @@ import bcrypt from 'bcrypt'
 import Users from "../models/user.model.js"
 import { generateToken, setTokenCookie } from '../utils/jwt.js';
 
-/* Salt for password hashing */
-const SALT_ROUNDS = 10;
-
 /**
  * route : auth/register 
  * Create an account for a new user
@@ -14,12 +11,13 @@ const SALT_ROUNDS = 10;
  */
 export const register = async(req, res) => {
     try {
+        const salt = await bcrypt.genSalt();
         const {name, email, password, role} = req.body
         const existing = await Users.findOne({email})
         if (existing){
             return res.status(409).json({message: "Email already used"})
         }
-        const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const user = await Users.create({
             name,
