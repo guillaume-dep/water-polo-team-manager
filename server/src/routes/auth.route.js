@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import json from '../controllers/test.controller.js';
+import json from '../controllers/auth.controller.js';
 
 router.get('/', json)
 
