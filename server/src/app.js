@@ -1,8 +1,13 @@
 import express from 'express'
 import dbConnection from './config/database.js'
-import router from './routes/auth.route.js'
+
+/* --- Router --- */
+import authRouter from './routes/auth.route.js'
 
 const app = express()
-app.use('/', router)
+
+/* --- Router + Middlewares --- */
+
+app.use('/auth', authRouter)
 
 export default app
