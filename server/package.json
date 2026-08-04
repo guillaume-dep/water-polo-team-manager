@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon main.js"
+    "dev": "node --watch bin/www"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
