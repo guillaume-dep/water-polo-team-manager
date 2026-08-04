@@ -1,7 +1,6 @@
-import express from 'express'
 import bcrypt from 'bcrypt'
-import Users from "../models/user.model"
-import { generateToken, setTokenCookie } from '../utils/jwt';
+import Users from "../models/user.model.js"
+import { generateToken, setTokenCookie } from '../utils/jwt.js';
 
 /* Salt for password hashing */
 const SALT_ROUNDS = 10;
@@ -16,7 +15,7 @@ const SALT_ROUNDS = 10;
 export const register = async(req, res) => {
     try {
         const {name, email, password, role} = req.body
-        const existing = await Users.find({email})
+        const existing = await Users.findOne({email})
         if (existing){
             return res.status(409).json({message: "Email already used"})
         }
@@ -29,7 +28,7 @@ export const register = async(req, res) => {
             role
         })
 
-        const token = generateToken(res, user)
+        const token = generateToken(user)
         setTokenCookie(res, token)
 
         /* success */
@@ -41,20 +40,45 @@ export const register = async(req, res) => {
     }
 }
 
+/**
+ * route : auth/login
+ * Log a user in his account
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns {JSON} JSON answer with the information of the user
+ */
 export const login = async(req, res) => {
     try {
-        
+        const {email, password} = req.body
+        const user = await Users.findOne({email})
+        if (!user){
+            return res.status(401).json({message: "Invalid credentials"})
+        }
+        const validPassword = await bcrypt.compare(password, user.password)
+        if (!validPassword){
+            return res.status(401).json({message: "Invalid credentials"})
+        }
+
+        const token = generateToken(user)
+        setTokenCookie(res, token)
+
+        /* success */
+        res.status(200).json({ id: user._id, name: user.name, role: user.role })
     }
-    catch(){
-        
+
+    catch(err){
+        res.status(500).json({message: err.message})
     }
 }
 
+/**
+ * route : auth/logout
+ * Logout a user
+ * @param {Object} req 
+ * @param {Object} res 
+ * @returns {JSON} 
+ */
 export const logout = async(req, res) => {
-    try {
-
-    }
-    catch(){
-        
-    }
+    res.clearCookie("token")
+    res.json({message: "Disconnected"})
 }
