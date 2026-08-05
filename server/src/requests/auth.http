@@ -1,0 +1,19 @@
+### Register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Paul Dupont",
+  "email": "paul.dupont@example.com",
+  "password": "Password123!",
+  "role": "player"
+}
+
+### Login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "paul.dupont@example.com",
+  "password": "Password123!"
+}

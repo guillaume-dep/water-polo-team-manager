@@ -22,7 +22,7 @@ export const register = async(req, res) => {
         const user = await Users.create({
             name,
             email,
-            password: hashedPassword,
+            passwordHash: hashedPassword,
             role
         })
 
@@ -52,7 +52,7 @@ export const login = async(req, res) => {
         if (!user){
             return res.status(401).json({message: "Invalid credentials"})
         }
-        const validPassword = await bcrypt.compare(password, user.password)
+        const validPassword = await bcrypt.compare(password, user.passwordHash)
         if (!validPassword){
             return res.status(401).json({message: "Invalid credentials"})
         }
