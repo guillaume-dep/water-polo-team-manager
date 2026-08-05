@@ -17,3 +17,7 @@ Content-Type: application/json
   "email": "paul.dupont@example.com",
   "password": "Password123!"
 }
+
+### Logout
+POST http://localhost:3000/auth/logout
+Cookie: token=<eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzM1YWMyMGY5NzU0YTk2M2Q4NjQwMCIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODU5NDQ4NzEsImV4cCI6MTc4NjU0OTY3MX0.kTlA2cqpdLdb4uNPovIGWjasMPXpUvIGRkvHgbMOwME>
