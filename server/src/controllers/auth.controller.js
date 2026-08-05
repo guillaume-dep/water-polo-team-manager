@@ -80,3 +80,15 @@ export const logout = async(req, res) => {
     res.clearCookie("token")
     res.json({message: "Disconnected"})
 }
+
+/*
+export const deleteAccount = async(req, res) => {
+    try{
+
+    }
+
+    catch(err){
+        res.status(500).json({message: err.message})
+    }
+}
+*/
