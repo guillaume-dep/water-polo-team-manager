@@ -7,15 +7,25 @@ const findGroupById = async (groupId) => {
     return group;
 };
 
+const findEventById = async (eventId) => {
+    const event = await Events.findById(eventId);
+    if (!event) throw new Error("Event not found");
+    return event;
+};
+
+const checkIsCoach = (group, userId) => {
+    if (group.coach.toString() !== userId) {
+        throw new Error("Not your group")
+    }
+}
+
 export const createEvent = async(req, res) => {
     try{
         const {name, date, location, eventType} = req.body
         const group = await findGroupById(req.params.id)
         
         /* Checks if it's the coach of the group */
-        if (group.coach.toString() !== req.user.id) {
-            return res.status(403).json({ message: "Not your group" })
-        }
+        checkIsCoach(group, req.user.id)
 
         const createdBy = req.user.id
         const event = await Events.create({
@@ -47,12 +57,9 @@ export const getEventsFromGroup = async(req, res) => {
     }
 }
 
-export const getEventDetails = async(req, res) => {
+export const getEvent = async(req, res) => {
     try{
-        const event = await Events.findById(req.params.eventId) /* the event id */
-        if (!event) {
-            return res.status(404).json({ message: "Event not found" })
-        }
+        const event = await findEventById(req.params.eventId)
         res.json(event)
     }
     catch(err){
@@ -61,10 +68,37 @@ export const getEventDetails = async(req, res) => {
 }
 
 export const updateEvent = async(req, res) => {
-    
+    try{
+        const event = await findEventById(req.params.eventId)
+        const group = await findGroupById(req.params.id)
+
+        checkIsCoach(group, req.user.id)
+
+        const {name, date, location, eventType} = req.body
+
+        event.name = name ?? event.name
+        event.date = date ?? event.date
+        event.location = location ?? event.location
+        event.eventType = eventType ?? event.eventType
+
+        await event.save()
+        res.json(event)
+    }
+    catch(err){
+        res.status(500).json({message: err.message})
+    }
 }
 
 export const deleteEvent = async(req, res) => {
+    try{
+        const group = await findGroupById(req.params.id)
+        checkIsCoach(group, req.user.id)
 
+        await Events.findByIdAndDelete(req.params.eventId)
+        res.json({message: "Event deleted"})
+    }
+    catch(err){
+        res.status(500).json({message: err.message})
+    }
 }
 

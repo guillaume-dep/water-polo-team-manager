@@ -13,5 +13,5 @@ app.use(express.json());
 
 app.use('/auth', authRouter)
 app.use('/groups', groupRouter)
-app.use('/routes', eventRouter)
+app.use('/groups/:id', eventRouter)
 export default app
