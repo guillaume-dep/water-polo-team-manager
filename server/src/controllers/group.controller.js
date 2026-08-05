@@ -82,7 +82,7 @@ export const getMyGroups = async(req, res) => {
 
 export const leaveGroup = async(req, res) => {
     try{
-        const group = await Groups.findOne(req.params.id)
+        const group = await Groups.findById(req.params.id)
         if (!group){
             return res.status(404).json({message: "Invalid code"})
         }
