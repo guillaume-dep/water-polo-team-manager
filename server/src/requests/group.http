@@ -1,0 +1,51 @@
+@coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzM3M2NhYzMyY2Q3YTNiNDEzYjIzNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NTk1MTE3OCwiZXhwIjoxNzg2NTU1OTc4fQ.WS29wUp0K_ZZ_7vQ5K2AU9kUYHNkW7x1EendK-1dKUE
+@playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzM1YWMyMGY5NzU0YTk2M2Q4NjQwMCIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODU5NDQ4NzEsImV4cCI6MTc4NjU0OTY3MX0.kTlA2cqpdLdb4uNPovIGWjasMPXpUvIGRkvHgbMOwME
+@groupId = <GROUP_ID>
+@groupCode = 459fd8
+
+###
+
+# Rechercher un groupe par son code
+GET http://localhost:3000/groups?code={{groupCode}}
+Cookie: token={{playerToken}}
+
+###
+
+# Créer un groupe (coach uniquement)
+POST http://localhost:3000/groups
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+  "name": "U18 Masculins"
+}
+
+###
+
+# Voir mes groupes
+GET http://localhost:3000/groups/me
+Cookie: token={{coachToken}}
+
+###
+
+# Voir mes groupes (joueur)
+GET http://localhost:3000/groups/me
+Cookie: token={{playerToken}}
+
+###
+
+# Rejoindre un groupe
+POST http://localhost:3000/groups/{{groupId}}/members
+Cookie: token={{playerToken}}
+
+###
+
+# Quitter un groupe
+DELETE http://localhost:3000/groups/{{groupId}}/members/me
+Cookie: token={{playerToken}}
+
+###
+
+# Supprimer un groupe (coach uniquement)
+DELETE http://localhost:3000/groups/{{groupId}}
+Cookie: token={{coachToken}}

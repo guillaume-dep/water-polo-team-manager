@@ -3,10 +3,10 @@ POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "name": "Paul Dupont",
-  "email": "paul.dupont@example.com",
-  "password": "Password123!",
-  "role": "player"
+  "name": "guillaume dep",
+  "email": "guillaume.dep@example.com",
+  "password": "bonjour123!",
+  "role": "coach"
 }
 
 ### Login
