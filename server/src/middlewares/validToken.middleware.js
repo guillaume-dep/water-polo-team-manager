@@ -8,8 +8,8 @@ const validToken = (req, res, next) => {
     }
 
     try{
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = decoded /* decoded = { id: "...", role: "coach", iat: ..., exp: ... } */
+        const payload = jwt.verify(token, process.env.JWT_SECRET)
+        req.user = payload /* decoded = { id: "...", role: "coach", iat: ..., exp: ... } */
         next()
     }
     catch(err){
