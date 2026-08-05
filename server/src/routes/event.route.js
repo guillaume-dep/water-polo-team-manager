@@ -7,8 +7,8 @@ const router = express.Router({ mergeParams: true }) /* To retrieve the id of th
 
 router.post('/events', validToken, requireRole(ROLE.COACH), createEvent)
 router.get('/events', validToken, getEventsFromGroup)
-router.get('/events/:id', validToken, getEventDetails)
-router.put('/events/:id', validToken, requireRole(ROLE.COACH), updateEvent)
-router.delete('/events/:id', validToken, requireRole(ROLE.COACH), deleteEvent)
+router.get('/events/:eventId', validToken, getEventDetails)
+router.put('/events/:eventId', validToken, requireRole(ROLE.COACH), updateEvent)
+router.delete('/events/:eventId', validToken, requireRole(ROLE.COACH), deleteEvent)
 
 export default router
