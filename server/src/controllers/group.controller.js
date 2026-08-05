@@ -1,4 +1,6 @@
 import Groups from "../models/group.model"
+import crypto from "crypto";
+import ROLE from "../../../shared/utils/role";
 
 export const searchGroupByCode = async(res, req) => {
     try {
@@ -19,7 +21,25 @@ export const searchGroupByCode = async(res, req) => {
 }
 
 export const createGroup = async(req, res) => {
+    try {
+        const {name} = req.body
 
+        /* code = 6 hex caracteres */
+        const code = crypto.randomBytes(3).toString("hex")
+        const group = await Groups.create({
+            name,
+            code,
+            coach: req.user.id,
+            members: []
+        })
+
+        /* Should we include the coach into the members array ? */
+        res.status(201).json(group)
+    }
+    catch(err){
+        res.status(500).json({ message: err.message });
+
+    }
 }
 
 export const joinGroup = async(req, res) => {
@@ -45,7 +65,21 @@ export const joinGroup = async(req, res) => {
 }
 
 export const getMyGroups = async(req, res) => {
+    try {
 
+        const isCoach = req.user.role === ROLE.COACH
+
+        const filter = (isCoach) 
+        ? {coach : req.user.id} 
+        : {members: req.user.id} /* MongoDB checks if the "members" array contains it */
+
+        const groups = await Groups.find(filter)
+        res.json(groups)
+    }
+    catch(err){
+        res.status(500).json({message: err.message})
+        
+    }
 }
 
 export const leaveGroup = async(req, res) => {
