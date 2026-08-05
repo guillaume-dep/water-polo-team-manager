@@ -1,8 +1,8 @@
-import Groups from "../models/group.model"
+import Groups from "../models/group.model.js"
 import crypto from "crypto";
-import ROLE from "../../../shared/utils/role";
+import ROLE from "../../../shared/utils/role.js";
 
-export const searchGroupByCode = async(res, req) => {
+export const searchGroupByCode = async(req, res) => {
     try {
         const {code} = req.query
         if (!code) {
@@ -44,9 +44,7 @@ export const createGroup = async(req, res) => {
 
 export const joinGroup = async(req, res) => {
     try {
-        const {code} = req.body
-        
-        const group = await Groups.findOne({code})
+        const group = await Groups.findById(req.params.id)
         if (!group){
             return res.status(404).json({message: "Invalid code"})
         }
@@ -83,9 +81,36 @@ export const getMyGroups = async(req, res) => {
 }
 
 export const leaveGroup = async(req, res) => {
+    try{
+        const group = await Groups.findOne(req.params.id)
+        if (!group){
+            return res.status(404).json({message: "Invalid code"})
+        }
 
+        if (!group.members.includes(req.user.id)) {
+            return res.status(409).json({ message: "Not in this group" })
+        }
+
+        group.members.pull(req.user.id)
+        await group.save()
+        res.json(group)
+    }
+    catch(err){
+        res.status(500).json({message: err.message})
+    }
 }
 
 export const deleteGroup = async(req, res) => {
+    try{
+        const deletedGroup = await Groups.findByIdAndDelete(req.params.id);
 
+        if (!deletedGroup) {
+            return res.status(404).json({message: "Invalid code"});
+        }
+
+        res.json({message: "Group deleted"});
+    }
+    catch(err){
+        res.status(500).json({message: err.message})
+    }
 }
