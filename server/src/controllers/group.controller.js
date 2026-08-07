@@ -1,22 +1,20 @@
 import Groups from "../models/group.model.js"
 import crypto from "crypto";
 import ROLE from "../../../shared/utils/role.js";
+import { findGroupById } from "../utils/dbFinder.js";
 
 export const searchGroupByCode = async(req, res) => {
     try {
         const {code} = req.query
-        if (!code) {
-            return res.status(400).json({message: "Missing code"})
-        }
+        if (!code) throw new AppError("Missing code", 400)
+
         const group = await Groups.findOne({code});
-        if (!group){
-            return res.status(404).json({message: "Group not found"})
-        }
+        if (!group) throw new AppError("Group not found", 404)
 
         res.json(group)
     }
-    catch(err){
-        res.status(500).json({ message: err.message });
+    catch(err) {
+        res.status(err.status || 500).json({ message: err.message });
     }
 }
 
@@ -33,32 +31,29 @@ export const createGroup = async(req, res) => {
             members: []
         })
 
-        /* Should we include the coach into the members array ? */
         res.status(201).json(group)
     }
-    catch(err){
-        res.status(500).json({ message: err.message });
 
+    catch(err){
+        res.status(err.status || 500).json({ message: err.message });
     }
 }
 
 export const joinGroup = async(req, res) => {
     try {
-        const group = await Groups.findById(req.params.id)
-        if (!group){
-            return res.status(404).json({message: "Invalid code"})
-        }
+        const group = await findGroupById(req.params.id)
 
+        /* func alreadyInGroup ? */
         if (group.members.includes(req.user.id)){
-            return res.status(409).json({message: "Already in the group"})
+            throw new AppError("Already in the group", 409) 
         }
         group.members.push(req.user.id)
-        await group.save(); /* Mongoose send a request to the DB */
+        await group.save(); /* Mongoose sends a request to the DB */
 
         res.json(group)
     }
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
@@ -75,42 +70,32 @@ export const getMyGroups = async(req, res) => {
         res.json(groups)
     }
     catch(err){
-        res.status(500).json({message: err.message})
-        
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
 export const leaveGroup = async(req, res) => {
     try{
-        const group = await Groups.findById(req.params.id)
-        if (!group){
-            return res.status(404).json({message: "Invalid code"})
-        }
-
-        if (!group.members.includes(req.user.id)) {
-            return res.status(409).json({ message: "Not in this group" })
-        }
+        const group = await findGroupById(req.params.id)
+        checkIsInGroup(group, req.user.id)
 
         group.members.pull(req.user.id)
         await group.save()
         res.json(group)
     }
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
 export const deleteGroup = async(req, res) => {
     try{
         const deletedGroup = await Groups.findByIdAndDelete(req.params.id);
-
-        if (!deletedGroup) {
-            return res.status(404).json({message: "Invalid code"});
-        }
+        if (!deletedGroup) throw new AppError("Group not found", 404)
 
         res.json({message: "Group deleted"});
     }
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
