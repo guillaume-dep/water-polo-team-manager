@@ -2,6 +2,8 @@ import Groups from "../models/group.model.js"
 import crypto from "crypto";
 import ROLE from "../../../shared/utils/role.js";
 import { findGroupById } from "../utils/dbFinder.js";
+import { checkIsMember, checkIsCoach } from "../utils/logicChecker.js";
+import AppError from "../utils/AppError.js"
 
 export const searchGroupByCode = async(req, res) => {
     try {
@@ -43,10 +45,11 @@ export const joinGroup = async(req, res) => {
     try {
         const group = await findGroupById(req.params.id)
 
-        /* func alreadyInGroup ? */
+        /* func alreadyInGroup, invert of checkIsMember */
         if (group.members.includes(req.user.id)){
             throw new AppError("Already in the group", 409) 
         }
+        
         group.members.push(req.user.id)
         await group.save(); /* Mongoose sends a request to the DB */
 
@@ -77,7 +80,7 @@ export const getMyGroups = async(req, res) => {
 export const leaveGroup = async(req, res) => {
     try{
         const group = await findGroupById(req.params.id)
-        checkIsInGroup(group, req.user.id)
+        checkIsMember(group, req.user.id)
 
         group.members.pull(req.user.id)
         await group.save()
