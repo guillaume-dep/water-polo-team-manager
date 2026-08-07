@@ -29,7 +29,18 @@ export const createResponse = async(req, res) => {
 
 export const updateResponse = async(req, res) => {
     try{
-        
+        const group = await findGroupById(req.params.id)
+        checkIsMember(group, req.user.id)
+        const event = await findEventById(req.params.eventId)
+        const response = await Responses.findOne({ event: req.params.eventId, user: req.user.id })
+        if (!response) throw new AppError("Response not found", 404)
+
+        const {status, comment} = req.body
+        response.status = status ?? response.status
+        response.comment = comment ?? response.comment
+
+        await response.save()
+        res.json(response)
     }
 
     catch(err){
