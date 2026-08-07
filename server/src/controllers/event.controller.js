@@ -1,23 +1,7 @@
 import Events from "../models/event.model.js"
 import Groups from "../models/group.model.js";
-
-const findGroupById = async (groupId) => {
-    const group = await Groups.findById(groupId);
-    if (!group) throw new Error("Group not found");
-    return group;
-};
-
-const findEventById = async (eventId) => {
-    const event = await Events.findById(eventId);
-    if (!event) throw new Error("Event not found");
-    return event;
-};
-
-const checkIsCoach = (group, userId) => {
-    if (group.coach.toString() !== userId) {
-        throw new Error("Not your group")
-    }
-}
+import { findEventById, findGroupById } from "../utils/dbFinder.js";
+import { checkIsCoach } from "../utils/logicChecker.js";
 
 export const createEvent = async(req, res) => {
     try{
