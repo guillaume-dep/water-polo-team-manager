@@ -1,5 +1,4 @@
 import Events from "../models/event.model.js"
-import Groups from "../models/group.model.js";
 import { findEventById, findGroupById } from "../utils/dbFinder.js";
 import { checkIsCoach } from "../utils/logicChecker.js";
 
@@ -25,7 +24,7 @@ export const createEvent = async(req, res) => {
     }
 
     catch(err){
-        res.status(500).json({message : err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
@@ -36,8 +35,9 @@ export const getEventsFromGroup = async(req, res) => {
 
         res.json(events)
     }
+
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
@@ -46,8 +46,9 @@ export const getEvent = async(req, res) => {
         const event = await findEventById(req.params.eventId)
         res.json(event)
     }
+
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
@@ -69,7 +70,7 @@ export const updateEvent = async(req, res) => {
         res.json(event)
     }
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
@@ -81,8 +82,9 @@ export const deleteEvent = async(req, res) => {
         await Events.findByIdAndDelete(req.params.eventId)
         res.json({message: "Event deleted"})
     }
+    
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
