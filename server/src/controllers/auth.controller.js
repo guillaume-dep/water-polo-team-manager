@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import Users from "../models/user.model.js"
+import AppError from "../utils/AppError.js"
 import { generateToken, setTokenCookie } from '../utils/jwt.js';
 
 /**
@@ -14,9 +15,8 @@ export const register = async(req, res) => {
         const salt = await bcrypt.genSalt();
         const {name, email, password, role} = req.body
         const existing = await Users.findOne({email})
-        if (existing){
-            return res.status(409).json({message: "Email already used"})
-        }
+        if (existing) throw new AppError("Email already used", 409)
+
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const user = await Users.create({
@@ -34,7 +34,7 @@ export const register = async(req, res) => {
     }
 
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
@@ -49,13 +49,10 @@ export const login = async(req, res) => {
     try {
         const {email, password} = req.body
         const user = await Users.findOne({email})
-        if (!user){
-            return res.status(401).json({message: "Invalid credentials"})
-        }
+        if (!user) throw new AppError("Invalid credentials", 401)
+
         const validPassword = await bcrypt.compare(password, user.passwordHash)
-        if (!validPassword){
-            return res.status(401).json({message: "Invalid credentials"})
-        }
+        if (!validPassword) throw new AppError("Invalid credentials", 401)
 
         const token = generateToken(user)
         setTokenCookie(res, token)
@@ -65,7 +62,7 @@ export const login = async(req, res) => {
     }
 
     catch(err){
-        res.status(500).json({message: err.message})
+        res.status(err.status || 500).json({message: err.message})
     }
 }
 
