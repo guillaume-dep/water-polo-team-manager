@@ -1,6 +1,6 @@
 import Events from "../models/event.model.js"
 import { findEventById, findGroupById } from "../utils/dbFinder.js";
-import { checkIsCoach } from "../utils/logicChecker.js";
+import { checkIsCoach, checkIsMemberOrCoach } from "../utils/logicChecker.js"
 
 export const createEvent = async(req, res) => {
     try{
@@ -31,6 +31,7 @@ export const createEvent = async(req, res) => {
 export const getEventsFromGroup = async(req, res) => {
     try{
         const group = await findGroupById(req.params.id)
+        checkIsMemberOrCoach(group, req.user.id)
         const events = await Events.find({group})
 
         res.json(events)
@@ -43,6 +44,8 @@ export const getEventsFromGroup = async(req, res) => {
 
 export const getEvent = async(req, res) => {
     try{
+        const group = await findGroupById(req.params.id)
+        checkIsMemberOrCoach(group, req.user.id)
         const event = await findEventById(req.params.eventId)
         res.json(event)
     }
