@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import Users from "../models/user.model.js"
 import AppError from "../utils/AppError.js"
 import { generateToken, setTokenCookie } from '../utils/jwt.js';
+import { checkUserData } from '../utils/logicChecker.js';
 
 /**
  * route : auth/register 
@@ -14,6 +15,8 @@ export const register = async(req, res) => {
     try {
         const salt = await bcrypt.genSalt();
         const {name, email, password, role} = req.body
+        checkUserData(name, email, password, role)
+        
         const existing = await Users.findOne({email})
         if (existing) throw new AppError("Email already used", 409)
 
