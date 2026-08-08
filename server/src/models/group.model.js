@@ -19,9 +19,10 @@ groupSchema.pre('findOneAndDelete', async function(next) {
         const groupId = this.getQuery()._id /* this = current request ; return the filter */
 
         const events = await Events.find({group: groupId})
-        const eventIds = events.map(e => e._id) /* own id */
-        await Responses.deleteMany({event : {$in : eventIds}}) /* delete events which are $in eventsIds */
-        await Events.deleteMany({group: groupId})
+        for (const event of events){
+            await Events.findByIdAndDelete(event._id) /* Cascading deletion continues with Events */
+        }
+
         next()
     }
     catch(err){
