@@ -49,7 +49,7 @@ export const joinGroup = async(req, res) => {
     try {
         const {code} = req.body
         if (!code) throw new AppError("Code is required", 400)
-            
+
         const group = await Groups.findOne({code})
         if (!group) throw new AppError("Group not found", 404)
 
@@ -95,7 +95,10 @@ export const leaveGroup = async(req, res) => {
 
         group.members.pull(req.user.id)
         await group.save()
-        res.json(group)
+        res.json({
+            name: group.name,
+            code: group.code
+        })
     }
     catch(err){
         res.status(err.status || 500).json({message: err.message})
