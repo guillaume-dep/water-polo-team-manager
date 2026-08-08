@@ -6,7 +6,7 @@ const responseSchema = new mongoose.Schema({
     status: {type: String, enum: Object.values(RESPONSE_TYPE), required: true},
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     event: {type: mongoose.Schema.Types.ObjectId, ref: 'Event', required: true},
-    comment: {type: String},
+    comment: {type: String, trim: true, maxlength: 100},
 }, {timestamps: true})
 
 responseSchema.index(
