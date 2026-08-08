@@ -15,3 +15,14 @@ const Groups = dbConnection.model('Group', groupSchema)
 
 export default Groups;
 
+/* TODO : AJOUTER CASCADE SUPP : 
+
+groupSchema.pre('findOneAndDelete', async function() {
+    const groupId = this.getQuery()._id
+    const events = await Event.find({ group: groupId })
+    const eventIds = events.map(e => e._id)
+    await Response.deleteMany({ event: { $in: eventIds } })
+    await Event.deleteMany({ group: groupId })
+})
+
+*/

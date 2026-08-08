@@ -13,7 +13,10 @@ export const searchGroupByCode = async(req, res) => {
         const group = await Groups.findOne({code});
         if (!group) throw new AppError("Group not found", 404)
 
-        res.json(group)
+        res.json({
+            name: group.name,
+            code: group.code
+        })
     }
     catch(err) {
         res.status(err.status || 500).json({ message: err.message });
@@ -23,6 +26,7 @@ export const searchGroupByCode = async(req, res) => {
 export const createGroup = async(req, res) => {
     try {
         const {name} = req.body
+        if (!name || !name.trim()) throw new AppError("Name is required", 400)
 
         /* code = 6 hex caracteres */
         const code = crypto.randomBytes(3).toString("hex")
@@ -43,7 +47,11 @@ export const createGroup = async(req, res) => {
 
 export const joinGroup = async(req, res) => {
     try {
-        const group = await findGroupById(req.params.id)
+        const {code} = req.body
+        if (!code) throw new AppError("Code is required", 400)
+            
+        const group = await Groups.findOne({code})
+        if (!group) throw new AppError("Group not found", 404)
 
         /* func alreadyInGroup, invert of checkIsMember */
         if (group.members.includes(req.user.id)){
@@ -53,7 +61,10 @@ export const joinGroup = async(req, res) => {
         group.members.push(req.user.id)
         await group.save(); /* Mongoose sends a request to the DB */
 
-        res.json(group)
+        res.json({
+            name: group.name,
+            code: group.code
+        })
     }
     catch(err){
         res.status(err.status || 500).json({message: err.message})
@@ -93,8 +104,10 @@ export const leaveGroup = async(req, res) => {
 
 export const deleteGroup = async(req, res) => {
     try{
-        const deletedGroup = await Groups.findByIdAndDelete(req.params.id);
-        if (!deletedGroup) throw new AppError("Group not found", 404)
+        const group = await findGroupById(req.params.id)
+        checkIsCoach(group, req.user.id)
+
+        await Groups.findByIdAndDelete(req.params.id);
 
         res.json({message: "Group deleted"});
     }

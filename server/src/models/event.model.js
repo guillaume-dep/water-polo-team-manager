@@ -14,3 +14,10 @@ const eventSchema = new mongoose.Schema({
 const Events = dbConnection.model('Event', eventSchema)
 
 export default Events
+
+/* TODO : CASCADE SUPPRESSION 
+
+await Response.deleteMany({ event: req.params.eventId })
+await Events.findByIdAndDelete(req.params.eventId)
+
+*/
