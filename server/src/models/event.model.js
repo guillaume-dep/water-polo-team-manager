@@ -4,9 +4,9 @@ import EVENT_TYPE from "../../../shared/utils/eventType.js";
 import Responses from "./response.model.js";
 
 const eventSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    name: {type: String, required: true, trim: true, minlength: 2, maxlength: 30},
     date: {type: Date, required: true},
-    location: {type: String, required: true},
+    location: {type: String, required: true, trim: true, minlength: 2, maxlength: 30},
     group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: true},
     createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     eventType: {type: String, enum: Object.values(EVENT_TYPE), required: true},
