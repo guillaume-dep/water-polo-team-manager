@@ -7,14 +7,17 @@ import {searchGroupByCode, createGroup, joinGroup, getMyGroups, leaveGroup, dele
 const router = express.Router()
 
 router.get('/', validToken, searchGroupByCode)
+
 /* Identifies a user instead of filtering in the controller */
 router.get('/me', validToken, getMyGroups)
 
 router.post('/', validToken, requireRole(ROLE.COACH), createGroup)
-router.delete('/:id', validToken, requireRole(ROLE.COACH), deleteGroup)
 
 /* NOT REST but players join a group with a code */
 router.post('/join', validToken, requireRole(ROLE.PLAYER), joinGroup)
+
+router.delete('/:id', validToken, requireRole(ROLE.COACH), deleteGroup)
+
 /* Delete myself from the list "members" of the group ":id" */
 router.delete('/:id/members/me', validToken, requireRole(ROLE.PLAYER), leaveGroup)
 

@@ -3,9 +3,9 @@
 
 @otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDE2OCwiZXhwIjoxNzg2ODA0OTY4fQ.qnPmPx_UevXplKPUag3-xLV0Jln2LiXM3aFpIt-Y9MY
 
-@groupId =
+@groupId = 6a77432cb65422b2d3d2e2fc
 
-@groupCode = 
+@groupCode = c8a932
 
 ###
 # Rechercher un groupe par son code
