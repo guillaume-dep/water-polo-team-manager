@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js"
 import Responses from "../models/response.model.js"
 import { findEventById, findGroupById } from "../utils/dbFinder.js"
-import { checkIsMember, checkIsMemberOrCoach, checkEventInGroup } from "../utils/logicChecker.js"
+import { checkIsMember, checkIsMemberOrCoach, checkEventInGroup, checkResponseData } from "../utils/logicChecker.js"
 
 export const createResponse = async(req, res) => {
     try{
@@ -16,8 +16,9 @@ export const createResponse = async(req, res) => {
         const existing = await Responses.findOne({ event: req.params.eventId, user: req.user.id })
         if (existing) throw new AppError("Response already exists", 409)
 
-        const status = req.body.status
-        const comment = req.body.comment
+        const {status, comment} = req.body
+        checkResponseData(status)
+
         const response = await Responses.create({
             status,
             user: req.user.id,
@@ -45,7 +46,10 @@ export const updateResponse = async(req, res) => {
         if (!response) throw new AppError("Response not found", 404)
 
         const {status, comment} = req.body
-        response.status = status ?? response.status
+        const newStatus = status ?? response.status
+        checkResponseData(newStatus)
+
+        response.status = newStatus
         response.comment = comment ?? response.comment
 
         await response.save()
