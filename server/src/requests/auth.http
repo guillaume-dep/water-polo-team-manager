@@ -1,6 +1,6 @@
-@coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzM3M2NhYzMyY2Q3YTNiNDEzYjIzNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NTk1MTE3OCwiZXhwIjoxNzg2NTU1OTc4fQ.WS29wUp0K_ZZ_7vQ5K2AU9kUYHNkW7x1EendK-1dKUE
+@coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzczMDRhOWI2ODgwYThhODliZjE3YSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjE5NjA0MiwiZXhwIjoxNzg2ODAwODQyfQ.eWzvzFoLSqijRJoXCJYETXi20AnXn-8OFqbKhfCgcic
 @playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzM1YWMyMGY5NzU0YTk2M2Q4NjQwMCIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODU5NDQ4NzEsImV4cCI6MTc4NjU0OTY3MX0.kTlA2cqpdLdb4uNPovIGWjasMPXpUvIGRkvHgbMOwME
-
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTYwNzgsImV4cCI6MTc4NjgwMDg3OH0.M5jG22ksYp7I7ujx1uKA03V9jYnrKxuYySscCoVP_Bw
 ### Register coach
 POST http://localhost:3000/auth/register
 Content-Type: application/json
@@ -10,6 +10,17 @@ Content-Type: application/json
   "email": "guillaume.dep@example.com",
   "password": "bonjour123!",
   "role": "coach"
+}
+
+### Register player
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Paul Dupont",
+  "email": "paul.dupont@example.com",
+  "password": "bonjour123!",
+  "role": "player"
 }
 
 ### Login coach
@@ -27,7 +38,7 @@ Content-Type: application/json
 
 {
   "email": "paul.dupont@example.com",
-  "password": "Password123!"
+  "password": "bonjour123!"
 }
 
 ### Logout coach
@@ -36,4 +47,4 @@ Cookie: token={{coachToken}}
 
 ### Logout player
 POST http://localhost:3000/auth/logout
-Cookie: token={{coachToken}}
+Cookie: token={{playerToken}}
