@@ -7,7 +7,7 @@ import Responses from "./response.model.js";
  * A group is a bunch of User
  */
 const groupSchema = new mongoose.Schema({
-    name: {type: String, required: true},
+    name: {type: String, required: true, trim: true, minlength: 2, maxlength: 30},
     code: {type: String, required: true, unique: true},
     coach: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
