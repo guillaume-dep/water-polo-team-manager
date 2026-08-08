@@ -1,10 +1,12 @@
 import Events from "../models/event.model.js"
 import { findEventById, findGroupById } from "../utils/dbFinder.js";
-import { checkIsCoach, checkIsMemberOrCoach } from "../utils/logicChecker.js"
+import { checkIsCoach, checkIsMemberOrCoach, checkEventInGroup, checkEventData } from "../utils/logicChecker.js"
 
 export const createEvent = async(req, res) => {
     try{
         const {name, date, location, eventType} = req.body
+        checkEventData(name, date, location, eventType)
+
         const group = await findGroupById(req.params.id)
         
         /* Checks if it's the coach of the group */
@@ -32,7 +34,7 @@ export const getEventsFromGroup = async(req, res) => {
     try{
         const group = await findGroupById(req.params.id)
         checkIsMemberOrCoach(group, req.user.id)
-        const events = await Events.find({group})
+        const events = await Events.find({group : group._id})
 
         res.json(events)
     }
@@ -47,6 +49,8 @@ export const getEvent = async(req, res) => {
         const group = await findGroupById(req.params.id)
         checkIsMemberOrCoach(group, req.user.id)
         const event = await findEventById(req.params.eventId)
+        checkEventInGroup(group, event)
+
         res.json(event)
     }
 
@@ -61,13 +65,26 @@ export const updateEvent = async(req, res) => {
         const group = await findGroupById(req.params.id)
 
         checkIsCoach(group, req.user.id)
+        checkEventInGroup(group, event)
 
         const {name, date, location, eventType} = req.body
 
-        event.name = name ?? event.name
-        event.date = date ?? event.date
-        event.location = location ?? event.location
-        event.eventType = eventType ?? event.eventType
+        const newName = name ?? event.name
+        const newDate = date ?? event.date
+        const newLocation = location ?? event.location
+        const newEventType = eventType ?? event.eventType
+
+        checkEventData(
+            newName,
+            newDate,
+            newLocation,
+            newEventType
+        )
+
+        event.name = newName
+        event.date = newDate
+        event.location = newLocation
+        event.eventType = newEventType
 
         await event.save()
         res.json(event)
@@ -82,7 +99,10 @@ export const deleteEvent = async(req, res) => {
         const group = await findGroupById(req.params.id)
         checkIsCoach(group, req.user.id)
 
-        await Events.findByIdAndDelete(req.params.eventId)
+        const event = await findEventById(req.params.eventId)
+        checkEventInGroup(group, event)
+
+        await Events.findByIdAndDelete(event._id)
         res.json({message: "Event deleted"})
     }
     

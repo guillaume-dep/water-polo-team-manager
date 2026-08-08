@@ -6,7 +6,7 @@ import Responses from "./response.model.js";
 const eventSchema = new mongoose.Schema({
     name: {type: String, required: true},
     date: {type: Date, required: true},
-    location: {type: String},
+    location: {type: String, required: true},
     group: {type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: true},
     createdBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     eventType: {type: String, enum: Object.values(EVENT_TYPE), required: true},
