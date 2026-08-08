@@ -6,7 +6,10 @@ const router = express.Router()
 
 /* TODO : coach role should be verified by an admin */
 router.post('/register', register)
+
+/* TODO : rate limiting to prevent DDOS */
 router.post('/login', login)
+
 router.post('/logout', validToken, logout)
 /* router.delete('/delete', deleteAccount) */
 
