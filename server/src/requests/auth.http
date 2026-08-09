@@ -2,75 +2,271 @@
 @playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTc3NTQsImV4cCI6MTc4NjgwMjU1NH0.PHmINO9isf2BKcUKerNCL5tfM-WE7wvpYoxz1m912-c
 @otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDg5NCwiZXhwIjoxNzg2ODA1Njk0fQ.e0pKitdKpIlidn3VcUhl7K0kDODJjvUtsd53gm1PtgY
 
+###############################################################################
+
+# AUTH — REGISTER
+
+###############################################################################
 
 ### Register coach
+
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "name": "guillaume dep",
-  "email": "guillaume.dep@example.com",
-  "password": "bonjour123!",
-  "role": "coach"
+"name": "guillaume dep",
+"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"password": "bonjour123!",
+"role": "coach"
 }
+
+###
 
 ### Register other coach
+
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "name": "jean dep",
-  "email": "jean.dep@example.com",
-  "password": "bonjour!",
-  "role": "coach"
+"name": "jean dep",
+"email": "[jean.dep@example.com](mailto:jean.dep@example.com)",
+"password": "bonjour!",
+"role": "coach"
 }
+
+###
 
 ### Register player
+
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
-  "name": "Paul Dupont",
-  "email": "paul.dupont@example.com",
-  "password": "bonjour123!",
-  "role": "player"
+"name": "Paul Dupont",
+"email": "[paul.dupont@example.com](mailto:paul.dupont@example.com)",
+"password": "bonjour123!",
+"role": "player"
 }
 
+###
 
+### Register — email déjà utilisé → 409
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+"name": "Autre Guillaume",
+"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"password": "bonjour123!",
+"role": "coach"
+}
+
+###
+
+### Register — sans email → 400
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+"name": "Test User",
+"password": "bonjour123!",
+"role": "player"
+}
+
+###
+
+### Register — mot de passe invalide
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+"name": "Test User",
+"email": "[test@example.com](mailto:test@example.com)",
+"password": "",
+"role": "player"
+}
+
+###
+
+### Register — rôle invalide → 400
+
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+"name": "Hacker",
+"email": "[hacker@example.com](mailto:hacker@example.com)",
+"password": "bonjour123!",
+"role": "admin"
+}
+
+###############################################################################
+
+# AUTH — LOGIN
+
+###############################################################################
 
 ### Login coach
+
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "guillaume.dep@example.com",
-  "password": "bonjour123!"
+"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"password": "bonjour123!"
 }
+
+###
 
 ### Login other coach
+
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "jean.dep@example.com",
-  "password": "bonjour!"
+"email": "[jean.dep@example.com](mailto:jean.dep@example.com)",
+"password": "bonjour!"
 }
+
+###
 
 ### Login player
+
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "paul.dupont@example.com",
-  "password": "bonjour123!"
+"email": "[paul.dupont@example.com](mailto:paul.dupont@example.com)",
+"password": "bonjour123!"
 }
 
+###
 
+### Login — mauvais mot de passe → 401
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"password": "mauvaisMotDePasse"
+}
+
+###
+
+### Login — email inexistant → 401
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"email": "[doesnotexist@example.com](mailto:doesnotexist@example.com)",
+"password": "bonjour123!"
+}
+
+###
+
+### Login — sans email → 401/400 selon validation
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"password": "bonjour123!"
+}
+
+###
+
+### Login — sans password → 401/400 selon validation
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)"
+}
+
+###############################################################################
+
+# AUTH — LOGOUT
+
+###############################################################################
 
 ### Logout coach
+
 POST http://localhost:3000/auth/logout
 Cookie: token={{coachToken}}
 
+###
+
 ### Logout player
+
 POST http://localhost:3000/auth/logout
 Cookie: token={{playerToken}}
+
+###
+
+### Logout other coach
+
+POST http://localhost:3000/auth/logout
+Cookie: token={{otherCoachToken}}
+
+###
+
+### Logout sans token → 401
+
+POST http://localhost:3000/auth/logout
+
+###############################################################################
+
+# AUTH — SECURITY
+
+###############################################################################
+
+### Accéder à logout avec le token d'un autre rôle
+
+# Doit fonctionner : logout est une opération commune aux utilisateurs authentifiés.
+
+POST http://localhost:3000/auth/logout
+Cookie: token={{otherCoachToken}}
+
+###
+
+### Token invalide → 401
+
+POST http://localhost:3000/auth/logout
+Cookie: token=invalid.token.here
+
+###
+
+### Token malformé → 401
+
+POST http://localhost:3000/auth/logout
+Cookie: token=bonjour
+
+###
+
+### Aucun token → 401
+
+POST http://localhost:3000/auth/logout
+
+###############################################################################
+
+# AUTH — TEST DU RATE LIMITER
+
+###############################################################################
+
+### Répéter volontairement cette requête plusieurs fois.
+
+# Après la limite définie dans authLimiter → 429 Too Many Requests
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"password": "mauvaisMotDePasse"
+}

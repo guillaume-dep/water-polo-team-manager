@@ -1,39 +1,81 @@
 @coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzczMDRhOWI2ODgwYThhODliZjE3YSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjE5NjA0MiwiZXhwIjoxNzg2ODAwODQyfQ.eWzvzFoLSqijRJoXCJYETXi20AnXn-8OFqbKhfCgcic
+
 @playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTc3NTQsImV4cCI6MTc4NjgwMjU1NH0.PHmINO9isf2BKcUKerNCL5tfM-WE7wvpYoxz1m912-c
 
 @otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDE2OCwiZXhwIjoxNzg2ODA0OTY4fQ.qnPmPx_UevXplKPUag3-xLV0Jln2LiXM3aFpIt-Y9MY
 
 @groupId = 6a78a4a613e2f985e6098a91
-
 @groupCode = 9bff8d
 
-###
-# Rechercher un groupe par son code
+###############################################################################
+
+# GROUP — SEARCH
+
+###############################################################################
+
+### Rechercher un groupe par son code
+
 # Attendu : 200
-# Le joueur ne doit recevoir que les informations publiques du groupe
+
+# Un joueur authentifié peut rechercher un groupe.
+
+# La réponse ne doit contenir que les informations publiques.
 
 GET http://localhost:3000/groups?code={{groupCode}}
 Cookie: token={{playerToken}}
 
+###
+
+### Rechercher un groupe avec un coach
+
+# Attendu : 200
+
+GET http://localhost:3000/groups?code={{groupCode}}
+Cookie: token={{coachToken}}
 
 ###
-# Rechercher un groupe sans code
+
+### Rechercher un groupe sans code
+
 # Attendu : 400
 
 GET http://localhost:3000/groups
 Cookie: token={{playerToken}}
 
-
 ###
-# Rechercher un groupe inexistant
+
+### Rechercher un groupe inexistant
+
 # Attendu : 404
 
 GET http://localhost:3000/groups?code=abcdef
 Cookie: token={{playerToken}}
 
+###
+
+### Rechercher un groupe avec un code malformé
+
+# Attendu : 404
+
+GET http://localhost:3000/groups?code=bonjour
+Cookie: token={{playerToken}}
 
 ###
-# Créer un groupe avec un coach
+
+### Rechercher un groupe sans token
+
+# Attendu : 401
+
+GET http://localhost:3000/groups?code={{groupCode}}
+
+###############################################################################
+
+# GROUP — CREATE
+
+###############################################################################
+
+### Créer un groupe avec un coach
+
 # Attendu : 201
 
 POST http://localhost:3000/groups
@@ -41,26 +83,39 @@ Content-Type: application/json
 Cookie: token={{coachToken}}
 
 {
-  "name": "U18 Masculins"
+"name": "U18 Masculins"
 }
 
-
 ###
-# Créer un groupe avec un joueur
+
+### Créer un groupe avec un joueur
+
 # Attendu : 403
-# Le rôle PLAYER ne doit pas pouvoir créer un groupe
 
 POST http://localhost:3000/groups
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-  "name": "Groupe interdit"
+"name": "Groupe interdit"
 }
 
+###
+
+### Créer un groupe sans nom
+
+# Attendu : 400
+
+POST http://localhost:3000/groups
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{}
 
 ###
-# Créer un groupe sans nom
+
+### Créer un groupe avec un nom vide
+
 # Attendu : 400
 
 POST http://localhost:3000/groups
@@ -68,29 +123,88 @@ Content-Type: application/json
 Cookie: token={{coachToken}}
 
 {
+"name": ""
 }
 
+###
+
+### Créer un groupe avec un nom composé uniquement d'espaces
+
+# Attendu : 400
+
+POST http://localhost:3000/groups
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+"name": "     "
+}
 
 ###
-# Voir mes groupes en tant que coach
+
+### Créer un groupe sans token
+
+# Attendu : 401
+
+POST http://localhost:3000/groups
+Content-Type: application/json
+
+{
+"name": "Groupe sans authentification"
+}
+
+###
+
+### Créer un groupe avec un token invalide
+
+# Attendu : 401
+
+POST http://localhost:3000/groups
+Content-Type: application/json
+Cookie: token=invalid.token.here
+
+###############################################################################
+
+# GROUP — MY GROUPS
+
+###############################################################################
+
+### Voir mes groupes — coach
+
 # Attendu : 200
-# Doit uniquement retourner les groupes dont le coach est l'utilisateur connecté
+
+# Ne doit retourner que les groupes dont le coach est l'utilisateur.
 
 GET http://localhost:3000/groups/me
 Cookie: token={{coachToken}}
 
-
 ###
-# Voir mes groupes en tant que joueur
+
+### Voir mes groupes — joueur
+
 # Attendu : 200
-# Doit uniquement retourner les groupes dont le joueur est membre
+
+# Ne doit retourner que les groupes dont le joueur est membre.
 
 GET http://localhost:3000/groups/me
 Cookie: token={{playerToken}}
 
-
 ###
-# Rejoindre un groupe avec son code
+
+### Voir mes groupes sans token
+
+# Attendu : 401
+
+GET http://localhost:3000/groups/me
+
+###############################################################################
+
+# GROUP — JOIN
+
+###############################################################################
+
+### Rejoindre un groupe avec son code
+
 # Attendu : 200
 
 POST http://localhost:3000/groups/join
@@ -98,24 +212,25 @@ Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-  "code": "{{groupCode}}"
+"code": "{{groupCode}}"
 }
 
-
 ###
-# Rejoindre un groupe sans code
+
+### Rejoindre un groupe sans code
+
 # Attendu : 400
 
 POST http://localhost:3000/groups/join
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
-{
-}
-
+{}
 
 ###
-# Rejoindre un groupe inexistant
+
+### Rejoindre un groupe inexistant
+
 # Attendu : 404
 
 POST http://localhost:3000/groups/join
@@ -123,25 +238,29 @@ Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-  "code": "abcdef"
+"code": "abcdef"
 }
 
-
 ###
-# Rejoindre deux fois le même groupe
+
+### Rejoindre deux fois le même groupe
+
 # Attendu : 409
 
+# À exécuter après le premier test de JOIN.
+
 POST http://localhost:3000/groups/join
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-  "code": "{{groupCode}}"
+"code": "{{groupCode}}"
 }
 
-
 ###
-# Un coach ne peut pas rejoindre un groupe comme joueur
+
+### Un coach ne peut pas rejoindre un groupe comme joueur
+
 # Attendu : 403
 
 POST http://localhost:3000/groups/join
@@ -149,62 +268,194 @@ Content-Type: application/json
 Cookie: token={{coachToken}}
 
 {
-  "code": "{{groupCode}}"
+"code": "{{groupCode}}"
 }
 
+###
+
+### Rejoindre un groupe sans token
+
+# Attendu : 401
+
+POST http://localhost:3000/groups/join
+Content-Type: application/json
+
+{
+"code": "{{groupCode}}"
+}
 
 ###
-# Quitter un groupe
+
+### Rejoindre un groupe avec un token invalide
+
+# Attendu : 401
+
+POST http://localhost:3000/groups/join
+Content-Type: application/json
+Cookie: token=invalid.token.here
+
+{
+"code": "{{groupCode}}"
+}
+
+###############################################################################
+
+# GROUP — LEAVE
+
+###############################################################################
+
+### Quitter un groupe
+
 # Attendu : 200
 
+# Le joueur doit être membre du groupe.
+
 DELETE http://localhost:3000/groups/{{groupId}}/members/me
 Cookie: token={{playerToken}}
 
-
 ###
-# Quitter un groupe auquel on n'appartient pas
+
+### Quitter un groupe auquel on n'appartient pas
+
 # Attendu : 403
 
+# À exécuter après le premier LEAVE.
+
 DELETE http://localhost:3000/groups/{{groupId}}/members/me
 Cookie: token={{playerToken}}
 
-
 ###
-# Un coach ne peut pas quitter un groupe comme joueur
+
+### Un coach ne peut pas quitter un groupe comme joueur
+
 # Attendu : 403
 
 DELETE http://localhost:3000/groups/{{groupId}}/members/me
 Cookie: token={{coachToken}}
 
-
 ###
-# Supprimer un groupe avec son coach
+
+### Quitter sans token
+
+# Attendu : 401
+
+DELETE http://localhost:3000/groups/{{groupId}}/members/me
+
+###############################################################################
+
+# GROUP — DELETE
+
+###############################################################################
+
+### Supprimer un groupe avec son coach
+
 # Attendu : 200
+
+# À exécuter en dernier car le groupe sera supprimé.
 
 DELETE http://localhost:3000/groups/{{groupId}}
 Cookie: token={{coachToken}}
 
-
 ###
-# Un joueur ne peut pas supprimer un groupe
+
+### Un joueur ne peut pas supprimer un groupe
+
 # Attendu : 403
 
 DELETE http://localhost:3000/groups/{{groupId}}
 Cookie: token={{playerToken}}
 
-
 ###
-# Un coach ne peut pas supprimer un groupe dont il n'est pas propriétaire
+
+### Un autre coach ne peut pas supprimer le groupe
+
 # Attendu : 403
-#
-# Pour ce test, utiliser un @otherCoachToken appartenant à un autre coach.
+
+# Le rôle COACH ne suffit pas : il doit être le propriétaire du groupe.
 
 DELETE http://localhost:3000/groups/{{groupId}}
 Cookie: token={{otherCoachToken}}
 
+###
+
+### Supprimer un groupe sans token
+
+# Attendu : 401
+
+DELETE http://localhost:3000/groups/{{groupId}}
 
 ###
-# Accéder à une route protégée sans token
+
+### Supprimer un groupe avec un ID inexistant
+
+# Attendu : 404
+
+DELETE http://localhost:3000/groups/000000000000000000000000
+Cookie: token={{coachToken}}
+
+###
+
+### Supprimer un groupe avec un ID invalide
+
+# Attendu : 400
+
+DELETE http://localhost:3000/groups/not-an-object-id
+Cookie: token={{coachToken}}
+
+###############################################################################
+
+# GROUP — SECURITY / AUTHORIZATION
+
+###############################################################################
+
+### Accéder à une route protégée sans token
+
 # Attendu : 401
 
 GET http://localhost:3000/groups/me
+
+###
+
+### Token invalide
+
+# Attendu : 401
+
+GET http://localhost:3000/groups/me
+Cookie: token=invalid.token.here
+
+###
+
+### Token malformé
+
+# Attendu : 401
+
+GET http://localhost:3000/groups/me
+Cookie: token=bonjour
+
+###
+
+### Un joueur tente de créer un groupe
+
+# Attendu : 403
+
+POST http://localhost:3000/groups
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+"name": "Tentative d'escalade de privilèges"
+}
+
+###
+
+### Un coach tente d'utiliser une route réservée aux joueurs
+
+# Attendu : 403
+
+POST http://localhost:3000/groups/join
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+"code": "{{groupCode}}"
+}

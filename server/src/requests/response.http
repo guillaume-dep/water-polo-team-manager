@@ -1,213 +1,337 @@
-@coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzczMDRhOWI2ODgwYThhODliZjE3YSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjE5NjA0MiwiZXhwIjoxNzg2ODAwODQyfQ.eWzvzFoLSqijRJoXCJYETXi20AnXn-8OFqbKhfCgcic
+@coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzczMDRhOWI2ODgwYThhODliZjE3YSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjE5NjA0MiwiZXhwIjoxNzg2ODA4NDIyfQ.eWzvzFoLSqijRJoXCJYETXi20AnXn-8OFqbKhfCgcic
 @playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTc3NTQsImV4cCI6MTc4NjgwMjU1NH0.PHmINO9isf2BKcUKerNCL5tfM-WE7wvpYoxz1m912-c
 @otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDE2OCwiZXhwIjoxNzg2ODA0OTY4fQ.qnPmPx_UevXplKPUag3-xLV0Jln2LiXM3aFpIt-Y9MY
 
-@groupId = 6a78a4a613e2f985e6098a91
-@eventId = 6a78a4e713e2f985e6098a92
+@groupId = 
+@eventId = 
 
-###
+# Event appartenant à un autre groupe
+@otherEventId = 
 
-# ============================================================
+
+############################################################
 # CREATE RESPONSE
-# ============================================================
+############################################################
 
-# Player membre → 201
+### Player membre → 201
 POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-    "status": "present",
-    "comment": "Je serai présent"
+  "status": "present",
+  "comment": "Je serai présent"
 }
 
 ###
 
-# Player → deuxième réponse au même événement
-# Doit être refusée par l'index unique
+### Deuxième réponse du même joueur → 409
+# Vérifie l'index unique { event, user }
 POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-    "status": "absent",
-    "comment": "Je change finalement d'avis"
+  "status": "absent",
+  "comment": "Je change finalement d'avis"
 }
 
 ###
 
-# Coach → 403
+### Coach → 403
 POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{coachToken}}
 
 {
-    "status": "present",
-    "comment": "Réponse du coach"
+  "status": "present",
+  "comment": "Réponse du coach"
 }
 
 ###
 
-# Autre coach → 403
+### Autre coach → 403
 POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{otherCoachToken}}
 
 {
-    "status": "present",
-    "comment": "Réponse interdite"
+  "status": "present",
+  "comment": "Réponse interdite"
 }
 
 ###
 
-# Sans token → 401
+### Sans token → 401
 POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 
 {
-    "status": "present",
-    "comment": "Test"
+  "status": "present",
+  "comment": "Test"
 }
 
 ###
 
-# Status invalide → 400
+### Status invalide → 400
 POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-    "status": "invalid_status",
-    "comment": "Test"
+  "status": "invalid_status",
+  "comment": "Test"
 }
 
 ###
 
-# ============================================================
-# GET RESPONSES
-# ============================================================
-
-# Player membre → 200
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
-Cookie: token={{playerToken}}
-
-###
-
-# Coach du groupe → 200
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
-Cookie: token={{coachToken}}
-
-###
-
-# Autre coach → 403
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
-Cookie: token={{otherCoachToken}}
-
-###
-
-# Sans token → 401
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
-
-###
-
-# Événement inexistant → 404
-GET http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses
-Cookie: token={{playerToken}}
-
-###
-
-# ============================================================
-# UPDATE MY RESPONSE
-# ============================================================
-
-# Player → 200
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+### Status absent → 400
+POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-    "status": "absent",
-    "comment": "Je ne pourrai finalement pas venir"
+  "comment": "Test"
 }
 
 ###
 
-# Player → modification partielle
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
-Content-Type: application/json
-Cookie: token={{playerToken}}
-
-{
-    "comment": "Nouveau commentaire"
-}
-
-###
-
-# Coach → 403
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
-Content-Type: application/json
-Cookie: token={{coachToken}}
-
-{
-    "status": "present"
-}
-
-###
-
-# Autre coach → 403
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
-Content-Type: application/json
-Cookie: token={{otherCoachToken}}
-
-{
-    "status": "present"
-}
-
-###
-
-# Sans token → 401
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
-Content-Type: application/json
-
-{
-    "status": "present"
-}
-
-###
-
-# Status invalide → 400
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
-Content-Type: application/json
-Cookie: token={{playerToken}}
-
-{
-    "status": "something_wrong"
-}
-
-###
-
-# ============================================================
-# COHÉRENCE EVENT / GROUP
-# ============================================================
-
-# Event appartenant à un autre groupe → 404
-GET http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses
-Cookie: token={{playerToken}}
-
-###
-
-# Event inexistant → 404
+### Event inexistant → 404
 POST http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
 {
-    "status": "present",
-    "comment": "Test"
+  "status": "present",
+  "comment": "Test"
 }
 
 ###
 
-# Groupe inexistant → 404
+### Groupe inexistant → 404
+POST http://localhost:3000/groups/000000000000000000000000/event/{{eventId}}/responses
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present",
+  "comment": "Test"
+}
+
+###
+
+### Event d'un autre groupe → 404
+# Le joueur ne doit pas pouvoir utiliser un eventId
+# appartenant à un autre groupe.
+POST http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present",
+  "comment": "Tentative d'accès"
+}
+
+
+############################################################
+# GET RESPONSES
+############################################################
+
+### Player membre → 200
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Cookie: token={{playerToken}}
+
+###
+
+### Coach du groupe → 200
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Cookie: token={{coachToken}}
+
+###
+
+### Autre coach → 403
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Cookie: token={{otherCoachToken}}
+
+###
+
+### Sans token → 401
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+
+###
+
+### Event inexistant → 404
+GET http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses
+Cookie: token={{playerToken}}
+
+###
+
+### Groupe inexistant → 404
 GET http://localhost:3000/groups/000000000000000000000000/event/{{eventId}}/responses
 Cookie: token={{playerToken}}
+
+###
+
+### Event appartenant à un autre groupe → 404
+GET http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses
+Cookie: token={{playerToken}}
+
+
+############################################################
+# UPDATE MY RESPONSE
+############################################################
+
+### Player → 200
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "absent",
+  "comment": "Je ne pourrai finalement pas venir"
+}
+
+###
+
+### Modification partielle du commentaire → 200
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "comment": "Nouveau commentaire"
+}
+
+###
+
+### Modification partielle du status → 200
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present"
+}
+
+###
+
+### Coach → 403
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+  "status": "present"
+}
+
+###
+
+### Autre coach → 403
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{otherCoachToken}}
+
+{
+  "status": "present"
+}
+
+###
+
+### Sans token → 401
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+
+{
+  "status": "present"
+}
+
+###
+
+### Status invalide → 400
+PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "something_wrong"
+}
+
+###
+
+### Event inexistant → 404
+PUT http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present"
+}
+
+###
+
+### Groupe inexistant → 404
+PUT http://localhost:3000/groups/000000000000000000000000/event/{{eventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present"
+}
+
+###
+
+### Event appartenant à un autre groupe → 404
+PUT http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses/me
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present"
+}
+
+
+############################################################
+# CONTRÔLE D'ACCÈS
+############################################################
+
+### Player non-membre → 403
+# À tester avec un player qui n'appartient PAS au groupe.
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Cookie: token={{playerToken}}
+
+###
+
+### Tentative de réponse pour un autre utilisateur
+# Il n'existe volontairement pas de :responseId.
+# Le serveur doit toujours utiliser req.user.id.
+POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+  "status": "present",
+  "user": "6a7373cac32cd7a3b413b237",
+  "comment": "Tentative de répondre à la place du coach"
+}
+
+
+############################################################
+# CASCADE
+############################################################
+
+### Vérifier les réponses avant suppression
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Cookie: token={{coachToken}}
+
+###
+
+### Supprimer ensuite l'événement
+# Utiliser le test DELETE EVENT.
+# Les réponses associées doivent disparaître automatiquement.
+
+###
+
+### Vérifier après suppression de l'événement → 404
+GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+Cookie: token={{coachToken}}
+
