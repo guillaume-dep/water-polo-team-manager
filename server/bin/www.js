@@ -4,6 +4,10 @@
  * Module dependencies.
  */
 
+import 'dotenv/config'
+import validateEnv from '../src/config/validateEnv.js';
+validateEnv()
+
 import app from '../src/app.js';
 import debugLib from 'debug';
 import http from 'http';
