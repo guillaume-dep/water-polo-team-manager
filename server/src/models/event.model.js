@@ -12,15 +12,14 @@ const eventSchema = new mongoose.Schema({
     eventType: {type: String, enum: Object.values(EVENT_TYPE), required: true},
 }, {timestamps: true});
 
-eventSchema.pre('findOneAndDelete', async function(next){
+eventSchema.pre('findOneAndDelete', async function(){
     try{
         const eventId = this.getQuery()._id
         await Responses.deleteMany({event: eventId})
-        next()
     }
 
     catch(err){
-        next(err)
+        throw err
     }
 })
 

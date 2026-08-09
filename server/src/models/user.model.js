@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     role: {type: String, enum: Object.values(ROLE), required: true} // list required for enum
 }, {timestamps: true});
 
-userSchema.pre('findOneAndDelete', async function(next) {
+userSchema.pre('findOneAndDelete', async function() {
     try{
         const userId = this.getQuery()._id /* this.getQuery() = req.user.id ? */
         const user = await Users.findById(userId)
@@ -32,11 +32,10 @@ userSchema.pre('findOneAndDelete', async function(next) {
             /* Find groups where user is in and removes it */
             await Groups.updateMany({members: userId}, {$pull : {members: userId}})
         }
-        next()
     }
     
     catch(err){
-        next(err)
+        throw err
     }
     
 })

@@ -14,7 +14,7 @@ const groupSchema = new mongoose.Schema({
 }, {timestamps: true});
 
 /* Executed before deleting */
-groupSchema.pre('findOneAndDelete', async function(next) {
+groupSchema.pre('findOneAndDelete', async function() {
     try{
         const groupId = this.getQuery()._id /* this = current request ; return the filter */
 
@@ -22,11 +22,9 @@ groupSchema.pre('findOneAndDelete', async function(next) {
         for (const event of events){
             await Events.findByIdAndDelete(event._id) /* Cascading deletion continues with Events */
         }
-
-        next()
     }
     catch(err){
-        next(err)
+        throw err
     }
 })
 

@@ -1,0 +1,353 @@
+@coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzczMDRhOWI2ODgwYThhODliZjE3YSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjE5NjA0MiwiZXhwIjoxNzg2ODAwODQyfQ.eWzvzFoLSqijRJoXCJYETXi20AnXn-8OFqbKhfCgcic
+@playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTc3NTQsImV4cCI6MTc4NjgwMjU1NH0.PHmINO9isf2BKcUKerNCL5tfM-WE7wvpYoxz1m912-c
+@otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDE2OCwiZXhwIjoxNzg2ODA0OTY4fQ.qnPmPx_UevXplKPUag3-xLV0Jln2LiXM3aFpIt-Y9MY
+
+@groupId = 6a78a4a613e2f985e6098a91
+@groupCode = c8a932
+
+# À remplir après création des événements
+@eventId = 6a78a4e713e2f985e6098a92
+@otherEventId = 6a78a1e4c24db73d7b19f369
+
+###
+
+# ============================================================
+# CREATE EVENT
+# ============================================================
+
+# Coach du groupe → 201
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Entraînement U20",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# Player → 403
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+    "name": "Entraînement interdit",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# Autre coach → 403
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{otherCoachToken}}
+
+{
+    "name": "Événement interdit",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# Sans token → 401
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# Nom vide → 400
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# Date passée → 400
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Test",
+    "date": "2020-01-01T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# Location vide → 400
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Test",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "",
+    "eventType": "training"
+}
+
+###
+
+# EventType invalide → 400
+POST http://localhost:3000/groups/{{groupId}}/events
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Test",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "invalid"
+}
+
+###
+
+# Groupe inexistant → 404
+POST http://localhost:3000/groups/000000000000000000000000/events
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Test",
+    "date": "2026-08-20T18:00:00.000Z",
+    "location": "Piscine municipale",
+    "eventType": "training"
+}
+
+###
+
+# ============================================================
+# GET EVENTS
+# ============================================================
+
+# Coach → 200
+GET http://localhost:3000/groups/{{groupId}}/events
+Cookie: token={{coachToken}}
+
+###
+
+# Player → 200
+GET http://localhost:3000/groups/{{groupId}}/events
+Cookie: token={{playerToken}}
+
+###
+
+# Autre coach → 403
+GET http://localhost:3000/groups/{{groupId}}/events
+Cookie: token={{otherCoachToken}}
+
+###
+
+# Sans token → 401
+GET http://localhost:3000/groups/{{groupId}}/events
+
+###
+
+# Groupe inexistant → 404
+GET http://localhost:3000/groups/000000000000000000000000/events
+Cookie: token={{playerToken}}
+
+###
+
+# ============================================================
+# GET EVENT
+# ============================================================
+
+# Player → 200
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{playerToken}}
+
+###
+
+# Coach → 200
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{coachToken}}
+
+###
+
+# Autre coach → 403
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{otherCoachToken}}
+
+###
+
+# Sans token → 401
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+
+###
+
+# Event inexistant → 404
+GET http://localhost:3000/groups/{{groupId}}/events/000000000000000000000000
+Cookie: token={{playerToken}}
+
+###
+
+# Event appartenant à un autre groupe → 404
+GET http://localhost:3000/groups/{{groupId}}/events/{{otherEventId}}
+Cookie: token={{playerToken}}
+
+###
+
+# ============================================================
+# UPDATE EVENT
+# ============================================================
+
+# Coach → 200
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Entraînement U18 modifié",
+    "date": "2026-08-21T18:00:00.000Z",
+    "location": "Nouvelle piscine",
+    "eventType": "training"
+}
+
+###
+
+# Player → 403
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Content-Type: application/json
+Cookie: token={{playerToken}}
+
+{
+    "name": "Modification interdite",
+    "date": "2026-08-21T18:00:00.000Z",
+    "location": "Piscine",
+    "eventType": "training"
+}
+
+###
+
+# Autre coach → 403
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Content-Type: application/json
+Cookie: token={{otherCoachToken}}
+
+{
+    "name": "Modification interdite",
+    "date": "2026-08-21T18:00:00.000Z",
+    "location": "Piscine",
+    "eventType": "training"
+}
+
+###
+
+# Date passée → 400
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Test",
+    "date": "2020-01-01T18:00:00.000Z",
+    "location": "Piscine",
+    "eventType": "training"
+}
+
+###
+
+# EventType invalide → 400
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Test",
+    "date": "2026-08-21T18:00:00.000Z",
+    "location": "Piscine",
+    "eventType": "invalid"
+}
+
+###
+
+# Event d'un autre groupe → 404
+PUT http://localhost:3000/groups/{{groupId}}/events/{{otherEventId}}
+Content-Type: application/json
+Cookie: token={{coachToken}}
+
+{
+    "name": "Tentative d'accès",
+    "date": "2026-08-21T18:00:00.000Z",
+    "location": "Piscine",
+    "eventType": "training"
+}
+
+###
+
+# Sans token → 401
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "date": "2026-08-21T18:00:00.000Z",
+    "location": "Piscine",
+    "eventType": "training"
+}
+
+###
+
+# ============================================================
+# DELETE EVENT
+# ============================================================
+
+# Player → 403
+DELETE http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{playerToken}}
+
+###
+
+# Autre coach → 403
+DELETE http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{otherCoachToken}}
+
+###
+
+# Event d'un autre groupe → 404
+DELETE http://localhost:3000/groups/{{groupId}}/events/{{otherEventId}}
+Cookie: token={{coachToken}}
+
+###
+
+# Sans token → 401
+DELETE http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+
+###
+
+# Coach → 200
+DELETE http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{coachToken}}
+
+###
+
+# Event déjà supprimé → 404
+DELETE http://localhost:3000/groups/{{groupId}}/events/{{eventId}}
+Cookie: token={{coachToken}}
+
+###
