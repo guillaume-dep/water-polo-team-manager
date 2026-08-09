@@ -2,7 +2,7 @@ import Groups from "../models/group.model.js"
 import crypto from "crypto";
 import ROLE from "../../../shared/utils/role.js";
 import { findGroupById } from "../utils/dbFinder.js";
-import { checkIsMember, checkIsCoach } from "../utils/logicChecker.js";
+import { checkIsMember, checkIsCoach, checkIsMemberOrCoach } from "../utils/logicChecker.js";
 import AppError from "../utils/AppError.js"
 
 export const searchGroupByCode = async(req, res) => {
@@ -67,6 +67,35 @@ export const joinGroup = async(req, res) => {
         })
     }
     catch(err){
+        res.status(err.status || 500).json({message: err.message})
+    }
+}
+
+export const getGroup = async(req, res) => {
+    try {
+        const group = await findGroupById(req.params.id)
+        checkIsMemberOrCoach(group, req.user.id)
+
+        /* Same object as group but with real documents instead of ids*/
+        const populated = await group.populate([
+            {path: 'coach', select: 'name'},
+            {path: 'members', select: 'name'}
+        ])
+
+        const isCoach = group.coach._id.toString() === req.user.id
+        const response = {
+            name: populated.name,
+            coach: populated.coach,
+            members: populated.members,
+        }
+
+        /* Share the code if it's the coach of the group */
+        if (isCoach) response.code = populated.code
+
+        res.json(response)
+    } 
+
+    catch (err){
         res.status(err.status || 500).json({message: err.message})
     }
 }
