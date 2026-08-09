@@ -45,16 +45,28 @@ export const checkEventData = (name, date, location, eventType) => {
 import RESPONSE_TYPE from "../../../shared/utils/responseType.js"
 
 export const checkUserData = (name, email, password, role) => {
-    if (!name || !name.trim()) throw new AppError("Name is required", 400)
-    if (!email || !email.trim()) throw new AppError("Email is required", 400)
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new AppError("Invalid email format", 400)
+    checkUserName(name)
+    checkUserEmail(email)
     checkUserPassword(password)
-    if (!role || !Object.values(ROLE).includes(role)) throw new AppError("Invalid role", 400)
+    checkUserRole(role)
+}
+
+export const checkUserName = (name) => {
+    if (!name || !name.trim()) throw new AppError("Name is required", 400)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new AppError("Invalid email format", 400)
+}
+
+export const checkUserEmail = (name) => {
+    if (!email || !email.trim()) throw new AppError("Email is required", 400)
 }
 
 export const checkUserPassword = (password) => {
     if (!password) throw new AppError("Password is required", 400)
     if (password.length < 8) throw new AppError("Password must be at least 8 characters", 400)
+}
+
+export const checkUserRole = (role) => {
+    if (!role || !Object.values(ROLE).includes(role)) throw new AppError("Invalid role", 400)
 }
 
 /* ----- RESPONSE ----- */
