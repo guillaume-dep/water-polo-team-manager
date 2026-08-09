@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import Users from "../models/user.model.js"
 import AppError from "../utils/AppError.js"
 import { generateToken, setTokenCookie } from '../utils/jwt.js';
-import { checkUserData, checkUserPassword } from '../utils/logicChecker.js';
+import { checkUserData, checkUserEmail, checkUserPassword } from '../utils/logicChecker.js';
 
 /**
  * route : auth/register 
@@ -81,13 +81,6 @@ export const logout = async(req, res) => {
     res.json({message: "Disconnected"})
 }
 
-/**
- * route : auth/me
- * return User data
- * @param {Object} req 
- * @param {Object} res 
- * @returns {JSON}
- */
 export const getUserData = async(req, res) => {
     try{
         const user = await Users.findById(req.user.id)
@@ -105,9 +98,37 @@ export const getUserData = async(req, res) => {
 
 export const updateUserData = async(req, res) => {
     try{
+        const user = await Users.findById(req.user.id)
+        const {name, email} = req.body
+
+        const newName = name ?? user.name
+        const newEmail = email ?? user.email
+        checkUserName(newName)
+
+        if (email) {
+            checkUserEmail(email)
+            if (email !== user.email) {
+                const existing = await Users.findOne({email})
+                if (existing) throw new AppError("Email already used", 409)
+            }   
+        }
+
+        user.name = newName
+        user.email = newEmail
+        await user.save()
+        res.json({ name: user.name, email: user.email, role: user.role })
+    }
+
+    catch(err){
+        res.status(err.status || 500).json({message: err.message})
+    }
+}
+
+export const updatePassword = async(req, res) => {
+    try{
         const salt = await bcrypt.genSalt();
         const user = await Users.findById(req.user.id)
-        
+
         const {currentPassword, newPassword} = req.body
         const validPassword = await bcrypt.compare(currentPassword, user.passwordHash)
         if (!validPassword) throw new AppError("Invalid current password", 401)
