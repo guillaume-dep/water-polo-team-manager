@@ -145,14 +145,14 @@ export const updatePassword = async(req, res) => {
     }
 }
 
-/*
 export const deleteAccount = async(req, res) => {
     try{
-
+        await Users.findByIdAndDelete(req.user.id)
+        res.clearCookie("token")
+        res.json({ message: "Account deleted" })
     }
 
     catch(err){
         res.status(500).json({message: err.message})
     }
 }
-*/

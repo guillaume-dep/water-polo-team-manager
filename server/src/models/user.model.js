@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dbConnection from "../config/database.js";
 import ROLE from "../../../shared/utils/role.js";
+import Groups from "./group.model.js";
+import Responses from "./response.model.js";
 
 /**
  * A user can either be a coach or a player
@@ -11,6 +13,33 @@ const userSchema = new mongoose.Schema({
     passwordHash: {type: String, required: true},
     role: {type: String, enum: Object.values(ROLE), required: true} // list required for enum
 }, {timestamps: true});
+
+userSchema.pre('findOneAndDelete', async function(next) {
+    try{
+        const userId = this.getQuery()._id /* this.getQuery() = req.user.id ? */
+        const user = await Users.findById(userId)
+        const role = user.role
+
+        if (role === ROLE.COACH){
+            const groups = await Groups.find({coach: userId})
+            for (const group of groups){
+                await Groups.findByIdAndDelete(group._id)
+            }
+        }
+        else{
+            const responses = await Responses.deleteMany({user: userId})
+
+            /* Find groups where user is in and removes it */
+            await Groups.updateMany({members: userId}, {$pull : {members: userId}})
+        }
+        next()
+    }
+    
+    catch(err){
+        next(err)
+    }
+    
+})
 
 const Users = dbConnection.model('User', userSchema)
 
