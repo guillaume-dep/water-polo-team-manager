@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const loadUser = async () => {
             try {
-                const res = await getMe()
+                const res = await getMe() /* AxiosResponse */
                 setUser(res.data)
             }
             catch {
