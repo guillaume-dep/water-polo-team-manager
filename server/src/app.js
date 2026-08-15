@@ -12,7 +12,7 @@ import eventRouter from './routes/event.route.js'
 import responseRouter from './routes/response.route.js'
 
 const app = express()
-app.use(express.json({limit: '10kb'}));
+app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 app.use(limiter)
 app.use(helmet())
@@ -22,8 +22,8 @@ app.use(helmet())
 app.use('/auth', authLimiter)
 app.use('/auth', authRouter)
 app.use('/groups', groupRouter)
-app.use('/groups/:id', eventRouter)
-app.use('/groups/:id/event/:eventId/responses', responseRouter)
+app.use('/groups/:id/events', eventRouter)
+app.use('/groups/:id/events/:eventId/responses', responseRouter)
 app.get('/debug', (req, res) => {
     res.json(req.cookies);
 });
