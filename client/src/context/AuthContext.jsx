@@ -1,3 +1,5 @@
 export const AuthProvider = () => {
-    return
+  return (
+    <div></div>
+  )
 }
