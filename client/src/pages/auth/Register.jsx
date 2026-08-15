@@ -34,13 +34,6 @@ const Register = () => {
         setLoading(true)
 
         try {
-            await register(
-                formData.name,
-                formData.email,
-                formData.password,
-                formData.role
-            )
-
             const data = await register(formData.name, formData.email, formData.password, formData.role)
             setUser(data)
             navigate('/')
