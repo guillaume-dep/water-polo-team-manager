@@ -11,13 +11,13 @@ import { checkUserData, checkUserEmail, checkUserPassword } from '../utils/logic
  * @param {Object} res 
  * @returns {JSON} JSON answer with the information of the user
  */
-export const register = async(req, res) => {
+export const register = async (req, res) => {
     try {
         const salt = await bcrypt.genSalt();
-        const {name, email, password, role} = req.body
+        const { name, email, password, role } = req.body
         checkUserData(name, email, password, role)
-        
-        const existing = await Users.findOne({email})
+
+        const existing = await Users.findOne({ email })
         if (existing) throw new AppError("Email already used", 409)
 
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -36,8 +36,8 @@ export const register = async(req, res) => {
         res.status(201).json({ id: user._id, name: user.name, role: user.role })
     }
 
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
@@ -48,10 +48,10 @@ export const register = async(req, res) => {
  * @param {Object} res 
  * @returns {JSON} JSON answer with the information of the user
  */
-export const login = async(req, res) => {
+export const login = async (req, res) => {
     try {
-        const {email, password} = req.body
-        const user = await Users.findOne({email})
+        const { email, password } = req.body
+        const user = await Users.findOne({ email })
         if (!user) throw new AppError("Invalid credentials", 401)
 
         const validPassword = await bcrypt.compare(password, user.passwordHash)
@@ -64,8 +64,8 @@ export const login = async(req, res) => {
         res.status(200).json({ id: user._id, name: user.name, role: user.role })
     }
 
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
@@ -76,13 +76,13 @@ export const login = async(req, res) => {
  * @param {Object} res 
  * @returns {JSON} 
  */
-export const logout = async(req, res) => {
+export const logout = async (req, res) => {
     res.clearCookie("token")
-    res.json({message: "Disconnected"})
+    res.json({ message: "Disconnected" })
 }
 
-export const getUserData = async(req, res) => {
-    try{
+export const getUserData = async (req, res) => {
+    try {
         const user = await Users.findById(req.user.id)
         res.json({
             name: user.name,
@@ -91,15 +91,15 @@ export const getUserData = async(req, res) => {
         })
 
     }
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const updateUserData = async(req, res) => {
-    try{
+export const updateUserData = async (req, res) => {
+    try {
         const user = await Users.findById(req.user.id)
-        const {name, email} = req.body
+        const { name, email } = req.body
 
         const newName = name ?? user.name
         const newEmail = email ?? user.email
@@ -108,9 +108,9 @@ export const updateUserData = async(req, res) => {
         if (email) {
             checkUserEmail(email)
             if (email !== user.email) {
-                const existing = await Users.findOne({email})
+                const existing = await Users.findOne({ email })
                 if (existing) throw new AppError("Email already used", 409)
-            }   
+            }
         }
 
         user.name = newName
@@ -119,17 +119,17 @@ export const updateUserData = async(req, res) => {
         res.json({ name: user.name, email: user.email, role: user.role })
     }
 
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const updatePassword = async(req, res) => {
-    try{
+export const updatePassword = async (req, res) => {
+    try {
         const salt = await bcrypt.genSalt();
         const user = await Users.findById(req.user.id)
 
-        const {currentPassword, newPassword} = req.body
+        const { currentPassword, newPassword } = req.body
         const validPassword = await bcrypt.compare(currentPassword, user.passwordHash)
         if (!validPassword) throw new AppError("Invalid current password", 401)
 
@@ -138,21 +138,21 @@ export const updatePassword = async(req, res) => {
         const newPasswordHash = await bcrypt.hash(newPassword, salt)
         user.passwordHash = newPasswordHash
         await user.save()
-        res.status(200).json({ id: user._id, name: user.name, role: user.role }) 
+        res.status(200).json({ id: user._id, name: user.name, role: user.role })
     }
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const deleteAccount = async(req, res) => {
-    try{
+export const deleteAccount = async (req, res) => {
+    try {
         await Users.findByIdAndDelete(req.user.id)
         res.clearCookie("token")
         res.json({ message: "Account deleted" })
     }
 
-    catch(err){
-        res.status(500).json({message: err.message})
+    catch (err) {
+        res.status(500).json({ message: err.message })
     }
 }

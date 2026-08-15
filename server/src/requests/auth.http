@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
 "name": "guillaume dep",
-"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"email": "guillaume.dep@example.com",
 "password": "bonjour123!",
 "role": "coach"
 }
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
 "name": "jean dep",
-"email": "[jean.dep@example.com](mailto:jean.dep@example.com)",
+"email": "jean.dep@gmail.com",
 "password": "bonjour!",
 "role": "coach"
 }
