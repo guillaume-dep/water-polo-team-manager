@@ -1,5 +1,5 @@
 import express from 'express'
-import {register, login, logout, getUserData, updateUserData, updatePassword, deleteAccount } from '../controllers/auth.controller.js';
+import { register, login, logout, getUserData, updateUserData, updatePassword, deleteAccount } from '../controllers/auth.controller.js';
 import validToken from '../middlewares/validToken.middleware.js';
 
 const router = express.Router()
@@ -10,8 +10,8 @@ router.post('/login', login)
 router.post('/logout', validToken, logout)
 
 router.get('/me', validToken, getUserData)
-router.get('/me', validToken, updateUserData)
+router.put('/me', validToken, updateUserData)
 router.put('/me/password', validToken, updatePassword)
-router.delete('/me', deleteAccount)
+router.delete('/me', validToken, deleteAccount)
 
 export default router;
