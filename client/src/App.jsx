@@ -4,7 +4,14 @@ import Test from './pages/Test'
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Test />}></Route>
+
+      {/* Public */}
+      <Route path="/login" element={<Test />} />
+      <Route path="/register" element={<Test />} />
+
+      {/* Authenticated */}
+      <Route path="/" element={<Test />} />
+
     </Routes>
   )
 }
