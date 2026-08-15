@@ -3,6 +3,7 @@ import Test from './pages/Test'
 import Register from './pages/auth/Register.jsx'
 import Login from './pages/auth/Login.jsx'
 import Home from './pages/home/Home.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 import { useAuth } from './context/hooks/useAuth.js'
 
 const App = () => {
@@ -18,7 +19,14 @@ const App = () => {
       <Route path="/register" element={<Register />} />
 
       {/* Authenticated */}
-      <Route path="/" element={<Home />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
 
     </Routes>
 
