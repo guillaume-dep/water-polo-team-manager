@@ -1,10 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { getMe } from '../api/auth.js'
+import { createContext } from "react"
 
-const AuthContext = createContext()
+/* available for all components */
+export const AuthContext = createContext(null)
 
-export const AuthProvider = () => {
-  return <div></div>
-}
 
-export default AuthProvider
+
