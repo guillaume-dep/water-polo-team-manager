@@ -12,7 +12,9 @@ const bootstrapReact = () => {
   root.render(
     <StrictMode>
       <BrowserRouter>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </StrictMode>
   )
