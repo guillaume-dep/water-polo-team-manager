@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { useAuth } from '../../context/hooks/useAuth.js'
 import { login } from '../../api/auth.js'
 import styles from '../../styles/auth/Login.module.css'
 
 const Login = () => {
     const navigate = useNavigate()
+    const { setUser } = useAuth()
 
     const [formData, setFormData] = useState({
         email: '',
@@ -26,22 +27,15 @@ const Login = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-
         setError(null)
         setLoading(true)
 
         try {
-            await login(
-                formData.email,
-                formData.password
-            )
-
+            const data = await login(formData.email, formData.password)
+            setUser(data)
             navigate('/')
         } catch (error) {
-            setError(
-                error.response?.data?.message ||
-                'Email ou mot de passe incorrect.'
-            )
+            setError(error.response?.data?.message || 'Email ou mot de passe incorrect.')
         } finally {
             setLoading(false)
         }

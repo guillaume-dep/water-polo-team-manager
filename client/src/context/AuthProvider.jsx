@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
         const loadUser = async () => {
             try {
                 const res = await getMe() /* AxiosResponse */
-                setUser(res.data)
+                setUser(res)
             }
             catch {
                 setUser(null)

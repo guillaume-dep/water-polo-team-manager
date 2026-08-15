@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { useAuth } from '../../context/hooks/useAuth.js'
 import { register } from '../../api/auth.js'
 import styles from '../../styles/auth/Register.module.css'
 
 const Register = () => {
     const navigate = useNavigate()
+    const { setUser } = useAuth()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -40,6 +41,8 @@ const Register = () => {
                 formData.role
             )
 
+            const data = await register(formData.name, formData.email, formData.password, formData.role)
+            setUser(data)
             navigate('/')
         } catch (error) {
             setError(
@@ -137,7 +140,7 @@ const Register = () => {
                         className={styles.button}
                         disabled={loading}
                     >
-                        {loading ? 'Inscription...' : 'S’inscrire'}
+                        {loading ? 'Inscription...' : "S'inscrire"}
                     </button>
                 </form>
 
