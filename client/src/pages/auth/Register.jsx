@@ -40,7 +40,7 @@ const Register = () => {
                 formData.role
             )
 
-            navigate('/login')
+            navigate('/')
         } catch (error) {
             setError(
                 error.response?.data?.message ||

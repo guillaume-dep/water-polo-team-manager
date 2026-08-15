@@ -3,8 +3,13 @@ import Test from './pages/Test'
 import Register from './pages/auth/Register.jsx'
 import Login from './pages/auth/Login.jsx'
 import Home from './pages/home/Home.jsx'
+import { useAuth } from './context/hooks/useAuth.js'
 
 const App = () => {
+  const { user, loading } = useAuth()
+  if (loading) return <p>Chargement...</p>
+  console.log(user)
+
   return (
     <Routes>
 
@@ -16,6 +21,7 @@ const App = () => {
       <Route path="/" element={<Home />} />
 
     </Routes>
+
   )
 }
 
