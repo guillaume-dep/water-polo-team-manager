@@ -8,14 +8,14 @@
   /* Base */
   --white-text: #fefffe;
   --white-bg: #f7f7f7;
-  --bg: #9c89ce;
+  --bg: #f7f7f7;
 
   /* Main colors */
-  --primary: #cc2936;
+  --text-primary: #cc2936;
 
   /* Text */
-  --text-primary: #1e2842;
-  --text-secondary: #b1b1b1;
+  --text-secondary: #1e2842;
+  --text-3: #b1b1b1;
 
   /* Feedback */
   --success: #64b77b;
