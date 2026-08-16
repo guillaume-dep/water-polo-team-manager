@@ -1,41 +1,42 @@
+/* =========================================================
+   PAGE CONTAINER (LOGIN)
+   ========================================================= */
+
 .page {
     min-height: 100vh;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: var(--space-3);
-
-    background-color: var(--bg);
+    background-color: var(--white-bg);
 }
 
 .formBox {
     width: 100%;
     max-width: 360px;
-
     overflow: hidden;
-
     border-radius: var(--radius-lg);
-
-    background-color: var(--blackPanel);
-    color: var(--white-text);
+    background-color: #ffffff;
+    color: var(--text-secondary);
+    box-shadow: 0 8px 24px rgba(204, 41, 54, 0.08);
 }
+
+/* =========================================================
+   FORM CONTENT
+   ========================================================= */
 
 .form {
     display: flex;
     flex-direction: column;
-
     gap: var(--space-3);
-
     padding: var(--space-4) var(--space-3);
-
     text-align: center;
 }
 
 .title {
     font-size: var(--text-2xl);
     font-weight: 700;
+    color: var(--text-primary);
 }
 
 .subtitle {
@@ -43,35 +44,28 @@
     color: var(--text-secondary);
 }
 
-
-/* Inputs */
+/* =========================================================
+   INPUTS
+   ========================================================= */
 
 .formContainer {
     width: 100%;
-
     overflow: hidden;
-
     border-radius: var(--radius-md);
-
-    background-color: var(--bg);
+    background-color: var(--white-bg);
+    border: 1px solid #e5e5e5;
 }
 
 .input {
     display: block;
-
     width: 100%;
     height: 48px;
-
     padding: 8px 15px;
-
     border: none;
     border-bottom: 1px solid #e5e5e5;
-
     outline: none;
-
     background: transparent;
-    color: #222;
-
+    color: var(--text-secondary);
     font-family: var(--font-main);
     font-size: var(--text-sm);
 }
@@ -81,52 +75,38 @@
 }
 
 .input::placeholder {
-    color: var(--text-secondary);
+    color: var(--text-3);
 }
 
 .input:focus {
     background-color: #ffffff;
 }
 
-
-/* Error */
+/* =========================================================
+   FEEDBACK & BUTTONS
+   ========================================================= */
 
 .error {
     margin: 0;
-
     padding: var(--space-2);
-
     border-radius: var(--radius-sm);
-
     background-color: var(--error);
     color: var(--white-text);
-
     font-size: var(--text-sm);
 }
 
-
-/* Button */
-
 .button {
     width: 100%;
-
     padding: 10px 16px;
-
     border: none;
     border-radius: var(--radius-lg);
-
     background-color: var(--text-primary);
     color: var(--white-text);
-
     font-family: var(--font-main);
     font-size: var(--text-md);
     font-weight: 600;
-
     cursor: pointer;
-
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .button:hover {
@@ -135,23 +115,21 @@
 
 .button:disabled {
     opacity: 0.6;
-
     cursor: not-allowed;
-
     transform: none;
 }
 
-
-/* Footer */
+/* =========================================================
+   FOOTER (Links)
+   ========================================================= */
 
 .formSection {
     padding: var(--space-3);
-
-    background-color: rgba(255, 255, 255, 0.08);
-
+    background-color: var(--white-bg);
+    border-top: 1px solid #e5e5e5;
     text-align: center;
-
     font-size: var(--text-sm);
+    color: var(--text-secondary);
 }
 
 .formSection p {
@@ -159,30 +137,31 @@
 }
 
 .formSection a {
-    color: var(--white-text);
-
+    color: var(--text-primary);
     font-weight: 600;
-
     text-decoration: none;
+    transition: opacity 0.2s ease;
 }
 
 .formSection a:hover {
     text-decoration: underline;
+    opacity: 0.8;
 }
 
-
-/* Mobile */
+/* =========================================================
+   MOBILE RESPONSIVE
+   ========================================================= */
 
 @media (max-width: 480px) {
     .page {
         align-items: flex-start;
-
         padding: var(--space-3);
         padding-top: 10vh;
     }
 
     .formBox {
         max-width: 100%;
+        box-shadow: none;
     }
 
     .form {
