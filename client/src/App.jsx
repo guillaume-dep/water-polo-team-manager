@@ -8,13 +8,7 @@ import Groups from './pages/groups/Groups.jsx'
 import Events from './pages/events/Events.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
-import { useAuth } from './context/hooks/useAuth.js'
-
 const App = () => {
-  const { user, loading } = useAuth()
-  if (loading) return <p>Chargement...</p>
-  console.log(user)
-
   return (
     <Routes>
 
@@ -23,41 +17,14 @@ const App = () => {
       <Route path="/register" element={<Register />} />
 
       {/* Authenticated */}
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Groups />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Events />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Events />
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+      </Route>
 
     </Routes>
 

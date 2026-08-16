@@ -1,0 +1,50 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 250px;
+    height: 40px;
+
+    background-color: #000;
+    border-radius: var(--radius-lg);
+
+    margin: 0 auto;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    outline: 0;
+
+    border-radius: 50%;
+    background-color: transparent;
+
+    color: var(--white-text);
+
+    cursor: pointer;
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.active {
+    color: var(--text-primary);
+}
