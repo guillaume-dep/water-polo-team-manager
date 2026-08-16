@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/hooks/useAuth.js'
 import { register } from '../../api/auth.js'
-import styles from '../../styles/auth/Register.module.css'
+import styles from '../../styles/auth/register.module.css'
 
 const Register = () => {
     const navigate = useNavigate()
