@@ -6,7 +6,10 @@ import Login from './pages/auth/Login.jsx'
 import Home from './pages/home/Home.jsx'
 import Groups from './pages/groups/Groups.jsx'
 import Events from './pages/events/Events.jsx'
+import Profile from './pages/profile/Profile.jsx'
+
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import ProtectedLayout from './components/ProtectedLayout.jsx'
 
 const App = () => {
   return (
