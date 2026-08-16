@@ -1,42 +1,114 @@
+import { useState, useEffect } from "react"
 import { useAuth } from "../../context/hooks/useAuth.js"
 import { useNavigate } from "react-router-dom"
+
+import { getMyGroups } from "../../api/groups.js"
+import { getEventsFromGroup } from "../../api/events.js"
 
 import ROLE from "../../../../shared/utils/role.js"
 import styles from "../../styles/home/home.module.css"
 
+// --- Utilitaire pour formater la date comme sur la maquette ---
+const formatEventDate = (dateString) => {
+    const date = new Date(dateString)
+    return {
+        dayName: date.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase(),
+        dayNumber: date.getDate(),
+        month: date.toLocaleDateString('fr-FR', { month: 'short' }).toUpperCase().replace('.', '')
+    }
+}
+
 const Home = () => {
     const { user } = useAuth()
-    const name = user.name
-    const role = user.role
-
     const navigate = useNavigate()
 
-    const handleButton = () => {
-        if (user.role === ROLE.COACH) {
-            return (
-                <button onClick={() => navigate('/groups/create')}>
-                    Créer un groupe
-                </button>
-            )
-        }
-        else if (user.role === ROLE.PLAYER) {
-            return (
-                <button onClick={() => navigate('/groups/join')}>
-                    Rejoindre un groupe
-                </button>
-            )
+    const [events, setEvents] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    const role = user?.role
+
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                setIsLoading(true)
+                const groups = await getMyGroups()
+
+                const eventsPromises = groups.map(group =>
+                    getEventsFromGroup(group._id || group.id)
+                )
+                const eventsArrays = await Promise.all(eventsPromises)
+
+                const allEvents = eventsArrays
+                    .flat()
+                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+
+                setEvents(allEvents)
+            } catch (error) {
+                console.error("Erreur lors du chargement du tableau de bord :", error)
+            } finally {
+                setIsLoading(false)
+            }
         }
 
+        fetchDashboardData()
+    }, [])
+
+    const handleAction = () => {
+        if (role === ROLE.COACH) {
+            navigate('/groups/create')
+        }
+        if (role === ROLE.PLAYER) {
+            navigate('/groups/join')
+        }
     }
 
     return (
-        <div className={styles}>
+        <div className={styles.home}>
+            {/* Section Événements */}
+            <section className={styles.eventsSection}>
+                <div className={styles.sectionHeader}>
+                    <h2 className={styles.sectionTitle}>ÉVÉNEMENTS</h2>
+                    <button
+                        className={styles.addButton}
+                        onClick={handleAction}
+                        aria-label="Ajouter ou rejoindre"
+                    >
+                        +
+                    </button>
+                </div>
 
-            <div>{handleButton()}</div>
-            <div>
-                <p>Connecté en tant que {name} ({role})</p>
-            </div>
+                <div className={styles.eventsList}>
+                    {isLoading ? (
+                        <p>Chargement de vos événements...</p>
+                    ) : events.length === 0 ? (
+                        <p>Aucun événement prévu pour le moment.</p>
+                    ) : (
+                        events.map((event) => {
+                            const formattedDate = formatEventDate(event.date)
 
+                            return (
+                                <div key={event._id || event.id} className={styles.eventCard}>
+                                    <div className={styles.eventDate}>
+                                        <span className={styles.dayName}>{formattedDate.dayName}</span>
+                                        <span className={styles.dayNumber}>{formattedDate.dayNumber}</span>
+                                        <span className={styles.month}>{formattedDate.month}</span>
+                                    </div>
+                                    <div className={styles.eventDetails}>
+                                        <h3>{event.name}</h3>
+                                        <p>📍 {event.location}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    )}
+                </div>
+
+                {events.length > 0 && (
+                    <button className={styles.seeAllBtn}>
+                        Voir tout &gt;
+                    </button>
+                )}
+            </section>
         </div>
     )
 }
