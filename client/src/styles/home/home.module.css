@@ -1,61 +1,15 @@
-.home {
-    /* Marge en bas pour ne pas cacher le contenu derrière la bottom navigation bar */
-    min-height: calc(100vh - 64px);
-    padding: var(--space-4) var(--space-3) 80px;
+/* =========================================================
+   PAGE HOME CONTENT
+   ========================================================= */
 
+.home {
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-
-    background-color: var(--white-bg, #ffffff);
-    color: var(--text-primary);
+    width: 100%;
 }
 
-/* =========================================================
-   BANNER (Header)
-   ========================================================= */
-
-.banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-
-    /* Pour étirer la bannière sur les bords malgré le padding du parent si nécessaire, 
-       ou alors la laisser centrée avec des marges négatives */
-    margin: 0 calc(var(--space-3) * -1);
-    padding: var(--space-3) var(--space-3);
-
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(204, 41, 54, 0.08);
-    /* Ombre aux teintes de ton rouge */
-    border-bottom: 2px solid var(--text-primary);
-    /* Ligne rouge pour marquer la DA */
-
-    /* Optionnel : pour la fixer en haut au scroll */
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.logo {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 50%;
-    /* Arrondi si ton logo le permet, comme sur la maquette */
-}
-
-.bannerTitle {
-    margin: 0;
-    font-size: var(--text-lg);
-    font-weight: 700;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Textes utilitaires (loading / empty) */
+/* Textes utilitaires */
 .loadingText,
 .emptyText {
     color: var(--text-secondary);
@@ -64,9 +18,9 @@
     padding: var(--space-3) 0;
 }
 
-/* =========================
-   Section Événements
-   ========================= */
+/* =========================================================
+   SECTION ÉVÉNEMENTS
+   ========================================================= */
 
 .eventsSection {
     display: flex;
@@ -84,38 +38,13 @@
     margin: 0;
     padding: var(--space-1) var(--space-2);
 
-    background-color: #FFC107;
-    /* Fond jaune du titre dans la maquette */
-    color: var(--text-primary, #000);
-    border-radius: var(--radius-sm, 4px);
+    background-color: var(--text-primary);
+    color: var(--white-text);
+    border-radius: var(--radius-sm);
 
     font-size: var(--text-sm);
     font-weight: 700;
     text-transform: uppercase;
-}
-
-.addButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 32px;
-    height: 32px;
-
-    border: 1px solid var(--text-primary);
-    border-radius: 50%;
-    background-color: transparent;
-    color: var(--text-primary);
-
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-
-    transition: transform 0.2s ease;
-}
-
-.addButton:active {
-    transform: scale(0.95);
 }
 
 .eventsList {
@@ -124,20 +53,18 @@
     gap: var(--space-3);
 }
 
-/* Carte d'un événement */
+/* Carte événement */
 .eventCard {
     display: flex;
     gap: var(--space-3);
     padding: var(--space-3);
 
-    background-color: var(--white-bg, #ffffff);
+    background-color: #ffffff;
     border-radius: var(--radius-md);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-left: 4px solid #0033CC;
-    /* Liseré bleu sur le bord gauche */
+    border-left: 4px solid var(--text-primary);
 }
 
-/* Bloc contenant la date (ex: MAR. 14 MAI) */
 .eventDate {
     display: flex;
     flex-direction: column;
@@ -148,23 +75,22 @@
 
 .dayName {
     font-size: var(--text-xs);
-    color: var(--text-secondary);
+    color: var(--text-3);
 }
 
 .dayNumber {
     font-size: var(--text-xl);
     font-weight: 700;
     line-height: 1.2;
+    color: var(--text-secondary);
 }
 
 .month {
     font-size: var(--text-xs);
-    color: #0033CC;
-    /* Bleu principal RDM */
+    color: var(--text-primary);
     font-weight: 600;
 }
 
-/* Détails de l'événement (Titre, Heure, Lieu) */
 .eventDetails {
     display: flex;
     flex-direction: column;
@@ -176,86 +102,22 @@
     margin: 0;
     font-size: var(--text-md);
     font-weight: 600;
+    color: var(--text-secondary);
 }
 
 .eventDetails p {
     margin: 0;
     font-size: var(--text-sm);
-    color: var(--text-secondary);
+    color: var(--text-3);
 }
 
 .seeAllBtn {
     align-self: center;
     background: none;
     border: none;
-    color: #0033CC;
+    color: var(--text-primary);
     font-weight: 600;
     font-size: var(--text-sm);
     cursor: pointer;
     margin-top: var(--space-2);
-}
-
-/* =========================
-   Section Actu du club
-   ========================= */
-
-.newsSection {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-}
-
-.newsTitle {
-    margin: 0;
-    font-size: var(--text-lg);
-    font-weight: 700;
-}
-
-.newsDate {
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    text-transform: uppercase;
-}
-
-.newsCard {
-    display: flex;
-    flex-direction: column;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    background-color: var(--white-bg, #ffffff);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.newsImage {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-}
-
-.newsContent {
-    padding: var(--space-3);
-}
-
-.newsContent h3 {
-    margin: 0 0 var(--space-2) 0;
-    font-size: var(--text-md);
-    font-weight: 600;
-}
-
-.newsContent p {
-    margin: 0;
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    line-height: 1.4;
-}
-
-/* =========================
-   Responsive
-   ========================= */
-
-@media (min-width: 768px) {
-    .home {
-        max-width: 600px;
-        margin: 0 auto;
-    }
 }
