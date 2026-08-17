@@ -6,6 +6,7 @@ import { getMyGroups } from "../../api/groups.js"
 import { getEventsFromGroup } from "../../api/events.js"
 
 import ROLE from "../../../../shared/utils/role.js"
+import logo from "../../../images/RDM_logo.jpg"
 import styles from "../../styles/home/home.module.css"
 
 // --- Utilitaire pour formater la date comme sur la maquette ---
@@ -28,14 +29,18 @@ const Home = () => {
     const role = user?.role
 
     useEffect(() => {
+        if (!user) return
+
         const fetchDashboardData = async () => {
             try {
                 setIsLoading(true)
+
                 const groups = await getMyGroups()
 
-                const eventsPromises = groups.map(group =>
+                const eventsPromises = groups.map((group) =>
                     getEventsFromGroup(group._id || group.id)
                 )
+
                 const eventsArrays = await Promise.all(eventsPromises)
 
                 const allEvents = eventsArrays
@@ -44,14 +49,17 @@ const Home = () => {
 
                 setEvents(allEvents)
             } catch (error) {
-                console.error("Erreur lors du chargement du tableau de bord :", error)
+                console.error(
+                    "Erreur lors du chargement du tableau de bord :",
+                    error
+                )
             } finally {
                 setIsLoading(false)
             }
         }
 
         fetchDashboardData()
-    }, [])
+    }, [user])
 
     const handleAction = () => {
         if (role === ROLE.COACH) {
@@ -64,17 +72,15 @@ const Home = () => {
 
     return (
         <div className={styles.home}>
+            <header className={styles.banner}>
+                <img src={logo} alt="RDM logo" className={styles.logo} />
+                <h1 className={styles.bannerTitle}>RDM WATER POLO</h1>
+            </header>
+
             {/* Section Événements */}
             <section className={styles.eventsSection}>
                 <div className={styles.sectionHeader}>
                     <h2 className={styles.sectionTitle}>ÉVÉNEMENTS</h2>
-                    <button
-                        className={styles.addButton}
-                        onClick={handleAction}
-                        aria-label="Ajouter ou rejoindre"
-                    >
-                        +
-                    </button>
                 </div>
 
                 <div className={styles.eventsList}>
@@ -95,7 +101,7 @@ const Home = () => {
                                     </div>
                                     <div className={styles.eventDetails}>
                                         <h3>{event.name}</h3>
-                                        <p>📍 {event.location}</p>
+                                        <p>{event.location}</p>
                                     </div>
                                 </div>
                             )
