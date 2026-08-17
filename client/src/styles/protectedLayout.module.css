@@ -1,3 +1,7 @@
+/* =========================================================
+   PROTECTED LAYOUT
+   ========================================================= */
+
 .appContainer {
     height: 100vh;
     height: 100dvh;
@@ -8,6 +12,8 @@
 }
 
 .banner {
+    flex-shrink: 0;
+    /* Garde la bannière à sa taille fixe */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,10 +43,15 @@
 
 .mainContent {
     flex: 1;
+    min-height: 0;
+    /* Indispensable pour débloquer le scroll interne en Flexbox */
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    padding: var(--space-4) var(--space-3) 80px;
+
+    /* Padding bas de 90px pour dégager la Navbar fixe */
+    padding: var(--space-4) var(--space-3) 90px;
+
     background-color: var(--white-bg);
     border-radius: 24px 24px 0 0;
     color: var(--text-secondary);

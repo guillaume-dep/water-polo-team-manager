@@ -1,11 +1,27 @@
-import { useEvents } from "../../hooks/useEvents.js"
-import { formatEventDate } from "../../utils/date.js"
-
+import { useEvents } from '../../hooks/useEvents.js'
+import { EventCard } from '../../components/EventCard.jsx'
+import styles from '../../styles/events/events.module.css'
 
 const Events = () => {
+    // Sans paramètre limit pour récupérer TOUS les événements futurs
     const { events, isLoading } = useEvents()
+
     return (
-        <div>Events</div>
+        <main className={styles.page}>
+            <h1>Tous les événements</h1>
+
+            <div className={styles.eventsList}>
+                {isLoading ? (
+                    <p>Chargement des événements...</p>
+                ) : events.length === 0 ? (
+                    <p>Aucun événement prévu.</p>
+                ) : (
+                    events.map((event) => (
+                        <EventCard key={event._id || event.id} event={event} />
+                    ))
+                )}
+            </div>
+        </main>
     )
 }
 
