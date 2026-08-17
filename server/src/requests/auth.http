@@ -1,5 +1,5 @@
 @coachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzczMDRhOWI2ODgwYThhODliZjE3YSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjE5NjA0MiwiZXhwIjoxNzg2ODAwODQyfQ.eWzvzFoLSqijRJoXCJYETXi20AnXn-8OFqbKhfCgcic
-@playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTc3NTQsImV4cCI6MTc4NjgwMjU1NH0.PHmINO9isf2BKcUKerNCL5tfM-WE7wvpYoxz1m912-c
+@playerToken = yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhODMyNGQ0MTIwMWRiODU1MTIwYzg0NyIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODY5Nzk1NjEsImV4cCI6MTc4NzU4NDM2MX0.mdl1YOWSpZvSRDtiEIK5hbs04za_t6gmeUyBIxsHgz8
 @otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDg5NCwiZXhwIjoxNzg2ODA1Njk0fQ.e0pKitdKpIlidn3VcUhl7K0kDODJjvUtsd53gm1PtgY
 
 ###############################################################################
@@ -141,6 +141,15 @@ Content-Type: application/json
 {
 "email": "paul.dupont@example.com",
 "password": "bonjour123!"
+}
+
+### Login player
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+"email": "gui@g.com",
+"password": "123"
 }
 
 ###
