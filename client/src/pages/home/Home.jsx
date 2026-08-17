@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "../../context/hooks/useAuth.js"
 import { useNavigate } from "react-router-dom"
+import { NavLink } from 'react-router-dom'
 
 import { getMyGroups } from "../../api/groups.js"
 import { getEventsFromGroup } from "../../api/events.js"
 
 import ROLE from "../../../../shared/utils/role.js"
-import logo from "../../../images/RDM_logo.jpg"
 import styles from "../../styles/home/home.module.css"
 
 // --- Utilitaire pour formater la date comme sur la maquette ---
@@ -15,18 +15,16 @@ const formatEventDate = (dateString) => {
     return {
         dayName: date.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase(),
         dayNumber: date.getDate(),
-        month: date.toLocaleDateString('fr-FR', { month: 'short' }).toUpperCase().replace('.', '')
+        month: date.toLocaleDateString('fr-FR', { month: 'short' }).toUpperCase().replace('.', ''),
+        time: date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h')
     }
 }
 
 const Home = () => {
     const { user } = useAuth()
-    const navigate = useNavigate()
 
     const [events, setEvents] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
-    const role = user?.role
 
     useEffect(() => {
         if (!user) return
@@ -43,9 +41,14 @@ const Home = () => {
 
                 const eventsArrays = await Promise.all(eventsPromises)
 
+                const now = new Date()
+
                 const allEvents = eventsArrays
                     .flat()
+                    .filter(event => new Date(event.date) >= now) // Filtre les événements passés
                     .sort((a, b) => new Date(a.date) - new Date(b.date))
+                    .slice(0, 2)
+
 
                 setEvents(allEvents)
             } catch (error) {
@@ -61,14 +64,7 @@ const Home = () => {
         fetchDashboardData()
     }, [user])
 
-    const handleAction = () => {
-        if (role === ROLE.COACH) {
-            navigate('/groups/create')
-        }
-        if (role === ROLE.PLAYER) {
-            navigate('/groups/join')
-        }
-    }
+
 
     return (
         <div className={styles.home}>
@@ -98,7 +94,7 @@ const Home = () => {
                                         </div>
                                         <div className={styles.eventDetails}>
                                             <h3>{event.name}</h3>
-                                            <p>{event.location}</p>
+                                            <p>{formattedDate.time} • {event.location}</p>
                                         </div>
                                     </div>
                                 )
@@ -106,10 +102,22 @@ const Home = () => {
                         )}
                     </div>
 
-                    {events.length > 0 && (
+                    {(
                         <button className={styles.seeAllBtn}>
-                            Voir tout &gt;
+
                         </button>
+                    )}
+
+                    {events.length > 0 && (
+                        <NavLink
+                            to="/events"
+                            className={({ isActive }) =>
+                                `${styles.seeAllBtn} ${isActive ? styles.active : ''}`
+                            }
+                            aria-label="Voir tous les événements"
+                        >
+                            Voir tout &gt;
+                        </NavLink>
                     )}
                 </section>
             </main>

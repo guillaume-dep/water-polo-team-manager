@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
 "name": "guillaume dep",
-"email": "guuzzillaume.dep@example.com",
+"email": "guillaumeee.dep@example.com",
 "password": "bonjour123!",
 "role": "coach"
 }
@@ -43,7 +43,7 @@ Content-Type: application/json
 
 {
 "name": "Paul Dupont",
-"email": "[paul.dupont@example.com](mailto:paul.dupont@example.com)",
+"email": "paul.dupont@example.com",
 "password": "bonjour123!",
 "role": "player"
 }
@@ -115,7 +115,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-"email": "[guillaume.dep@example.com](mailto:guillaume.dep@example.com)",
+"email": "guillaumeee.dep@example.com",
 "password": "bonjour123!"
 }
 
@@ -139,7 +139,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-"email": "[paul.dupont@example.com](mailto:paul.dupont@example.com)",
+"email": "paul.dupont@example.com",
 "password": "bonjour123!"
 }
 

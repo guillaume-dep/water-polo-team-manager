@@ -119,5 +119,5 @@
     font-weight: 600;
     font-size: var(--text-sm);
     cursor: pointer;
-    margin-top: var(--space-2);
+    text-decoration: none;
 }
