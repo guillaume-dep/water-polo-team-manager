@@ -1,0 +1,254 @@
+.responsesContainer {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+
+/* =========================
+   Header
+   ========================= */
+
+.responseHeader {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-2);
+}
+
+.responseLabel {
+    flex-shrink: 0;
+
+    color: var(--text-secondary);
+
+    font-size: var(--text-xs);
+    font-weight: 600;
+}
+
+
+/* =========================
+   Réponses
+   ========================= */
+
+.responses {
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-1);
+}
+
+.responseButton {
+    flex: 0 0 32px;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    color: var(--white-text);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        filter 0.2s ease;
+}
+
+.responseButton svg {
+    width: 80%;
+    height: 80%;
+}
+
+
+/* =========================
+   Couleurs
+   ========================= */
+
+.present {
+    background-color: var(--present);
+}
+
+.absent {
+    background-color: var(--absent);
+}
+
+.uncertain {
+    background-color: var(--uncertain);
+}
+
+
+/* =========================
+   Réponse sélectionnée
+   ========================= */
+
+/* Simplifié : on enlève .responseButton devant pour éviter les conflits CSS Modules */
+.active {
+    opacity: 1;
+    filter: none;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--white-bg);
+}
+
+/* =========================
+   Réponses non sélectionnées
+   ========================= */
+
+.unselected {
+    opacity: 0.35;
+    /* On augmente le flou à 3px (ou 4px) pour que l'effet soit bien visible */
+    filter: blur(3px);
+    transform: scale(0.9);
+}
+
+/* =========================
+   Hover
+   ========================= */
+
+.responseButton:hover:not(:disabled) {
+    transform: scale(1.08);
+}
+
+.active:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+.unselected:hover:not(:disabled) {
+    transform: scale(0.9);
+}
+
+/* =========================
+   Click
+   ========================= */
+
+.responseButton:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+
+/* =========================
+   Disabled
+   ========================= */
+
+.responseButton:disabled {
+    cursor: default;
+}
+
+
+/* =========================
+   Commentaire
+   ========================= */
+
+.commentSection {
+    width: 100%;
+    min-width: 0;
+}
+
+.commentInputGroup {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: var(--space-1);
+}
+
+.commentInput {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+
+    height: 36px;
+
+    padding: 0 var(--space-2);
+
+    border: 1px solid var(--text-secondary);
+    border-radius: var(--radius-md);
+
+    background-color: var(--white-bg);
+    color: var(--blackText);
+
+    font-family: var(--font-main);
+    font-size: var(--text-xs);
+
+    outline: none;
+
+    transition: border-color 0.2s ease;
+}
+
+.commentInput:focus {
+    border-color: var(--information1);
+}
+
+.commentInput::placeholder {
+    color: var(--text-secondary);
+}
+
+.commentInput:disabled {
+    cursor: default;
+    opacity: 0.5;
+}
+
+
+/* =========================
+   Bouton envoyer
+   ========================= */
+
+.submitCommentButton {
+    flex: 0 0 36px;
+
+    width: 36px;
+    height: 36px;
+
+    padding: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: var(--radius-md);
+
+    background-color: var(--information1);
+    color: var(--white-text);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.2s ease;
+}
+
+.submitCommentButton svg {
+    width: 100%;
+    height: 100%;
+}
+
+.submitCommentButton:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.submitCommentButton:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.submitCommentButton:disabled {
+    cursor: default;
+    opacity: 0.4;
+}

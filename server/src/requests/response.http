@@ -2,10 +2,12 @@
 @playerToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzcyZTI2M2FiODAzNGI4Zjk1MTU4ZSIsInJvbGUiOiJwbGF5ZXIiLCJpYXQiOjE3ODYxOTc3NTQsImV4cCI6MTc4NjgwMjU1NH0.PHmINO9isf2BKcUKerNCL5tfM-WE7wvpYoxz1m912-c
 @otherCoachToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNzc0MDY4NDI4N2JhOGVkMDUxMGZlNyIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTc4NjIwMDE2OCwiZXhwIjoxNzg2ODA0OTY4fQ.qnPmPx_UevXplKPUag3-xLV0Jln2LiXM3aFpIt-Y9MY
 
-@groupId = 
-@eventId = 
+@groupId = 6a8311231201db855120c839
+@groupCode = 508568
 
-# Event appartenant à un autre groupe
+@eventId = 6a8313a21201db855120c845
+
+# events appartenant à un autre groupe
 @otherEventId = 
 
 
@@ -14,7 +16,7 @@
 ############################################################
 
 ### Player membre → 201
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -26,8 +28,8 @@ Cookie: token={{playerToken}}
 ###
 
 ### Deuxième réponse du même joueur → 409
-# Vérifie l'index unique { event, user }
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+# Vérifie l'index unique { events, user }
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -39,7 +41,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Coach → 403
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{coachToken}}
 
@@ -51,7 +53,7 @@ Cookie: token={{coachToken}}
 ###
 
 ### Autre coach → 403
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{otherCoachToken}}
 
@@ -63,7 +65,7 @@ Cookie: token={{otherCoachToken}}
 ###
 
 ### Sans token → 401
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 
 {
@@ -74,7 +76,7 @@ Content-Type: application/json
 ###
 
 ### Status invalide → 400
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -86,7 +88,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Status absent → 400
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -96,8 +98,8 @@ Cookie: token={{playerToken}}
 
 ###
 
-### Event inexistant → 404
-POST http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses
+### events inexistant → 404
+POST http://localhost:3000/groups/{{groupId}}/events/000000000000000000000000/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -109,7 +111,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Groupe inexistant → 404
-POST http://localhost:3000/groups/000000000000000000000000/event/{{eventId}}/responses
+POST http://localhost:3000/groups/000000000000000000000000/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -120,10 +122,10 @@ Cookie: token={{playerToken}}
 
 ###
 
-### Event d'un autre groupe → 404
+### events d'un autre groupe → 404
 # Le joueur ne doit pas pouvoir utiliser un eventId
 # appartenant à un autre groupe.
-POST http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{otherEventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -138,42 +140,42 @@ Cookie: token={{playerToken}}
 ############################################################
 
 ### Player membre → 200
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Cookie: token={{playerToken}}
 
 ###
 
 ### Coach du groupe → 200
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Cookie: token={{coachToken}}
 
 ###
 
 ### Autre coach → 403
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Cookie: token={{otherCoachToken}}
 
 ###
 
 ### Sans token → 401
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 
 ###
 
-### Event inexistant → 404
-GET http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses
+### events inexistant → 404
+GET http://localhost:3000/groups/{{groupId}}/events/000000000000000000000000/responses
 Cookie: token={{playerToken}}
 
 ###
 
 ### Groupe inexistant → 404
-GET http://localhost:3000/groups/000000000000000000000000/event/{{eventId}}/responses
+GET http://localhost:3000/groups/000000000000000000000000/events/{{eventId}}/responses
 Cookie: token={{playerToken}}
 
 ###
 
-### Event appartenant à un autre groupe → 404
-GET http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses
+### events appartenant à un autre groupe → 404
+GET http://localhost:3000/groups/{{groupId}}/events/{{otherEventId}}/responses
 Cookie: token={{playerToken}}
 
 
@@ -182,7 +184,7 @@ Cookie: token={{playerToken}}
 ############################################################
 
 ### Player → 200
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -194,7 +196,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Modification partielle du commentaire → 200
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -205,7 +207,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Modification partielle du status → 200
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -216,7 +218,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Coach → 403
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{coachToken}}
 
@@ -227,7 +229,7 @@ Cookie: token={{coachToken}}
 ###
 
 ### Autre coach → 403
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{otherCoachToken}}
 
@@ -238,7 +240,7 @@ Cookie: token={{otherCoachToken}}
 ###
 
 ### Sans token → 401
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 
 {
@@ -248,7 +250,7 @@ Content-Type: application/json
 ###
 
 ### Status invalide → 400
-PUT http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -258,8 +260,8 @@ Cookie: token={{playerToken}}
 
 ###
 
-### Event inexistant → 404
-PUT http://localhost:3000/groups/{{groupId}}/event/000000000000000000000000/responses/me
+### events inexistant → 404
+PUT http://localhost:3000/groups/{{groupId}}/events/000000000000000000000000/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -270,7 +272,7 @@ Cookie: token={{playerToken}}
 ###
 
 ### Groupe inexistant → 404
-PUT http://localhost:3000/groups/000000000000000000000000/event/{{eventId}}/responses/me
+PUT http://localhost:3000/groups/000000000000000000000000/events/{{eventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -280,8 +282,8 @@ Cookie: token={{playerToken}}
 
 ###
 
-### Event appartenant à un autre groupe → 404
-PUT http://localhost:3000/groups/{{groupId}}/event/{{otherEventId}}/responses/me
+### events appartenant à un autre groupe → 404
+PUT http://localhost:3000/groups/{{groupId}}/events/{{otherEventId}}/responses/me
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -296,7 +298,7 @@ Cookie: token={{playerToken}}
 
 ### Player non-membre → 403
 # À tester avec un player qui n'appartient PAS au groupe.
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Cookie: token={{playerToken}}
 
 ###
@@ -304,7 +306,7 @@ Cookie: token={{playerToken}}
 ### Tentative de réponse pour un autre utilisateur
 # Il n'existe volontairement pas de :responseId.
 # Le serveur doit toujours utiliser req.user.id.
-POST http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+POST http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Content-Type: application/json
 Cookie: token={{playerToken}}
 
@@ -320,18 +322,18 @@ Cookie: token={{playerToken}}
 ############################################################
 
 ### Vérifier les réponses avant suppression
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Cookie: token={{coachToken}}
 
 ###
 
 ### Supprimer ensuite l'événement
-# Utiliser le test DELETE EVENT.
+# Utiliser le test DELETE events.
 # Les réponses associées doivent disparaître automatiquement.
 
 ###
 
 ### Vérifier après suppression de l'événement → 404
-GET http://localhost:3000/groups/{{groupId}}/event/{{eventId}}/responses
+GET http://localhost:3000/groups/{{groupId}}/events/{{eventId}}/responses
 Cookie: token={{coachToken}}
 
