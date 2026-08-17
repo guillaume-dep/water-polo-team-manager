@@ -8,7 +8,7 @@ const Events = () => {
 
     return (
         <main className={styles.page}>
-            <h1>Tous les événements</h1>
+            <h1 className={styles.title}>Tous les événements</h1>
 
             <div className={styles.eventsList}>
                 {isLoading ? (

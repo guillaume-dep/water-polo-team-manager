@@ -53,64 +53,6 @@
     gap: var(--space-3);
 }
 
-/* Carte événement */
-.eventCard {
-    display: flex;
-    gap: var(--space-3);
-    padding: var(--space-3);
-
-    background-color: #ffffff;
-    border-radius: var(--radius-md);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-left: 4px solid var(--text-primary);
-}
-
-.eventDate {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-width: 45px;
-}
-
-.dayName {
-    font-size: var(--text-xs);
-    color: var(--text-3);
-}
-
-.dayNumber {
-    font-size: var(--text-xl);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--text-secondary);
-}
-
-.month {
-    font-size: var(--text-xs);
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.eventDetails {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-}
-
-.eventDetails h3 {
-    margin: 0;
-    font-size: var(--text-md);
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.eventDetails p {
-    margin: 0;
-    font-size: var(--text-sm);
-    color: var(--text-3);
-}
-
 .seeAllBtn {
     align-self: center;
     background: none;
