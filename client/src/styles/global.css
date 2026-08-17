@@ -127,10 +127,6 @@ select {
   font: inherit;
 }
 
-button {
-  cursor: pointer;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -173,6 +169,19 @@ h3 {
 button {
   font-family: var(--font-main);
   font-size: var(--text-md);
+  cursor: pointer;
+
+  /* Désactive l'encadré carré par défaut au clic */
+  outline: none;
+
+  /* Désactive le rectangle grisé/bleu au toucher sur les écrans tactiles (mobiles) */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Maintien de l'accessibilité pour la navigation au clavier (Touche Tab) */
+button:focus-visible {
+  /* Ajoute un contour propre qui respectera le border-radius de chaque bouton */
+  box-shadow: 0 0 0 2px var(--text-secondary);
 }
 
 
