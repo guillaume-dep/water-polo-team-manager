@@ -95,6 +95,11 @@
     font-size: var(--text-sm);
 }
 
+/* Cache le message d'erreur lorsqu'un champ est en cours d'édition */
+.form:has(.input:focus) .error {
+    display: none;
+}
+
 .button {
     width: 100%;
     padding: 10px 16px;
