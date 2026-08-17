@@ -8,7 +8,7 @@
 @groupCode = 508568
 
 # À remplir après création des événements
-@eventId = 
+@eventId = 6a8313a21201db855120c845
 @otherEventId = 
 
 
@@ -221,7 +221,7 @@ Cookie: token={{coachToken}}
 
 {
   "name": "Entraînement U18 modifié",
-  "date": "2026-08-21T18:00:00.000Z",
+  "date": "2026-08-18T18:00:00.000Z",
   "location": "Nouvelle piscine",
   "eventType": "training"
 }
