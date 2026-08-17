@@ -30,3 +30,12 @@ export const getResponses = async (groupId, eventId) => {
 
     return res.data;
 };
+
+/* GET call to get all responses from an event */
+export const getMyResponse = async (groupId, eventId) => {
+    const res = await api.get(
+        `/groups/${groupId}/events/${eventId}/responses/me`
+    );
+
+    return res.data;
+};
