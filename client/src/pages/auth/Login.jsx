@@ -35,7 +35,7 @@ const Login = () => {
             setUser(data)
             navigate('/')
         } catch (error) {
-            setError(error.response?.data?.message || 'Email ou mot de passe incorrect.')
+            setError('Email ou mot de passe incorrect.')
         } finally {
             setLoading(false)
         }
