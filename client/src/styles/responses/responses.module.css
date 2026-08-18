@@ -146,6 +146,7 @@
 
 .commentInputGroup {
     width: 100%;
+
     min-width: 0;
     display: flex;
     align-items: center;
@@ -209,7 +210,7 @@
 }
 
 .submitCommentButton:hover:not(:disabled) {
-    transform: scale(1.05);
+    transform: scale(1.0);
 }
 
 .submitCommentButton:active:not(:disabled) {

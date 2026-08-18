@@ -9,7 +9,7 @@ const Groups = () => {
         }
     }
     return (
-        <div>Groups</div>
+        <div>Mes equipes</div>
     )
 
 }

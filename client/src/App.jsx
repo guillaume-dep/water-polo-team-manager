@@ -5,6 +5,9 @@ import Register from './pages/auth/Register.jsx'
 import Login from './pages/auth/Login.jsx'
 import Home from './pages/home/Home.jsx'
 import Groups from './pages/groups/Groups.jsx'
+import CreateGroup from './pages/groups/CreateGroup.jsx'
+import JoinGroup from './pages/groups/JoinGroup.jsx'
+
 import Events from './pages/events/Events.jsx'
 import Profile from './pages/profile/Profile.jsx'
 
@@ -22,9 +25,15 @@ const App = () => {
       {/* Authenticated */}
       <Route element={<ProtectedRoute />}>
         <Route element={<ProtectedLayout />}>
+
           <Route path="/" element={<Home />} />
+
           <Route path="/groups" element={<Groups />} />
+          <Route path="/groups/create" element={<CreateGroup />} />
+          <Route path="/groups/join" element={<JoinGroup />} />
+
           <Route path="/events" element={<Events />} />
+
           <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
