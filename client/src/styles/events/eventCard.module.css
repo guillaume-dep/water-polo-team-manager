@@ -55,7 +55,6 @@
 .eventTypeTag {
     flex-shrink: 0;
     padding: 2px 8px;
-
     background-color: var(--information1);
     border-radius: var(--radius-sm);
     color: var(--white-text);
