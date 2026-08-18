@@ -5,12 +5,12 @@ import { findGroupById } from "../utils/dbFinder.js";
 import { checkIsMember, checkIsCoach, checkIsMemberOrCoach } from "../utils/logicChecker.js";
 import AppError from "../utils/AppError.js"
 
-export const searchGroupByCode = async(req, res) => {
+export const searchGroupByCode = async (req, res) => {
     try {
-        const {code} = req.query
+        const { code } = req.query
         if (!code) throw new AppError("Missing code", 400)
 
-        const group = await Groups.findOne({code});
+        const group = await Groups.findOne({ code });
         if (!group) throw new AppError("Group not found", 404)
 
         res.json({
@@ -18,14 +18,14 @@ export const searchGroupByCode = async(req, res) => {
             code: group.code
         })
     }
-    catch(err) {
+    catch (err) {
         res.status(err.status || 500).json({ message: err.message });
     }
 }
 
-export const createGroup = async(req, res) => {
+export const createGroup = async (req, res) => {
     try {
-        const {name} = req.body
+        const { name } = req.body
         if (!name || !name.trim()) throw new AppError("Name is required", 400)
 
         /* code = 6 hex caracteres */
@@ -40,24 +40,24 @@ export const createGroup = async(req, res) => {
         res.status(201).json(group)
     }
 
-    catch(err){
+    catch (err) {
         res.status(err.status || 500).json({ message: err.message });
     }
 }
 
-export const joinGroup = async(req, res) => {
+export const joinGroup = async (req, res) => {
     try {
-        const {code} = req.body
+        const { code } = req.body
         if (!code) throw new AppError("Code is required", 400)
 
-        const group = await Groups.findOne({code})
+        const group = await Groups.findOne({ code })
         if (!group) throw new AppError("Group not found", 404)
 
         /* func alreadyInGroup, invert of checkIsMember */
-        if (group.members.includes(req.user.id)){
-            throw new AppError("Already in the group", 409) 
+        if (group.members.includes(req.user.id)) {
+            throw new AppError("Already in the group", 409)
         }
-        
+
         group.members.push(req.user.id)
         await group.save(); /* Mongoose sends a request to the DB */
 
@@ -66,20 +66,20 @@ export const joinGroup = async(req, res) => {
             code: group.code
         })
     }
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const getGroup = async(req, res) => {
+export const getGroup = async (req, res) => {
     try {
         const group = await findGroupById(req.params.id)
         checkIsMemberOrCoach(group, req.user.id)
 
         /* Same object as group but with real documents instead of ids*/
         const populated = await group.populate([
-            {path: 'coach', select: 'name'},
-            {path: 'members', select: 'name'}
+            { path: 'coach', select: 'name' },
+            { path: 'members', select: 'name' }
         ])
 
         const isCoach = group.coach._id.toString() === req.user.id
@@ -93,32 +93,32 @@ export const getGroup = async(req, res) => {
         if (isCoach) response.code = populated.code
 
         res.json(response)
-    } 
+    }
 
-    catch (err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const getMyGroups = async(req, res) => {
+export const getMyGroups = async (req, res) => {
     try {
 
         const isCoach = req.user.role === ROLE.COACH
 
-        const filter = (isCoach) 
-        ? {coach : req.user.id} 
-        : {members: req.user.id} /* MongoDB checks if the "members" array contains it */
+        const filter = (isCoach)
+            ? { coach: req.user.id }
+            : { members: req.user.id } /* MongoDB checks if the "members" array contains it */
 
-        const groups = await Groups.find(filter)
+        const groups = await Groups.find(filter).populate('coach', 'name')
         res.json(groups)
     }
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const leaveGroup = async(req, res) => {
-    try{
+export const leaveGroup = async (req, res) => {
+    try {
         const group = await findGroupById(req.params.id)
         checkIsMember(group, req.user.id)
 
@@ -129,21 +129,21 @@ export const leaveGroup = async(req, res) => {
             code: group.code
         })
     }
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
 
-export const deleteGroup = async(req, res) => {
-    try{
+export const deleteGroup = async (req, res) => {
+    try {
         const group = await findGroupById(req.params.id)
         checkIsCoach(group, req.user.id)
 
         await Groups.findByIdAndDelete(req.params.id);
 
-        res.json({message: "Group deleted"});
+        res.json({ message: "Group deleted" });
     }
-    catch(err){
-        res.status(err.status || 500).json({message: err.message})
+    catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
     }
 }
