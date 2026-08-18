@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { isCookie, NavLink } from 'react-router-dom'
 import { useEvents } from '../../hooks/useEvents.js'
 import { EventCard } from '../../components/EventCard.jsx'
 import { useAuth } from '../../context/hooks/useAuth.js'
@@ -10,6 +10,8 @@ const Home = () => {
     const { events, isLoading, removeEvent } = useEvents(2)
     const { user } = useAuth()
 
+    const isCoach = user?.role === ROLE.COACH
+
     return (
         <div className={styles.home}>
             <main className={styles.mainContent}>
@@ -17,14 +19,25 @@ const Home = () => {
                     <div className={styles.eventHeader}>
                         <h2 className={styles.sectionTitle}>Événements</h2>
 
-                        {user?.role === ROLE.COACH && (
+                        {isCoach && (
                             <NavLink
                                 to="/create-event"
                                 className={styles.createEventBtn}
                                 aria-label="Créer un événement"
                                 title="Créer un événement"
                             >
-                                +
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+
+                                </svg>
                             </NavLink>
                         )}
                     </div>
