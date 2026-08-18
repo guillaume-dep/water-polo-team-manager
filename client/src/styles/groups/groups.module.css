@@ -1,0 +1,72 @@
+/* =========================
+   Conteneur Principal
+   ========================= */
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* =========================
+   En-tête (Titre + Bouton +)
+   ========================= */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.title {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: 700;
+    color: var(--white-text);
+    line-height: 1.2;
+    background-color: var(--information2);
+    padding: var(--space-1) var(--space-2);
+
+    border-radius: var(--radius-sm);
+}
+
+/* =========================
+   Bouton Action (+)
+   ========================= */
+
+.addButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: var(--information2);
+    color: var(--white-text);
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.addButton svg {
+    width: 20px;
+    height: 20px;
+}
+
+.addButton:hover {
+    background-color: var(--information1);
+}
+
+.addButton:active {
+    transform: scale(0.95);
+}
+
+/* =========================
+   Zone de contenu
+   ========================= */
+
+.content {
+    width: 100%;
+}

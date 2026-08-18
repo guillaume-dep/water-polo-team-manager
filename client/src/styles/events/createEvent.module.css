@@ -49,7 +49,7 @@
     border-radius: var(--radius-md);
     font-family: var(--font-main);
     font-size: var(--text-sm);
-    color: var(--text-3);
+    color: var(--text-secondary);
     background-color: var(--white-text);
     outline: none;
     transition: border-color 0.2s ease;
@@ -92,7 +92,7 @@
 }
 
 .submitButton:hover:not(:disabled) {
-    background-color: var(--information2);
+    background-color: var(--text-primary);
 }
 
 .submitButton:disabled {
