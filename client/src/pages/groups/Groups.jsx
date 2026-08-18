@@ -1,24 +1,23 @@
 import { useGroups } from "../../hooks/useGroups.js"
+import GroupCard from "../../components/groups/GroupCard.jsx"
+import { NavLink } from "react-router-dom"
+import ROLE from "../../../../shared/utils/role.js"
+import { useAuth } from "../../context/hooks/useAuth.js"
 
 const Groups = () => {
+    const { user } = useAuth()
     const { groups, isLoading } = useGroups()
+    const isCoach = user.role === ROLE.COACH
 
     return (
         <main>
             <h1>Mes groupes</h1>
-
-            {isLoading ? (
-                <p>Chargement...</p>
-            ) : groups.length === 0 ? (
-                <p>Vous n'avez aucun groupe.</p>
-            ) : (
-                groups.map((group) => (
-                    <div key={group._id}>
-                        <h2>{group.name}</h2>
-                        <p>Code : {group.code}</p>
-                    </div>
-                ))
+            {isCoach && (
+                <NavLink to="/groups/create">
+                    Créer un groupe
+                </NavLink>
             )}
+            <GroupCard groups={groups} isLoading={isLoading} />
         </main>
     )
 }

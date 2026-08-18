@@ -79,7 +79,7 @@ const CreateEvent = () => {
                         onChange={(e) => setName(e.target.value)}
                         required
                         className={styles.input}
-                        placeholder="Ex: Entraînement U15"
+                        placeholder="Ex: Entraînement U16"
                     />
                 </div>
 
