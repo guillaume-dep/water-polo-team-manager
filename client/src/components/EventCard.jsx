@@ -1,4 +1,4 @@
-import Responses from '../pages/responses/Responses.jsx'
+import EventResponse from '../pages/events/EventResponse.jsx'
 import { useState } from 'react'
 import { formatEventDate } from '../utils/date.js'
 import { useAuth } from '../context/hooks/useAuth.js'

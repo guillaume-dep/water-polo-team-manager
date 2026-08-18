@@ -1,17 +1,26 @@
+import { useGroups } from "../../hooks/useGroups.js"
+
 const Groups = () => {
+    const { groups, isLoading } = useGroups()
 
-    const handleAction = () => {
-        if (role === ROLE.COACH) {
-            navigate('/groups/create')
-        }
-        if (role === ROLE.PLAYER) {
-            navigate('/groups/join')
-        }
-    }
     return (
-        <div>Mes equipes</div>
-    )
+        <main>
+            <h1>Mes groupes</h1>
 
+            {isLoading ? (
+                <p>Chargement...</p>
+            ) : groups.length === 0 ? (
+                <p>Vous n'avez aucun groupe.</p>
+            ) : (
+                groups.map((group) => (
+                    <div key={group._id}>
+                        <h2>{group.name}</h2>
+                        <p>Code : {group.code}</p>
+                    </div>
+                ))
+            )}
+        </main>
+    )
 }
 
 export default Groups
