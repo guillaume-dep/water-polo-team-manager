@@ -1,10 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import { useEvents } from '../../hooks/useEvents.js'
 import { EventCard } from '../../components/EventCard.jsx'
+import { useAuth } from '../../context/hooks/useAuth.js'
+import ROLE from '../../../../shared/utils/role.js'
+
 import styles from '../../styles/home/home.module.css'
 
 const Home = () => {
     const { events, isLoading } = useEvents(2)
+    const { user } = useAuth()
 
     return (
         <div className={styles.home}>
@@ -13,6 +17,13 @@ const Home = () => {
                     <div className={styles.sectionHeader}>
                         <h2 className={styles.sectionTitle}>ÉVÉNEMENTS</h2>
                     </div>
+
+                    {user?.role === ROLE.PLAYER && <NavLink
+                        to="/create-event"
+                        className={styles.createEventBtn}
+                    >
+                        Créer un événement
+                    </NavLink>}
 
                     <div className={styles.eventsList}>
                         {isLoading ? (
@@ -39,7 +50,7 @@ const Home = () => {
                     )}
                 </section>
             </main>
-        </div>
+        </div >
     )
 }
 

@@ -9,6 +9,8 @@ import CreateGroup from './pages/groups/CreateGroup.jsx'
 import JoinGroup from './pages/groups/JoinGroup.jsx'
 
 import Events from './pages/events/Events.jsx'
+import CreateEvent from './pages/events/CreateEvent.jsx'
+
 import Profile from './pages/profile/Profile.jsx'
 
 import ProtectedRoute from './components/ProtectedRoute.jsx'
@@ -33,6 +35,8 @@ const App = () => {
           <Route path="/groups/join" element={<JoinGroup />} />
 
           <Route path="/events" element={<Events />} />
+          <Route path="/create-event" element={<CreateEvent />} />
+
 
           <Route path="/profile" element={<Profile />} />
         </Route>
