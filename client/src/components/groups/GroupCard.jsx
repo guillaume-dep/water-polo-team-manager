@@ -50,7 +50,7 @@ const GroupCard = ({ groups, isLoading }) => {
                                     </span>
                                 </div>
                             </div>
-                            <p>{group.name}</p>
+                            <p>{group.coach.name}</p>
                         </div>
                     </article>
                 ))}

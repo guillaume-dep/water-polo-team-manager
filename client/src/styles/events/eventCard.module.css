@@ -125,8 +125,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     padding: 6px;
 
     background-color: transparent;
@@ -155,7 +155,7 @@
 .deleteConfirmGroup {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
 
     /* Ancrage à droite pour ne pas pousser le titre vers la gauche */
     position: absolute;
@@ -172,8 +172,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
     padding: 4px;
 
     border: none;
