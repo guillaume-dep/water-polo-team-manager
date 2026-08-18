@@ -15,7 +15,7 @@ const Home = () => {
             <main className={styles.mainContent}>
                 <section className={styles.eventsSection}>
                     <div className={styles.eventHeader}>
-                        <h2>Événements</h2>
+                        <h2 className={styles.sectionTitle}>Événements</h2>
 
                         {user?.role === ROLE.COACH && (
                             <NavLink
