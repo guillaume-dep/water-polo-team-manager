@@ -5,9 +5,19 @@ import { useEventResponse } from '../hooks/useEventResponse.js'
 import styles from '../styles/events/eventCard.module.css'
 
 export const EventCard = ({ event }) => {
-    // 1. Correction : Appel de la fonction du hook (avec transmission de l'id de l'événement si nécessaire)
     const { currentStatus, currentComment, isSubmitting, isLoading, handleResponseChange } = useEventResponse(event)
     const formattedDate = formatEventDate(event.date)
+
+    // Libellé propre
+    const eventTypeLabel = event.eventType === 'training'
+        ? 'Entraînement'
+        : event.eventType === 'match'
+            ? 'Match'
+            : event.eventType
+
+    // On vérifie si le nom contient déjà le type (ex: "Entraînement U15" contient "entraînement")
+    const titleContainsType = event.name && eventTypeLabel &&
+        event.name.toLowerCase().includes(eventTypeLabel.toLowerCase())
 
     return (
         <div className={styles.eventCard}>
@@ -23,10 +33,23 @@ export const EventCard = ({ event }) => {
                 <span className={styles.month}>
                     {formattedDate.month}
                 </span>
+
+                <span className={styles.year}>
+                    {formattedDate.year}
+                </span>
             </div>
 
             <div className={styles.eventDetails}>
-                <h3>{event.name}</h3>
+                <div className={styles.eventHeaderInfo}>
+                    <h3>{event.name}</h3>
+
+                    {/* Affiche le badge seulement s'il n'est pas déjà mentionné dans le titre */}
+                    {eventTypeLabel && !titleContainsType && (
+                        <span className={styles.eventTypeTag}>
+                            {eventTypeLabel}
+                        </span>
+                    )}
+                </div>
 
                 <p>
                     {formattedDate.time} • {event.location}

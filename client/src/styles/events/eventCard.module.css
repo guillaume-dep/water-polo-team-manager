@@ -36,6 +36,34 @@
     font-weight: 600;
 }
 
+.year {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-3);
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.eventHeaderInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    width: 100%;
+}
+
+.eventTypeTag {
+    flex-shrink: 0;
+    padding: 2px 8px;
+
+    background-color: var(--information1);
+    border-radius: var(--radius-sm);
+    color: var(--white-text);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
 .eventDetails {
     display: flex;
     flex-direction: column;

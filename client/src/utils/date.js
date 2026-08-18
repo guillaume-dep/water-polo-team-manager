@@ -4,6 +4,7 @@ export const formatEventDate = (dateString) => {
         dayName: date.toLocaleDateString('fr-FR', { weekday: 'short' }).toUpperCase(),
         dayNumber: date.getDate(),
         month: date.toLocaleDateString('fr-FR', { month: 'short' }).toUpperCase().replace('.', ''),
+        year: date.getFullYear(), // Ajout de l'année
         time: date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }).replace(':', 'h')
     }
 }
