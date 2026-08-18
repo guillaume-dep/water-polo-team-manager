@@ -63,3 +63,49 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.eventHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: var(--space-3);
+}
+
+/* On s'assure que le titre ne prend pas de marge inutile */
+.eventHeader h2 {
+    margin: 0;
+}
+
+.createEventBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    background-color: var(--information1);
+    color: var(--white-text);
+    border-radius: 50%;
+
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: none;
+
+    padding-bottom: 2px;
+    /* Alignement optique du '+' */
+
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.createEventBtn:hover {
+    background-color: var(--information2);
+}
+
+.createEventBtn:active {
+    opacity: 0.8;
+}

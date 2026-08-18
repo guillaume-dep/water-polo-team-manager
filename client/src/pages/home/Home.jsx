@@ -14,16 +14,20 @@ const Home = () => {
         <div className={styles.home}>
             <main className={styles.mainContent}>
                 <section className={styles.eventsSection}>
-                    <div className={styles.sectionHeader}>
-                        <h2 className={styles.sectionTitle}>ÉVÉNEMENTS</h2>
-                    </div>
+                    <div className={styles.eventHeader}>
+                        <h2>Événements</h2>
 
-                    {user?.role === ROLE.COACH && <NavLink
-                        to="/create-event"
-                        className={styles.createEventBtn}
-                    >
-                        Créer un événement
-                    </NavLink>}
+                        {user?.role === ROLE.COACH && (
+                            <NavLink
+                                to="/create-event"
+                                className={styles.createEventBtn}
+                                aria-label="Créer un événement"
+                                title="Créer un événement"
+                            >
+                                +
+                            </NavLink>
+                        )}
+                    </div>
 
                     <div className={styles.eventsList}>
                         {isLoading ? (
