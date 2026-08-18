@@ -16,7 +16,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* Centrage vertical uniforme de la date */
     min-width: 45px;
     text-align: center;
     flex-shrink: 0;
@@ -53,20 +52,32 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* Aligne verticalement le contenu face à la date */
     gap: var(--space-1);
     flex: 1;
     min-width: 0;
-    /* Évite les débordements de texte */
 }
 
 .eventHeaderInfo {
     display: flex;
     align-items: center;
-    /* Aligne le titre h3 et le badge sur la même ligne médiane */
     justify-content: space-between;
     gap: var(--space-2);
     width: 100%;
+}
+
+.eventDetails h3 {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--text-secondary);
+    line-height: 1.2;
+}
+
+.eventDetails p {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--text-3);
+    line-height: 1.3;
 }
 
 .eventTypeTag {
@@ -84,17 +95,118 @@
     line-height: 1.2;
 }
 
-.eventDetails h3 {
-    margin: 0;
-    font-size: var(--text-md);
-    font-weight: 600;
-    color: var(--text-secondary);
-    line-height: 1.3;
+/* =========================
+   Conteneur Titre + Badge
+   ========================= */
+
+.titleAndTag {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
 }
 
-.eventDetails p {
-    margin: 0;
-    font-size: var(--text-sm);
+/* =========================
+   Zone d'actions Coach
+   ========================= */
+
+.actionsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    position: relative;
+    /* Conserve une largeur constante pour éviter les décalages du titre */
+    min-width: 30px;
+    height: 30px;
+}
+
+.deleteIconButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+
+    background-color: transparent;
     color: var(--text-3);
-    line-height: 1.3;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.deleteIconButton svg {
+    width: 100%;
+    height: 100%;
+}
+
+.deleteIconButton:hover {
+    color: var(--error);
+    background-color: var(--white-bg);
+}
+
+/* =========================
+   Barre de confirmation compacte
+   ========================= */
+
+.deleteConfirmGroup {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    /* Ancrage à droite pour ne pas pousser le titre vers la gauche */
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background-color: #ffffff;
+    padding: 2px;
+    border-radius: 20px;
+}
+
+.confirmButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.confirmButton svg {
+    width: 100%;
+    height: 100%;
+}
+
+.confirmButton:hover {
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+.confirmButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Bouton Valider (Vert / Success) */
+.confirmYes {
+    background-color: var(--success);
+    color: var(--white-text);
+}
+
+/* Bouton Annuler (Rouge / Error) */
+.confirmNo {
+    background-color: var(--absent);
+    color: var(--white-text);
 }

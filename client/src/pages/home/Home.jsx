@@ -7,7 +7,7 @@ import ROLE from '../../../../shared/utils/role.js'
 import styles from '../../styles/home/home.module.css'
 
 const Home = () => {
-    const { events, isLoading } = useEvents(2)
+    const { events, isLoading, removeEvent } = useEvents(2)
     const { user } = useAuth()
 
     return (
@@ -36,7 +36,11 @@ const Home = () => {
                             <p className={styles.emptyText}>Aucun événement prévu pour le moment.</p>
                         ) : (
                             events.map((event) => (
-                                <EventCard key={event._id || event.id} event={event} />
+                                <EventCard
+                                    key={event._id || event.id}
+                                    event={event}
+                                    onDelete={removeEvent}
+                                />
                             ))
                         )}
                     </div>
