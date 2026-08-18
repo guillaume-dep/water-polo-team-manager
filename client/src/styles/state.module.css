@@ -1,0 +1,80 @@
+/* state.module.css */
+
+/* =========================
+   Conteneur principal
+   ========================= */
+.container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    border-left: 4px solid;
+    font-family: var(--font-main);
+    box-sizing: border-box;
+}
+
+/* =========================
+   Icône et Texte (Taille fixe pour éviter l'effet "énorme")
+   ========================= */
+.icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-right: var(--space-2);
+}
+
+.message {
+    font-size: var(--text-sm);
+    /* ou --text-xs si tu veux encore plus petit */
+    font-weight: 600;
+    margin: 0;
+}
+
+/* =========================
+   Variations de couleurs
+   ========================= */
+
+/* Succès (Vert) */
+.success {
+    background-color: #d1fae5;
+    border-left-color: #22c55e;
+    color: #14532d;
+}
+
+.success .icon {
+    color: #16a34a;
+}
+
+/* Erreur (Rouge) */
+.error {
+    background-color: #fee2e2;
+    border-left-color: #ef4444;
+    color: #7f1d1d;
+}
+
+.error .icon {
+    color: #dc2626;
+}
+
+/* Info (Bleu) */
+.info {
+    background-color: #dbeafe;
+    border-left-color: #3b82f6;
+    color: #1e3a8a;
+}
+
+.info .icon {
+    color: #2563eb;
+}
+
+/* Attention (Jaune) */
+.warning {
+    background-color: #fef3c7;
+    border-left-color: #f59e0b;
+    color: #78350f;
+}
+
+.warning .icon {
+    color: #d97706;
+}

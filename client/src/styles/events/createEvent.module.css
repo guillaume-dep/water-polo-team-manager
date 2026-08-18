@@ -1,0 +1,128 @@
+/* createEvent.module.css */
+
+.container {
+    max-width: 500px;
+    margin: var(--space-4) auto;
+    padding: var(--space-4);
+    background-color: var(--white-text);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: var(--space-4);
+}
+
+.stateContainer {
+    margin-bottom: var(--space-4);
+}
+
+/* =========================
+   Formulaire
+   ========================= */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.input,
+.select {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--text-3);
+    border-radius: var(--radius-md);
+    font-family: var(--font-main);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    background-color: var(--white-text);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.input::placeholder {
+    color: var(--text-3);
+}
+
+.input:focus,
+.select:focus {
+    border-color: var(--information1);
+}
+
+.select:disabled {
+    background-color: var(--white-bg);
+    color: var(--text-3);
+    cursor: not-allowed;
+}
+
+/* =========================
+   Bouton Soumettre
+   ========================= */
+
+.submitButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    margin-top: var(--space-2);
+    padding: 12px var(--space-3);
+    background-color: var(--information1);
+    color: var(--white-text);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.submitButton:hover:not(:disabled) {
+    background-color: var(--information2);
+}
+
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================
+   Animation Spinner (Chargement)
+   ========================= */
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+.spinnerCircle {
+    opacity: 0.25;
+}
+
+.spinnerPath {
+    opacity: 0.75;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

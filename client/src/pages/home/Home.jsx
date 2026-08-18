@@ -18,7 +18,7 @@ const Home = () => {
                         <h2 className={styles.sectionTitle}>ÉVÉNEMENTS</h2>
                     </div>
 
-                    {user?.role === ROLE.PLAYER && <NavLink
+                    {user?.role === ROLE.COACH && <NavLink
                         to="/create-event"
                         className={styles.createEventBtn}
                     >
