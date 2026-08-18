@@ -4,7 +4,7 @@ import styles from '../../styles/events/events.module.css'
 
 const Events = () => {
     // Sans paramètre limit pour récupérer TOUS les événements futurs
-    const { events, isLoading } = useEvents()
+    const { events, isLoading, removeEvent } = useEvents()
 
     return (
         <main className={styles.page}>
@@ -17,7 +17,11 @@ const Events = () => {
                     <p>Aucun événement prévu.</p>
                 ) : (
                     events.map((event) => (
-                        <EventCard key={event._id || event.id} event={event} />
+                        <EventCard
+                            key={event._id || event.id}
+                            event={event}
+                            onDelete={removeEvent}
+                        />
                     ))
                 )}
             </div>

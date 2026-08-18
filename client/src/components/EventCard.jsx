@@ -1,20 +1,23 @@
+import EventResponse from '../pages/events/EventResponse.jsx'
+import { useState } from 'react'
 import { formatEventDate } from '../utils/date.js'
-import Responses from '../pages/responses/Responses.jsx'
-import { useEventResponse } from '../hooks/useEventResponse.js'
-import { useAuth } from '../context/hooks/useAuth.js' // Import de ton hook d'authentification
-import ROLE from '../../../shared/utils/role.js' // Import de tes constantes de rôles
+import { useAuth } from '../context/hooks/useAuth.js'
+import { deleteEvent } from '../api/events.js'
 
+import ROLE from '../../../shared/utils/role.js'
+import EVENT_TYPE from '../../../shared/utils/eventType.js'
 import styles from '../styles/events/eventCard.module.css'
 
-export const EventCard = ({ event }) => {
+export const EventCard = ({ event, onDelete }) => {
     const { user } = useAuth()
-    const { currentStatus, currentComment, isSubmitting, isLoading, handleResponseChange } = useEventResponse(event)
     const formattedDate = formatEventDate(event.date)
 
-    // Libellé propre
-    const eventTypeLabel = event.eventType === 'training'
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
+
+    const eventTypeLabel = event.eventType === EVENT_TYPE.TRAINING
         ? 'Entraînement'
-        : event.eventType === 'match'
+        : event.eventType === EVENT_TYPE.MATCH
             ? 'Match'
             : event.eventType
 
@@ -22,6 +25,24 @@ export const EventCard = ({ event }) => {
         event.name.toLowerCase().includes(eventTypeLabel.toLowerCase())
 
     const isCoach = user?.role === ROLE.COACH
+
+    const handleDelete = async () => {
+        try {
+            setIsDeleting(true)
+
+            await deleteEvent(event.group, event._id)
+            onDelete(event._id)
+
+            setShowDeleteConfirm(false)
+        } catch (err) {
+            console.error(
+                "Erreur lors de la suppression de l'événement",
+                err
+            )
+        } finally {
+            setIsDeleting(false)
+        }
+    }
 
     return (
         <div className={styles.eventCard}>
@@ -45,12 +66,65 @@ export const EventCard = ({ event }) => {
 
             <div className={styles.eventDetails}>
                 <div className={styles.eventHeaderInfo}>
-                    <h3>{event.name}</h3>
+                    <div className={styles.titleAndTag}>
+                        <h3>{event.name}</h3>
 
-                    {eventTypeLabel && !titleContainsType && (
-                        <span className={styles.eventTypeTag}>
-                            {eventTypeLabel}
-                        </span>
+                        {eventTypeLabel && !titleContainsType && (
+                            <span className={styles.eventTypeTag}>
+                                {eventTypeLabel}
+                            </span>
+                        )}
+                    </div>
+
+                    {isCoach && (
+                        <div className={styles.actionsContainer}>
+                            {!showDeleteConfirm ? (
+                                <button
+                                    type="button"
+                                    onClick={() => setShowDeleteConfirm(true)}
+                                    className={styles.deleteIconButton}
+                                    title="Supprimer l'événement"
+                                    aria-label="Supprimer l'événement"
+                                >
+                                    {/* Icône Corbeille */}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                                    </svg>
+                                </button>
+                            ) : (
+                                <div className={styles.deleteConfirmGroup}>
+                                    <button
+                                        type="button"
+                                        onClick={handleDelete}
+                                        disabled={isDeleting}
+                                        className={`${styles.confirmButton} ${styles.confirmYes}`}
+                                        title="Valider la suppression"
+                                        aria-label="Valider la suppression"
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowDeleteConfirm(false)}
+                                        disabled={isDeleting}
+                                        className={`${styles.confirmButton} ${styles.confirmNo}`}
+                                        title="Annuler"
+                                        aria-label="Annuler"
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     )}
                 </div>
 
@@ -58,14 +132,8 @@ export const EventCard = ({ event }) => {
                     {formattedDate.time} • {event.location}
                 </p>
 
-                {/* Masqué si l'utilisateur est un coach */}
                 {!isCoach && (
-                    <Responses
-                        currentStatus={currentStatus}
-                        currentComment={currentComment}
-                        onResponseChange={handleResponseChange}
-                        disabled={isSubmitting || isLoading}
-                    />
+                    <EventResponse event={event} />
                 )}
             </div>
         </div>

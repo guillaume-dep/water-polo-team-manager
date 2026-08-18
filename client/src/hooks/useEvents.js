@@ -6,34 +6,48 @@ export const useEvents = (limit = null) => {
     const [events, setEvents] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        const fetchEvents = async () => {
-            try {
-                setIsLoading(true);
-                const groups = await getMyGroups()
-                const eventsPromises = groups.map((group) => getEventsFromGroup(group._id))
+    const fetchEvents = async () => {
+        try {
+            setIsLoading(true)
 
-                const now = new Date()
-                let events = (await Promise.all(eventsPromises))
-                    .flat()
-                    .filter((event) => new Date(event.date) >= now)
-                    .sort((a, b) => new Date(a.date) - new Date(b.date))
+            const groups = await getMyGroups()
 
-                if (limit) {
-                    events = events.slice(0, limit)
-                }
-                setEvents(events)
+            const eventsPromises = groups.map((group) =>
+                getEventsFromGroup(group._id)
+            )
+
+            const now = new Date()
+
+            let events = (await Promise.all(eventsPromises))
+                .flat()
+                .filter((event) => new Date(event.date) >= now)
+                .sort(
+                    (a, b) =>
+                        new Date(a.date) - new Date(b.date)
+                )
+
+            if (limit) {
+                events = events.slice(0, limit)
             }
-            catch (err) {
-                console.error('Error occured while retrieving events', err)
-            }
-            finally {
-                setIsLoading(false)
-            }
+
+            setEvents(events)
+        } catch (err) {
+            console.error(
+                'Error occured while retrieving events',
+                err
+            )
+        } finally {
+            setIsLoading(false)
         }
+    }
 
+    useEffect(() => {
         fetchEvents()
     }, [limit])
 
-    return { events, isLoading }
+    const removeEvent = async () => {
+        await fetchEvents()
+    }
+
+    return { events, isLoading, removeEvent }
 }
