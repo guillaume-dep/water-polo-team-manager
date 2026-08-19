@@ -1,13 +1,8 @@
-import { useAuth } from '../context/hooks/useAuth'
-import ROLE from '../../../shared/utils/role'
-
 import styles from '../styles/personCard.module.css'
 
-const PersonCard = ({ person }) => {
-    const { user } = useAuth()
-    const isCoach = user.role === ROLE.COACH
+const PersonCard = ({ person, showEmail = false }) => {
     return (
-        <article key={person._id} className={styles.memberCard}>
+        <article className={styles.memberCard}>
             <div className={styles.avatar}>
                 <svg
                     viewBox="0 0 24 24"
@@ -21,10 +16,16 @@ const PersonCard = ({ person }) => {
                     <circle cx="12" cy="7" r="4" />
                 </svg>
             </div>
+
             <div className={styles.memberInfo}>
-                <h3 className={styles.memberName}>{person.name}</h3>
-                {isCoach && person.email && (
-                    <p className={styles.memberMeta}>{person.email}</p>
+                <h3 className={styles.memberName}>
+                    {person.name}
+                </h3>
+
+                {showEmail && person.email && (
+                    <p className={styles.memberMeta}>
+                        {person.email}
+                    </p>
                 )}
             </div>
         </article>

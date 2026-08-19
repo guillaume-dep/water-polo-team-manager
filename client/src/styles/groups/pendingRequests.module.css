@@ -11,6 +11,7 @@
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
+    text-align: center;
 }
 
 .requestsList {
@@ -93,6 +94,6 @@
 .infoText {
     text-align: center;
     color: var(--text-secondary);
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
     padding: var(--space-4) 0;
 }

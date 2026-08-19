@@ -34,7 +34,7 @@ const Profile = () => {
             {/* Bloc 1 : Informations */}
             <section className={styles.infoCard}>
                 <div className={styles.cardWrapper}>
-                    <PersonCard person={user} />
+                    <PersonCard person={user} showEmail={true} />
                 </div>
 
                 <div className={styles.roleSection}>
