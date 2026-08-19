@@ -1,6 +1,7 @@
 import { useParams, NavLink } from 'react-router-dom'
 import { getGroup } from '../../api/groups.js'
 import { useEffect, useState } from 'react'
+import PersonCard from '../../components/PersonCard.jsx'
 
 import wpBall from '../../../images/wp-ball.jpg'
 import styles from '../../styles/groups/groupMembers.module.css'
@@ -111,27 +112,10 @@ const GroupMembers = () => {
                     ) : (
                         <div className={styles.membersList}>
                             {group.members.map((member) => (
-                                <article key={member._id} className={styles.memberCard}>
-                                    <div className={styles.avatar}>
-                                        <svg
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth="2"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        >
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                            <circle cx="12" cy="7" r="4" />
-                                        </svg>
-                                    </div>
-                                    <div className={styles.memberInfo}>
-                                        <h3 className={styles.memberName}>{member.name}</h3>
-                                        {member.email && (
-                                            <p className={styles.memberMeta}>{member.email}</p>
-                                        )}
-                                    </div>
-                                </article>
+                                <PersonCard
+                                    key={member._id}
+                                    person={member}
+                                />
                             ))}
                         </div>
                     )}

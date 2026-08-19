@@ -181,57 +181,6 @@
     width: 100%;
 }
 
-.memberCard {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3);
-
-    background-color: #ffffff;
-    border-radius: var(--radius-md);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    border-left: 4px solid var(--information2);
-}
-
-.avatar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background-color: var(--bg-light, #f9fafb);
-    color: var(--information2);
-    flex-shrink: 0;
-}
-
-.avatar svg {
-    width: 20px;
-    height: 20px;
-}
-
-.memberInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-}
-
-.memberName {
-    margin: 0;
-    font-size: var(--text-md);
-    font-weight: 600;
-    color: var(--information2);
-    line-height: 1.2;
-}
-
-.memberMeta {
-    margin: 0;
-    font-size: var(--text-xs);
-    color: var(--text-3);
-}
 
 /* =========================
    États de chargement / vide
