@@ -10,6 +10,7 @@ import JoinGroup from './pages/groups/JoinGroup.jsx'
 
 import Events from './pages/events/Events.jsx'
 import CreateEvent from './pages/events/CreateEvent.jsx'
+import EventResponses from './pages/events/EventResponses.jsx'
 
 import Profile from './pages/profile/Profile.jsx'
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route path='/groups/:id/pending-requests' element={<PendingRequests />} />
 
           <Route path="/events" element={<Events />} />
+          <Route path="/events/:eventId/responses" element={<EventResponses />} />
           <Route path="/create-event" element={<CreateEvent />} />
 
 
