@@ -120,6 +120,7 @@ const GroupMembers = () => {
                                 <PersonCard
                                     key={member._id}
                                     person={member}
+                                    showEmail={isCoach}
                                 />
                             ))}
                         </div>

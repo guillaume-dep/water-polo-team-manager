@@ -7,13 +7,17 @@ import { deleteEvent } from '../api/events.js'
 import ROLE from '../../../shared/utils/role.js'
 import EVENT_TYPE from '../../../shared/utils/eventType.js'
 import styles from '../styles/events/eventCard.module.css'
+import { useNavigate } from 'react-router-dom'
 
 export const EventCard = ({ event, onDelete }) => {
     const { user } = useAuth()
+    const navigate = useNavigate()
     const formattedDate = formatEventDate(event.date)
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
+
+    /* --- UTILS --- */
 
     const eventTypeLabel = event.eventType === EVENT_TYPE.TRAINING
         ? 'Entraînement'
@@ -25,6 +29,10 @@ export const EventCard = ({ event, onDelete }) => {
         event.name.toLowerCase().includes(eventTypeLabel.toLowerCase())
 
     const isCoach = user?.role === ROLE.COACH
+
+
+
+    /* --- DELETE EVENT --- */
 
     const handleDelete = async () => {
         try {
@@ -76,6 +84,25 @@ export const EventCard = ({ event, onDelete }) => {
 
                     {isCoach && (
                         <div className={styles.actionsContainer}>
+                            <button
+                                type="button"
+                                onClick={() => navigate(`/events/${event._id}/responses`)}
+                                className={styles.moreButton}
+                                title="Voir les réponses"
+                                aria-label="Voir les réponses"
+                            >
+                                <svg
+                                    className={styles.arrowIcon}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </button>
                             {!showDeleteConfirm ? (
                                 <button
                                     type="button"
