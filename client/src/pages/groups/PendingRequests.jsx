@@ -86,7 +86,7 @@ const PendingRequests = () => {
                         className={styles.requestCard}
                     >
                         <div className={styles.personWrapper}>
-                            <PersonCard person={person} showEmail={false} />
+                            <PersonCard person={person} showEmail={true} />
                         </div>
 
                         <div className={styles.actions}>
