@@ -111,23 +111,16 @@ const Responses = ({
                         onClick={() => handleStatusClick('uncertain')}
                     >
                         <svg
+                            xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
-                            aria-hidden="true"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="3"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                         >
-                            <path
-                                d="M9.5 9a2.5 2.5 0 1 1 4.3 1.8c-.8.8-1.8 1.2-1.8 2.7"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                            />
-
-                            <circle
-                                cx="12"
-                                cy="17"
-                                r="1"
-                                fill="currentColor"
-                            />
+                            <path d="M7.5 8a4.5 4.5 0 1 1 9 0c0 3-4.5 4.5-4.5 5.5" />
+                            <circle cx="12" cy="18" r="0.5" fill="currentColor" />
                         </svg>
                     </button>
 

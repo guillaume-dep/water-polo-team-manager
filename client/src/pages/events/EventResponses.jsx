@@ -31,7 +31,14 @@ const EventResponses = () => {
     }
 
     if (responses.length === 0) {
-        return <p>Aucune réponse pour le moment.</p>
+        return (
+            <main className={styles.container}>
+                <h1 className={styles.title}>Réponses</h1>
+                <div className={styles.stateContainer}>
+                    <p className={styles.infoText}>Aucune réponse pour le moment.</p>
+                </div>
+            </main>
+        )
     }
 
     const renderStatus = (status) => {
@@ -77,13 +84,12 @@ const EventResponses = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2.5"
+                    strokeWidth="3"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                 >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4" />
-                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                    <path d="M7.5 8a4.5 4.5 0 1 1 9 0c0 3-4.5 4.5-4.5 5.5" />
+                    <circle cx="12" cy="18" r="0.5" fill="currentColor" />
                 </svg>
             </span>
         )
@@ -91,7 +97,7 @@ const EventResponses = () => {
 
     return (
         <main className={styles.container}>
-            <h1>Réponses</h1>
+            <h1 className={styles.title}>Réponses</h1>
 
             <div className={styles.responsesList}>
                 {responses.map((response) => (
