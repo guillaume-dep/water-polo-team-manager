@@ -11,9 +11,9 @@ const Events = () => {
 
             <div className={styles.eventsList}>
                 {isLoading ? (
-                    <p>Chargement de vos événements...</p>
+                    <p className={styles.loadingText}>Chargement de vos événements...</p>
                 ) : events.length === 0 ? (
-                    <p>Aucun événement prévu.</p>
+                    <p className={styles.emptyText}>Aucun événement prévu pour le moment.</p>
                 ) : (
                     events.map((event) => (
                         <EventCard
