@@ -104,3 +104,33 @@
     font-size: var(--text-sm);
     padding: var(--space-4) 0;
 }
+
+.statusIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.statusIcon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.accepted {
+    background-color: var(--success);
+    color: var(--white-text);
+}
+
+.rejected {
+    background-color: var(--absent);
+    color: var(--white-text);
+}
+
+.uncertain {
+    background-color: var(--uncertain);
+    color: var(--white-text);
+}

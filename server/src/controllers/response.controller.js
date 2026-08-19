@@ -69,7 +69,7 @@ export const getResponses = async (req, res) => {
         const event = await findEventById(req.params.eventId)
         checkEventInGroup(group, event)
 
-        const responses = await Responses.find({ event: req.params.eventId })
+        const responses = await Responses.find({ event: req.params.eventId }).populate('user', 'name')
 
         res.json(responses)
     }
