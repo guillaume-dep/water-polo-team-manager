@@ -31,6 +31,25 @@
 }
 
 /* =========================
+   Flèche de navigation
+   ========================= */
+
+.arrowContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: var(--space-1);
+}
+
+.arrowIcon {
+    width: 20px;
+    height: 20px;
+    color: var(--text-3);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* =========================
    Bloc Visuel / Icône
    ========================= */
 
