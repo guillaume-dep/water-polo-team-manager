@@ -26,7 +26,7 @@
     margin: 0 0 var(--space-6, 24px) 0;
     font-size: var(--text-xl, 1.25rem);
     font-weight: 700;
-    color: var(--text-primary, #111827);
+    color: var(--information2);
     text-align: center;
 }
 
@@ -89,7 +89,7 @@
     font-size: var(--text-base, 1rem);
     font-weight: 600;
     color: var(--white-text, #ffffff);
-    background-color: var(--text-primary);
+    background-color: var(--information2);
     border: none;
     border-radius: var(--radius-md, 8px);
     cursor: pointer;
@@ -98,7 +98,7 @@
 }
 
 .submitButton:hover:not(:disabled) {
-    background-color: var(--information1);
+    background-color: var(--information2);
 }
 
 .submitButton:active:not(:disabled) {

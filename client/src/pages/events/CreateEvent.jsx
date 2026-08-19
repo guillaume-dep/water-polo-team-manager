@@ -40,7 +40,7 @@ const CreateEvent = () => {
 
             setTimeout(() => {
                 navigate('/')
-            }, 1500)
+            }, 1000)
         }
         catch (err) {
             console.error("An error occured while creating an event", err)
