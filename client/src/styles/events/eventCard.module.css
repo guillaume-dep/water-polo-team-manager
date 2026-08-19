@@ -71,6 +71,9 @@
     font-weight: 600;
     color: var(--text-secondary);
     line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .eventDetails p {
@@ -110,15 +113,21 @@
    Zone d'actions Coach
    ========================= */
 
+.actionsDivider {
+    align-self: stretch;
+    width: 1px;
+    background-color: var(--text-3);
+    opacity: 0.3;
+    flex-shrink: 0;
+}
+
 .actionsContainer {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
+    gap: 6px;
     flex-shrink: 0;
-    position: relative;
-    /* Conserve une largeur constante pour éviter les décalages du titre */
-    min-width: 30px;
-    height: 30px;
 }
 
 .deleteIconButton {
@@ -154,17 +163,11 @@
 
 .deleteConfirmGroup {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 6px;
-
-    /* Ancrage à droite pour ne pas pousser le titre vers la gauche */
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-
     background-color: #ffffff;
-    padding: 2px;
+    padding: 4px;
     border-radius: 20px;
 }
 
@@ -209,4 +212,36 @@
 .confirmNo {
     background-color: var(--absent);
     color: var(--white-text);
+}
+
+/* MORE BUTTON */
+
+.moreButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.moreButton:hover {
+    background-color: var(--bg-light, #f3f4f6);
+    color: var(--text-primary);
+}
+
+.moreButton:active {
+    transform: scale(0.95);
+}
+
+.arrowIcon {
+    width: 20px;
+    height: 20px;
+    display: block;
 }
