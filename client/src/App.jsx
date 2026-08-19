@@ -40,7 +40,7 @@ const App = () => {
           <Route path='/groups/:id/pending-requests' element={<PendingRequests />} />
 
           <Route path="/events" element={<Events />} />
-          <Route path="/events/:eventId/responses" element={<EventResponses />} />
+          <Route path="/groups/:id/events/:eventId/responses" element={<EventResponses />} />
           <Route path="/create-event" element={<CreateEvent />} />
 
 
