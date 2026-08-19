@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/create" element={<CreateGroup />} />
           <Route path="/groups/join" element={<JoinGroup />} />
-          <Route path="/groups/:id/group-members" element={<GroupMembers />} />
+          <Route path="/groups/:id/members" element={<GroupMembers />} />
           <Route path='/groups/:id/pending-requests' element={<PendingRequests />} />
 
           <Route path="/events" element={<Events />} />
