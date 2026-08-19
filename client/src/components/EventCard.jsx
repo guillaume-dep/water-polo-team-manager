@@ -30,13 +30,13 @@ export const EventCard = ({ event, onDelete }) => {
         try {
             setIsDeleting(true)
 
-            await deleteEvent(event.group, event._id)
+            await deleteEvent(event.group._id, event._id)
             onDelete(event._id)
 
             setShowDeleteConfirm(false)
         } catch (err) {
             console.error(
-                "Erreur lors de la suppression de l'événement",
+                "Error occured while deleting an event",
                 err
             )
         } finally {
@@ -69,11 +69,9 @@ export const EventCard = ({ event, onDelete }) => {
                     <div className={styles.titleAndTag}>
                         <h3>{event.name}</h3>
 
-                        {eventTypeLabel && !titleContainsType && (
-                            <span className={styles.eventTypeTag}>
-                                {eventTypeLabel}
-                            </span>
-                        )}
+                        <span className={styles.eventTypeTag}>
+                            {event.group?.name}
+                        </span>
                     </div>
 
                     {isCoach && (
@@ -129,7 +127,7 @@ export const EventCard = ({ event, onDelete }) => {
                 </div>
 
                 <p>
-                    {formattedDate.time} • {event.location} • {event.group?.name}
+                    {!titleContainsType && `${eventTypeLabel} •`}  {formattedDate.time} • {event.location}
                 </p>
 
                 {!isCoach && (
