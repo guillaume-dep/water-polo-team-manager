@@ -1,6 +1,7 @@
 import styles from '../styles/personCard.module.css'
 
 const PersonCard = ({ person }) => {
+    console.log(person.email)
     return (
         <article key={person._id} className={styles.memberCard}>
             <div className={styles.avatar}>

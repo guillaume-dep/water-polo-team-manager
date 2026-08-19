@@ -136,8 +136,8 @@ export const getGroup = async (req, res) => {
 
         /* Same object as group but with real documents instead of ids*/
         const populated = await group.populate([
-            { path: 'coach', select: 'name' },
-            { path: 'members', select: 'name' }
+            { path: 'coach', select: 'name email' },
+            { path: 'members', select: 'name email' }
         ])
 
         const isCoach = group.coach._id.toString() === req.user.id
