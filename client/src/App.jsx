@@ -15,6 +15,8 @@ import Profile from './pages/profile/Profile.jsx'
 
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import ProtectedLayout from './components/ProtectedLayout.jsx'
+import PendingRequests from './pages/groups/PendingRequests.jsx'
+import GroupMembers from './pages/groups/GroupMembers.jsx'
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/create" element={<CreateGroup />} />
           <Route path="/groups/join" element={<JoinGroup />} />
+          <Route path="/groups/:id/group-members" element={<GroupMembers />} />
+          <Route path='/groups/:id/pending-requests' element={<PendingRequests />} />
 
           <Route path="/events" element={<Events />} />
           <Route path="/create-event" element={<CreateEvent />} />
