@@ -1,7 +1,5 @@
 const PendingRequests = () => {
 
-
-
     return (
         <div>Pending requests</div>
     )

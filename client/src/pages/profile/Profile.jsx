@@ -29,18 +29,22 @@ const Profile = () => {
 
     return (
         <main className={styles.container}>
-            <h1 className={styles.title}>Votre profil</h1>
+            <h1 className={styles.title}>Mon compte</h1>
 
-            <div className={styles.cardWrapper}>
-                <PersonCard person={user} />
-            </div>
+            {/* Bloc 1 : Informations */}
+            <section className={styles.infoCard}>
+                <div className={styles.cardWrapper}>
+                    <PersonCard person={user} />
+                </div>
 
-            <div className={styles.roleSection}>
-                <span className={styles.roleLabel}>Rôle</span>
-                <span className={styles.roleBadge}>{roleLabel}</span>
-            </div>
+                <div className={styles.roleSection}>
+                    <span className={styles.roleLabel}>Rôle</span>
+                    <span className={styles.roleBadge}>{roleLabel}</span>
+                </div>
+            </section>
 
-            <div className={styles.logoutWrapper}>
+            {/* Bloc 2 : Déconnexion */}
+            <section className={styles.logoutCard}>
                 <button
                     onClick={handleLogout}
                     className={styles.logoutButton}
@@ -62,7 +66,7 @@ const Profile = () => {
                     </svg>
                     <span>Se déconnecter</span>
                 </button>
-            </div>
+            </section>
         </main>
     )
 }

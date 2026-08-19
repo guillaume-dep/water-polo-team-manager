@@ -1,7 +1,30 @@
 .container {
     width: 100%;
     max-width: 500px;
+    height: calc(100dvh - 2 * var(--space-4));
+    /* Hauteur fixe basée sur le viewport */
     margin: var(--space-4) auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    box-sizing: border-box;
+}
+
+.title {
+    margin: 0;
+    font-size: var(--text-2xl, 1.25rem);
+    font-weight: 700;
+    color: var(--information2);
+    text-align: center;
+}
+
+/* =========================
+   Bloc 1 : Carte d'Information
+   ========================= */
+
+.infoCard {
+    width: 100%;
+    box-sizing: border-box;
     padding: var(--space-4);
     background-color: var(--white-text, #ffffff);
     border-radius: var(--radius-lg, 12px);
@@ -11,23 +34,11 @@
     gap: var(--space-4);
 }
 
-.title {
-    margin: 0;
-    font-size: var(--text-xl, 1.25rem);
-    font-weight: 700;
-    color: var(--information2);
-    text-align: center;
-}
-
 .cardWrapper {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
-/* =========================
-   Section Rôle
-   ========================= */
 
 .roleSection {
     display: flex;
@@ -58,12 +69,18 @@
 }
 
 /* =========================
-   Bouton Déconnexion
+   Bloc 2 : Carte Déconnexion
    ========================= */
 
-.logoutWrapper {
+.logoutCard {
     width: 100%;
-    margin-top: var(--space-2);
+    box-sizing: border-box;
+    padding: var(--space-3);
+    background-color: var(--white-text, #ffffff);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: auto;
+    /* Maintient le bloc collé en bas sans pousser au-delà de l'écran */
 }
 
 .logoutButton {
