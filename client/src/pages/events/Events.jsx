@@ -3,7 +3,6 @@ import { EventCard } from '../../components/EventCard.jsx'
 import styles from '../../styles/events/events.module.css'
 
 const Events = () => {
-    // Sans paramètre limit pour récupérer TOUS les événements futurs
     const { events, isLoading, removeEvent } = useEvents()
 
     return (
@@ -12,7 +11,7 @@ const Events = () => {
 
             <div className={styles.eventsList}>
                 {isLoading ? (
-                    <p>Chargement des événements...</p>
+                    <p>Chargement de vos événements...</p>
                 ) : events.length === 0 ? (
                     <p>Aucun événement prévu.</p>
                 ) : (
