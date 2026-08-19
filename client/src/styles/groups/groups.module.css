@@ -43,6 +43,7 @@
     width: 36px;
     height: 36px;
     background-color: var(--information2);
+    padding: 0;
     color: var(--white-text);
     border-radius: 50%;
     text-decoration: none;
@@ -51,8 +52,9 @@
 }
 
 .addButton svg {
-    width: 20px;
-    height: 20px;
+    display: block;
+    width: 22px;
+    height: 22px;
 }
 
 .addButton:hover {
