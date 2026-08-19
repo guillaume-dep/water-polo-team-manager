@@ -1,6 +1,6 @@
 import styles from '../styles/personCard.module.css'
 
-const PersonCard = ({ person, showEmail = false }) => {
+const PersonCard = ({ person, showEmail = false, eventResponses, showResponses = false }) => {
     return (
         <article className={styles.memberCard}>
             <div className={styles.avatar}>
@@ -28,6 +28,7 @@ const PersonCard = ({ person, showEmail = false }) => {
                     </p>
                 )}
             </div>
+            {showResponses && eventResponses}
         </article>
     )
 }
