@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import styles from '../../styles/groups/groupCard.module.css'
 
 const GroupCard = ({ groups, isLoading }) => {
@@ -23,7 +24,11 @@ const GroupCard = ({ groups, isLoading }) => {
         return (
             <div className={styles.list}>
                 {groups.map((group) => (
-                    <article className={styles.groupCard} key={group._id}>
+                    <NavLink
+                        key={group._id}
+                        to={`/groups/${group._id}/members`}
+                        className={styles.groupCard}
+                    >
                         <div className={styles.groupIconContainer}>
                             <svg
                                 className={styles.groupIcon}
@@ -45,14 +50,33 @@ const GroupCard = ({ groups, isLoading }) => {
                             <div className={styles.groupHeaderInfo}>
                                 <div className={styles.titleAndTag}>
                                     <h3>{group.name}</h3>
+
                                     <span className={styles.codeTag}>
                                         Code - {group.code}
                                     </span>
                                 </div>
                             </div>
-                            <p>{group.coach.name}</p>
+
+                            <p>
+                                Coach : {group.coach?.name}
+                            </p>
                         </div>
-                    </article>
+
+                        {/* Flèche d'indication de lien */}
+                        <div className={styles.arrowContainer}>
+                            <svg
+                                className={styles.arrowIcon}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                        </div>
+                    </NavLink>
                 ))}
             </div>
         )
