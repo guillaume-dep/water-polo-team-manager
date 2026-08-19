@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { createResponse, updateResponse, getMyResponse } from '../api/responses.js'
 
 export const useEventResponse = (event) => {
-    const groupId = event?.group
+    const groupId = event?.group._id
     const eventId = event?._id
 
     const [currentStatus, setCurrentStatus] = useState(null)
