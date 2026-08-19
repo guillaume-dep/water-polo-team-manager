@@ -73,18 +73,10 @@
     color: #ffffff;
 }
 
-.acceptButton:hover {
-    background-color: #16a34a;
-}
-
 /* Bouton Refuser (Rouge) */
 .rejectButton {
     background-color: #ef4444;
     color: #ffffff;
-}
-
-.rejectButton:hover {
-    background-color: #dc2626;
 }
 
 .acceptButton:active,
