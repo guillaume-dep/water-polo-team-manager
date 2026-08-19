@@ -1,6 +1,6 @@
 import styles from '../styles/personCard.module.css'
 
-const PersonCard = ({ person, showEmail = false, eventResponses, showResponses = false }) => {
+const PersonCard = ({ person, showEmail = false, children, showResponses = false }) => {
     return (
         <article className={styles.memberCard}>
             <div className={styles.avatar}>
@@ -28,7 +28,8 @@ const PersonCard = ({ person, showEmail = false, eventResponses, showResponses =
                     </p>
                 )}
             </div>
-            {showResponses && eventResponses}
+
+            {showResponses && children}
         </article>
     )
 }

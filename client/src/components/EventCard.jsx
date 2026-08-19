@@ -1,24 +1,23 @@
-import EventResponse from '../pages/events/EventResponse.jsx'
 import { useState } from 'react'
-import { formatEventDate } from '../utils/date.js'
+import { useNavigate } from 'react-router-dom'
+import EventResponse from '../pages/events/EventResponse.jsx'
 import { useAuth } from '../context/hooks/useAuth.js'
 import { deleteEvent } from '../api/events.js'
-
+import { formatEventDate } from '../utils/date.js'
 import ROLE from '../../../shared/utils/role.js'
 import EVENT_TYPE from '../../../shared/utils/eventType.js'
-import { useNavigate } from 'react-router-dom'
 
 import styles from '../styles/events/eventCard.module.css'
 
 export const EventCard = ({ event, onDelete }) => {
     const { user } = useAuth()
     const navigate = useNavigate()
-    const formattedDate = formatEventDate(event.date)
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
 
-    /* --- UTILS --- */
+    const isCoach = user?.role === ROLE.COACH
+    const formattedDate = formatEventDate(event.date)
 
     const eventTypeLabel = event.eventType === EVENT_TYPE.TRAINING
         ? 'Entraînement'
@@ -29,25 +28,14 @@ export const EventCard = ({ event, onDelete }) => {
     const titleContainsType = event.name && eventTypeLabel &&
         event.name.toLowerCase().includes(eventTypeLabel.toLowerCase())
 
-    const isCoach = user?.role === ROLE.COACH
-
-
-
-    /* --- DELETE EVENT --- */
-
     const handleDelete = async () => {
         try {
             setIsDeleting(true)
-
             await deleteEvent(event.group._id, event._id)
             onDelete(event._id)
-
             setShowDeleteConfirm(false)
         } catch (err) {
-            console.error(
-                "Error occured while deleting an event",
-                err
-            )
+            console.error("Error occured while deleting an event", err)
         } finally {
             setIsDeleting(false)
         }
@@ -72,12 +60,10 @@ export const EventCard = ({ event, onDelete }) => {
                     </div>
                 </div>
 
-                <p>{!titleContainsType && `${eventTypeLabel} •`} {formattedDate.time} </p>
+                <p>{!titleContainsType && `${eventTypeLabel} •`} {formattedDate.time}</p>
                 <p>{event.location}</p>
 
-                {!isCoach && (
-                    <EventResponse event={event} />
-                )}
+                {!isCoach && <EventResponse event={event} />}
             </div>
 
             <div className={styles.actionsDivider} />
@@ -85,7 +71,7 @@ export const EventCard = ({ event, onDelete }) => {
             <div className={styles.actionsContainer}>
                 <button
                     type="button"
-                    onClick={() => navigate(`/events/${event._id}/responses`)}
+                    onClick={() => navigate(`/groups/${event.group._id}/events/${event._id}/responses`)}
                     className={styles.moreButton}
                     title="Voir les réponses"
                     aria-label="Voir les réponses"
@@ -105,22 +91,7 @@ export const EventCard = ({ event, onDelete }) => {
                 </button>
 
                 {isCoach && (
-                    !showDeleteConfirm ? (
-                        <button
-                            type="button"
-                            onClick={() => setShowDeleteConfirm(true)}
-                            className={styles.deleteIconButton}
-                            title="Supprimer l'événement"
-                            aria-label="Supprimer l'événement"
-                        >
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                            </svg>
-                        </button>
-                    ) : (
+                    showDeleteConfirm ? (
                         <div className={styles.deleteConfirmGroup}>
                             <button
                                 type="button"
@@ -148,6 +119,21 @@ export const EventCard = ({ event, onDelete }) => {
                                 </svg>
                             </button>
                         </div>
+                    ) : (
+                        <button
+                            type="button"
+                            onClick={() => setShowDeleteConfirm(true)}
+                            className={styles.deleteIconButton}
+                            title="Supprimer l'événement"
+                            aria-label="Supprimer l'événement"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </button>
                     )
                 )}
             </div>
