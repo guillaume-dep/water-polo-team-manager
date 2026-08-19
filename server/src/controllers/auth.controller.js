@@ -33,7 +33,7 @@ export const register = async (req, res) => {
         setTokenCookie(res, token)
 
         /* success */
-        res.status(201).json({ id: user._id, name: user.name, role: user.role })
+        res.status(201).json({ id: user._id, name: user.name, role: user.role, email: user.email, })
     }
 
     catch (err) {
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
         setTokenCookie(res, token)
 
         /* success */
-        res.status(200).json({ id: user._id, name: user.name, role: user.role })
+        res.status(200).json({ id: user._id, name: user.name, role: user.role, email: user.email })
     }
 
     catch (err) {
