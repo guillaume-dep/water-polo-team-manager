@@ -72,9 +72,10 @@ const GroupMembers = () => {
                     <div className={styles.groupMainInfo}>
                         <h1 className={styles.groupTitle}>{group.name}</h1>
 
-                        <span className={styles.codeTag}>
+                        {isCoach && <span className={styles.codeTag}>
                             Code - {group.code}
-                        </span>
+                        </span>}
+
                         <p className={styles.coachName}>
                             Coach : {group.coach?.name || 'Non assigné'}
                         </p>

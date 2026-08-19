@@ -1,7 +1,11 @@
+import { useAuth } from '../context/hooks/useAuth'
+import ROLE from '../../../shared/utils/role'
+
 import styles from '../styles/personCard.module.css'
 
 const PersonCard = ({ person }) => {
-    console.log(person.email)
+    const { user } = useAuth()
+    const isCoach = user.role === ROLE.COACH
     return (
         <article key={person._id} className={styles.memberCard}>
             <div className={styles.avatar}>
@@ -19,7 +23,7 @@ const PersonCard = ({ person }) => {
             </div>
             <div className={styles.memberInfo}>
                 <h3 className={styles.memberName}>{person.name}</h3>
-                {person.email && (
+                {isCoach && person.email && (
                     <p className={styles.memberMeta}>{person.email}</p>
                 )}
             </div>
