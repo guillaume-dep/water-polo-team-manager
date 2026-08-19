@@ -3,16 +3,14 @@ import { useState } from 'react'
 import { formatEventDate } from '../utils/date.js'
 import { useAuth } from '../context/hooks/useAuth.js'
 import { deleteEvent } from '../api/events.js'
-import { useEffect } from 'react'
+
 import ROLE from '../../../shared/utils/role.js'
 import EVENT_TYPE from '../../../shared/utils/eventType.js'
 import styles from '../styles/events/eventCard.module.css'
-import { getGroup } from '../api/groups.js'
 
 export const EventCard = ({ event, onDelete }) => {
     const { user } = useAuth()
     const formattedDate = formatEventDate(event.date)
-    const [group, setGroup] = useState(null)
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
@@ -27,23 +25,6 @@ export const EventCard = ({ event, onDelete }) => {
         event.name.toLowerCase().includes(eventTypeLabel.toLowerCase())
 
     const isCoach = user?.role === ROLE.COACH
-
-    useEffect(() => {
-        const fetchGroup = async () => {
-            try {
-                const group = await getGroup(event.group)
-                setGroup(group)
-            } catch (err) {
-                console.error(
-                    'Error occured while retrieving the group of the event',
-                    err
-                )
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        fetchGroup()
-    }, [event.group])
 
     const handleDelete = async () => {
         try {
@@ -148,7 +129,7 @@ export const EventCard = ({ event, onDelete }) => {
                 </div>
 
                 <p>
-                    {formattedDate.time} • {event.location} • {group?.name}
+                    {formattedDate.time} • {event.location} • {event.group?.name}
                 </p>
 
                 {!isCoach && (

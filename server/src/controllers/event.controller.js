@@ -34,8 +34,7 @@ export const getEventsFromGroup = async (req, res) => {
     try {
         const group = await findGroupById(req.params.id)
         checkIsMemberOrCoach(group, req.user.id)
-        const events = await Events.find({ group: group._id })
-
+        const events = await Events.find({ group: group._id }).populate('group', 'name')
         res.json(events)
     }
 
