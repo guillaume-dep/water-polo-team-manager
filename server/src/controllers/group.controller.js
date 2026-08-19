@@ -54,11 +54,15 @@ export const joinGroup = async (req, res) => {
         if (!group) throw new AppError("Group not found", 404)
 
         /* func alreadyInGroup, invert of checkIsMember */
-        if (group.members.includes(req.user.id)) {
+        if (group.members.some(id => id.toString() === req.user.id)) {
             throw new AppError("Already in the group", 409)
         }
 
-        group.members.push(req.user.id)
+        if (group.pendingMembers.some(id => id.toString() === req.user.id)) {
+            throw new AppError("Already asked for joining the group", 409)
+        }
+
+        group.pendingMembers.push(req.user.id)
         await group.save(); /* Mongoose sends a request to the DB */
 
         res.json({
@@ -67,6 +71,60 @@ export const joinGroup = async (req, res) => {
         })
     }
     catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
+    }
+}
+
+export const getJoinRequests = async (req, res) => {
+    try {
+        const group = await findGroupById(req.params.id)
+        checkIsCoach(group, req.user.id)
+
+        const populatedGroup = await group.populate('pendingMembers', 'name email')
+        res.status(200).json(populatedGroup.pendingMembers)
+
+    } catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
+    }
+}
+
+export const acceptJoinRequest = async (req, res) => {
+    try {
+        const group = await findGroupById(req.params.id)
+        checkIsCoach(group, req.user.id)
+
+        const userId = req.params.userId
+        if (!group.pendingMembers.some(id => id.toString() === userId)) {
+            throw new AppError('Request not found', 404)
+        }
+
+        group.pendingMembers = group.pendingMembers.filter(id => id.toString() !== userId)
+        group.members.push(userId)
+        await group.save()
+
+        res.status(200).json({ message: 'Player accepted' })
+
+    } catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
+    }
+}
+
+export const rejectJoinRequest = async (req, res) => {
+    try {
+        const group = await findGroupById(req.params.id)
+        checkIsCoach(group, req.user.id)
+
+        const userId = req.params.userId
+        if (!group.pendingMembers.some(id => id.toString() === userId)) {
+            throw new AppError('Request not found', 404)
+        }
+
+        group.pendingMembers = group.pendingMembers.filter(id => id.toString() !== userId)
+        await group.save()
+
+        res.status(200).json({ message: 'Player rejected' })
+
+    } catch (err) {
         res.status(err.status || 500).json({ message: err.message })
     }
 }
