@@ -5,13 +5,17 @@ import PersonCard from '../../components/PersonCard.jsx'
 
 import wpBall from '../../../images/wp-ball.jpg'
 import styles from '../../styles/groups/groupMembers.module.css'
+import { useAuth } from '../../context/hooks/useAuth.js'
+import ROLE from '../../../../shared/utils/role.js'
 
 const GroupMembers = () => {
     const groupId = useParams().id
+    const { user } = useAuth()
 
     const [group, setGroup] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
+    const isCoach = user.role === ROLE.COACH
     useEffect(() => {
         const fetchGroup = async () => {
             try {
@@ -86,7 +90,7 @@ const GroupMembers = () => {
                             </span>
                         </div>
 
-                        <NavLink
+                        {isCoach && <NavLink
                             to={`/groups/${groupId}/pending-requests`}
                             className={styles.actionBtn}
                         >
@@ -102,7 +106,7 @@ const GroupMembers = () => {
                             >
                                 <polyline points="9 18 15 12 9 6" />
                             </svg>
-                        </NavLink>
+                        </NavLink>}
                     </div>
 
                     {group.members.length === 0 ? (
