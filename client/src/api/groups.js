@@ -16,10 +16,34 @@ export const joinGroup = async (code) => {
     return res.data;
 };
 
+/* POST call to accept a player */
+export const acceptJoinRequest = async (groupId, userId) => {
+    const res = await api.post(
+        `/groups/${groupId}/join-requests/${userId}`
+    )
+
+    return res.data
+}
+
+/* POST call to reject a player */
+export const rejectJoinRequest = async (groupId, userId) => {
+    const res = await api.delete(
+        `/groups/${groupId}/join-requests/${userId}`
+    )
+
+    return res.data
+}
+
+/* GET call to visualize the players who requested to join */
+export const getJoinRequests = async (groupId) => {
+    const res = await api.get(`/groups/${groupId}/join-requests`)
+    return res.data
+}
+
 /* GET call to search for a group by its code */
 export const searchGroupByCode = async (code) => {
     const res = await api.get("/groups/", {
-        params: code /* req.query (backend) */
+        params: { code } /* req.query (backend) */
     })
     return res.data
 }
