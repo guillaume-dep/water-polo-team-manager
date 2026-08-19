@@ -7,23 +7,24 @@ import Responses from "./response.model.js";
  * A group is a bunch of User
  */
 const groupSchema = new mongoose.Schema({
-    name: {type: String, required: true, trim: true, minlength: 2, maxlength: 30},
-    code: {type: String, required: true, unique: true},
-    coach: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
-}, {timestamps: true});
+    name: { type: String, required: true, trim: true, minlength: 2, maxlength: 30 },
+    code: { type: String, required: true, unique: true },
+    coach: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    pendingMembers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
+}, { timestamps: true });
 
 /* Executed before deleting */
-groupSchema.pre('findOneAndDelete', async function() {
-    try{
+groupSchema.pre('findOneAndDelete', async function () {
+    try {
         const groupId = this.getQuery()._id /* this = current request ; return the filter */
 
-        const events = await Events.find({group: groupId})
-        for (const event of events){
+        const events = await Events.find({ group: groupId })
+        for (const event of events) {
             await Events.findByIdAndDelete(event._id) /* Cascading deletion continues with Events */
         }
     }
-    catch(err){
+    catch (err) {
         throw err
     }
 })
