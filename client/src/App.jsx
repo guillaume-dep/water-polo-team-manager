@@ -26,11 +26,9 @@ const App = () => {
   return (
     <Routes>
 
-      {/* Public */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* Authenticated */}
       <Route element={<ProtectedRoute />}>
         <Route element={<ProtectedLayout />}>
 
