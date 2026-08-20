@@ -4,7 +4,6 @@ import { useEventResponse } from "../../hooks/useEventResponse"
 const EventResponse = ({ event }) => {
     const {
         currentStatus,
-        currentComment,
         isSubmitting,
         isLoading,
         handleResponseChange
@@ -13,7 +12,6 @@ const EventResponse = ({ event }) => {
     return (
         <Responses
             currentStatus={currentStatus}
-            currentComment={currentComment}
             onResponseChange={handleResponseChange}
             disabled={isSubmitting || isLoading}
         />

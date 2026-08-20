@@ -21,6 +21,7 @@
     justify-content: space-between;
 
     gap: var(--space-2);
+    padding-top: 20px;
 }
 
 .responseLabel {
@@ -102,76 +103,4 @@
 
 .responseButton:disabled {
     cursor: default;
-}
-
-/* =========================
-   Commentaire
-   ========================= */
-
-.commentSection {
-    width: 100%;
-    min-width: 0;
-}
-
-.commentInputGroup {
-    width: 100%;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-}
-
-.commentInput {
-    flex: 1;
-    min-width: 0;
-    width: 100%;
-    height: 36px;
-    padding: 0 var(--space-2);
-    border: 1px solid var(--text-3);
-    border-radius: var(--radius-md);
-    background-color: var(--white-bg);
-    color: var(--text-secondary);
-    font-family: var(--font-main);
-    font-size: var(--text-xs);
-    outline: none;
-    transition: border-color 0.2s ease;
-}
-
-.commentInput::placeholder {
-    color: var(--text-secondary);
-}
-
-.commentInput:disabled {
-    cursor: default;
-    opacity: 0.5;
-}
-
-/* =========================
-   Bouton envoyer
-   ========================= */
-
-.submitCommentButton {
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: var(--radius-md);
-    background-color: var(--information1);
-    color: var(--white-text);
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.submitCommentButton svg {
-    width: 100%;
-    height: 100%;
-}
-
-.submitCommentButton:disabled {
-    cursor: default;
-    opacity: 0.4;
 }

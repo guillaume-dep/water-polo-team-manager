@@ -4,15 +4,10 @@ import styles from '../../styles/responses/responses.module.css'
 
 const Responses = ({
     currentStatus,
-    currentComment,
     onResponseChange,
     disabled
 }) => {
     const [comment, setComment] = useState('')
-
-    useEffect(() => {
-        setComment(currentComment ?? '')
-    }, [currentComment])
 
     const handleStatusClick = (status) => {
         console.log('1. CLICK', status)
@@ -22,14 +17,6 @@ const Responses = ({
         if (disabled || !onResponseChange) return
 
         onResponseChange(status, comment)
-    }
-
-    const handleCommentSubmit = (e) => {
-        e.preventDefault()
-
-        if (disabled || !onResponseChange || !currentStatus) return
-
-        onResponseChange(currentStatus, comment)
     }
 
     const getButtonClass = (status, colorClass) => {
@@ -124,55 +111,6 @@ const Responses = ({
 
                 </div>
             </div>
-
-            <form
-                onSubmit={handleCommentSubmit}
-                className={styles.commentSection}
-            >
-                <div className={styles.commentInputGroup}>
-
-                    <input
-                        type="text"
-                        placeholder="Ajouter un commentaire..."
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        disabled={disabled}
-                        className={styles.commentInput}
-                    />
-
-                    <button
-                        type="submit"
-                        disabled={disabled || !comment.trim()}
-                        className={styles.submitCommentButton}
-                        aria-label="Envoyer le commentaire"
-                    >
-                        <svg
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <path
-                                d="M22 2L11 13"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-
-                            <path
-                                d="M22 2L15 22L11 13L2 9L22 2Z"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </button>
-
-                </div>
-            </form>
-
         </div>
     )
 }
