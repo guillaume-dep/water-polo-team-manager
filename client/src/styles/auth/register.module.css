@@ -159,6 +159,38 @@
     transform: none;
 }
 
+.passwordWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.passwordWrapper .input {
+    padding-right: 42px;
+    /* Pour éviter que le texte chevauche l'icône */
+}
+
+.togglePasswordBtn {
+    position: absolute;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary, #6b7280);
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+
+.togglePasswordBtn svg {
+    width: 20px;
+    height: 20px;
+}
+
 /* =========================================================
    FOOTER (Links)
    ========================================================= */
