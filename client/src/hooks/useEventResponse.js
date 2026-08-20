@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createResponse, updateResponse, getMyResponse } from '../api/responses.js'
 
-export const useEventResponse = (event) => {
+export const useEventResponse = (event, updateResponsesMap) => {
     const groupId = event?.group._id
     const eventId = event?._id
 
@@ -23,7 +23,6 @@ export const useEventResponse = (event) => {
                 const response = await getMyResponse(groupId, eventId)
                 setCurrentStatus(response?.status ?? null)
                 setCurrentComment(response?.comment ?? "")
-
             } catch (err) {
                 console.error('Error occured while retrieving the reponse', err)
             } finally {
@@ -49,6 +48,8 @@ export const useEventResponse = (event) => {
             } else {
                 await createResponse(groupId, eventId, newStatus, newComment)
             }
+            updateResponsesMap?.(eventId, newStatus)
+
         } catch (err) {
             console.error("Error occured while saving response", err)
             setCurrentStatus(previousStatus)

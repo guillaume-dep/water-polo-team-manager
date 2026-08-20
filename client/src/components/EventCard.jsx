@@ -10,7 +10,7 @@ import EVENT_TYPE from '../../../shared/utils/eventType.js'
 
 import styles from '../styles/events/eventCard.module.css'
 
-export const EventCard = ({ event, onDelete }) => {
+export const EventCard = ({ event, onDelete, updateResponsesMap }) => {
     const { user } = useAuth()
     const navigate = useNavigate()
 
@@ -64,10 +64,9 @@ export const EventCard = ({ event, onDelete }) => {
                 <p>{!titleContainsType && `${eventTypeLabel} •`} {formattedDate.time}</p>
                 <p>{event.location}</p>
 
-                {!isCoach && <EventResponse event={event} />}
+                {!isCoach && <EventResponse event={event} updateResponsesMap={updateResponsesMap} />}
             </div>
 
-            {/* À l'intérieur de ta EventCard */}
             <div className={styles.actionsWrapper}>
                 <div className={styles.actionsDivider} />
 
