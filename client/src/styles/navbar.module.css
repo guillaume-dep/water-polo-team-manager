@@ -52,5 +52,14 @@
 }
 
 .active .icon {
-    transform: scale(1.20);
+    transform: scale(1.25);
+}
+
+.button {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.button:focus-visible {
+    box-shadow: 0 0 0 2px var(--text-secondary);
 }

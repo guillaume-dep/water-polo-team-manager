@@ -34,7 +34,7 @@ const EventResponses = () => {
     if (responses.length === 0) {
         return (
             <main className={styles.container}>
-                <h1 className={styles.title}>Réponses</h1>
+                <h1 className={styles.title}>Réponses des joueurs</h1>
                 <div className={styles.stateContainer}>
                     <p className={styles.infoText}>Aucune réponse pour le moment.</p>
                 </div>
@@ -98,7 +98,7 @@ const EventResponses = () => {
 
     return (
         <main className={styles.container}>
-            <h1 className={styles.title}>Réponses</h1>
+            <h1 className={styles.title}>Réponses des joueurs</h1>
 
             <div className={styles.responsesList}>
                 {responses.map((response) => (

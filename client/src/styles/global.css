@@ -184,6 +184,9 @@ button:focus-visible {
   box-shadow: 0 0 0 2px var(--text-secondary);
 }
 
+.navLink {
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* =========================================================
    TABLET / DESKTOP
