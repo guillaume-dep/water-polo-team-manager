@@ -1,133 +1,147 @@
-.container,
-.page {
+.container {
     width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-4, 16px);
     box-sizing: border-box;
 }
 
 .title {
-    font-size: var(--text-2xl);
+    font-size: var(--text-2xl, 24px);
     font-weight: 700;
     color: var(--information2);
     margin: 0;
     text-align: center;
 }
 
-.responsesList {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
+/* Grille à 3 colonnes responsive */
+.columnsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4, 16px);
     width: 100%;
 }
 
-.responseCard {
+@media (min-width: 768px) {
+    .columnsGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Style de chaque colonne/bloc */
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3, 12px);
+    background-color: var(--bg-light, #f9fafb);
+    padding: var(--space-3, 12px);
+    border-radius: var(--radius-md, 12px);
+    border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.columnHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-3);
-    background-color: var(--white-text, #ffffff);
-    border-radius: var(--radius-lg, 12px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    gap: var(--space-3);
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    padding-bottom: var(--space-2, 8px);
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
 }
 
-.responseCard:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+.columnTitle {
+    font-size: var(--text-md, 16px);
+    font-weight: 600;
+    color: var(--information2, #111827);
+    margin: 0;
 }
 
-.personWrapper {
-    flex: 1;
+.present {
+    color: var(--present);
 }
 
-/* =========================
-   Conteneurs d'état (Chargement / Vide)
-   ========================= */
+.uncertain {
+    color: var(--uncertain);
+}
 
-.stateContainer {
-    display: flex;
+.absent {
+    color: var(--absent);
+}
+
+.badge {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    background-color: var(--white-bg, #ffffff);
-    border-radius: var(--radius-lg, 12px);
-    padding: var(--space-2);
-}
-
-.infoText {
-    margin: 0;
     text-align: center;
-    color: var(--text-secondary);
-    font-size: var(--text-sm);
-    font-weight: 500;
+
+    min-width: 24px;
+    height: 24px;
+    padding: 0 6px;
+    box-sizing: border-box;
+
+    border-radius: 50px;
+    font-size: var(--text-sm, 12px);
+    font-weight: 700;
+    line-height: 1;
+    /* Empêche le décalage vertical du texte */
+    color: var(--white-text, #ffffff);
 }
 
-/* =========================
-   Statuts & Action (Flèche)
-   ========================= */
+.badgePresent {
+    background-color: var(--success, #10b981);
+}
 
-.statusAndAction {
+.badgeUncertain {
+    background-color: var(--warning, #f59e0b);
+}
+
+.badgeAbsent {
+    background-color: var(--absent, #ef4444);
+}
+
+/* Liste des cartes */
+.cardsList {
     display: flex;
-    align-items: center;
-    gap: var(--space-2);
+    flex-direction: column;
+    gap: var(--space-2, 8px);
 }
 
+.noData {
+    font-size: var(--text-sm, 14px);
+    color: var(--text-secondary, #6b7280);
+    text-align: center;
+    margin: var(--space-3, 12px) 0;
+}
+
+.loadingText,
+.emptyText {
+    text-align: center;
+    color: var(--text-secondary, #6b7280);
+    font-size: var(--text-sm, 14px);
+    padding: var(--space-4, 16px) 0;
+}
+
+/* Icônes de statut */
 .statusIcon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
 }
 
 .statusIcon svg {
-    width: 18px;
-    height: 18px;
+    width: 100%;
+    height: 100%;
 }
 
 .accepted {
-    background-color: var(--success, #22c55e);
-    color: var(--white-text, #ffffff);
+    color: var(--success, #10b981);
 }
 
 .rejected {
-    background-color: var(--absent, #ef4444);
-    color: var(--white-text, #ffffff);
+    color: var(--absent, #ef4444);
 }
 
 .uncertain {
-    background-color: var(--uncertain, #f59e0b);
-    color: var(--white-text, #ffffff);
-}
-
-/* Bouton flèche */
-.arrowButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    border: none;
-    background: transparent;
-    color: var(--text-secondary);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: color 0.2s ease, transform 0.15s ease;
-}
-
-.arrowButton svg {
-    width: 20px;
-    height: 20px;
-}
-
-.responseCard:hover .arrowButton {
-    color: var(--text-primary);
-    transform: translateX(3px);
+    color: var(--warning, #f59e0b);
 }

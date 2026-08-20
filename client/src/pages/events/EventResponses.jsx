@@ -28,7 +28,11 @@ const EventResponses = () => {
     }, [groupId, eventId])
 
     if (isLoading) {
-        return <p>Chargement des réponses...</p>
+        return (
+            <main className={styles.container}>
+                <p className={styles.loadingText}>Chargement des réponses...</p>
+            </main>
+        )
     }
 
     if (responses.length === 0) {
@@ -36,11 +40,15 @@ const EventResponses = () => {
             <main className={styles.container}>
                 <h1 className={styles.title}>Réponses des joueurs</h1>
                 <div className={styles.stateContainer}>
-                    <p className={styles.infoText}>Aucune réponse pour le moment.</p>
+                    <p className={styles.emptyText}>Aucune réponse pour le moment.</p>
                 </div>
             </main>
         )
     }
+
+    const presents = responses.filter((r) => r.status === RESPONSE_TYPE.PRESENT)
+    const uncertains = responses.filter((r) => r.status === RESPONSE_TYPE.UNCERTAIN || r.status === RESPONSE_TYPE.PENDING)
+    const absents = responses.filter((r) => r.status === RESPONSE_TYPE.ABSENT)
 
     const renderStatus = (status) => {
         if (status === RESPONSE_TYPE.PRESENT) {
@@ -100,16 +108,73 @@ const EventResponses = () => {
         <main className={styles.container}>
             <h1 className={styles.title}>Réponses des joueurs</h1>
 
-            <div className={styles.responsesList}>
-                {responses.map((response) => (
-                    <PersonCard
-                        key={response._id}
-                        person={response.user}
-                        showResponses={true}
-                    >
-                        {renderStatus(response.status)}
-                    </PersonCard>
-                ))}
+            <div className={styles.columnsGrid}>
+
+                <div className={styles.column}>
+                    <div className={styles.columnHeader}>
+                        <h2 className={`${styles.columnTitle} ${styles.present}`}>Présents</h2>
+                        <span className={`${styles.badge} ${styles.badgePresent}`}>{presents.length}</span>
+                    </div>
+                    <div className={styles.cardsList}>
+                        {presents.length === 0 ? (
+                            <p className={styles.noData}>Aucun joueur présent</p>
+                        ) : (
+                            presents.map((response) => (
+                                <PersonCard
+                                    key={response._id}
+                                    person={response.user}
+                                    showResponses={true}
+                                >
+                                    {renderStatus(response.status)}
+                                </PersonCard>
+                            ))
+                        )}
+                    </div>
+                </div>
+
+                <div className={styles.column}>
+                    <div className={styles.columnHeader}>
+                        <h2 className={`${styles.columnTitle} ${styles.uncertain}`}>Incertains</h2>
+                        <span className={`${styles.badge} ${styles.badgeUncertain}`}>{uncertains.length}</span>
+                    </div>
+                    <div className={styles.cardsList}>
+                        {uncertains.length === 0 ? (
+                            <p className={styles.noData}>Aucun joueur incertain</p>
+                        ) : (
+                            uncertains.map((response) => (
+                                <PersonCard
+                                    key={response._id}
+                                    person={response.user}
+                                    showResponses={true}
+                                >
+                                    {renderStatus(response.status)}
+                                </PersonCard>
+                            ))
+                        )}
+                    </div>
+                </div>
+
+                <div className={styles.column}>
+                    <div className={styles.columnHeader}>
+                        <h2 className={`${styles.columnTitle} ${styles.absent}`}>Absents</h2>
+                        <span className={`${styles.badge} ${styles.badgeAbsent}`}>{absents.length}</span>
+                    </div>
+                    <div className={styles.cardsList}>
+                        {absents.length === 0 ? (
+                            <p className={styles.noData}>Aucun joueur absent</p>
+                        ) : (
+                            absents.map((response) => (
+                                <PersonCard
+                                    key={response._id}
+                                    person={response.user}
+                                    showResponses={true}
+                                >
+                                    {renderStatus(response.status)}
+                                </PersonCard>
+                            ))
+                        )}
+                    </div>
+                </div>
             </div>
         </main>
     )
