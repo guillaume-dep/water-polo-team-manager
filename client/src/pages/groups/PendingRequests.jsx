@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { acceptJoinRequest, getJoinRequests, rejectJoinRequest } from '../../api/groups.js'
 import { useEffect, useState } from 'react'
+
 import PersonCard from '../../components/PersonCard.jsx'
 
 import styles from '../../styles/groups/pendingRequests.module.css'

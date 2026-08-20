@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { joinGroup } from '../../api/groups.js'
-import styles from '../../styles/groups/joinGroup.module.css'
 import { useNavigate } from 'react-router-dom'
+
+import styles from '../../styles/groups/joinGroup.module.css'
 
 const JoinGroup = () => {
     const navigate = useNavigate()

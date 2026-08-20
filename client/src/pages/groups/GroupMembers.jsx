@@ -1,10 +1,10 @@
 import { useParams, NavLink, useNavigate } from 'react-router-dom'
 import { getGroup, getJoinRequests, deleteGroup, leaveGroup } from '../../api/groups.js'
 import { useEffect, useState } from 'react'
-import PersonCard from '../../components/PersonCard.jsx'
+import { useAuth } from '../../context/hooks/useAuth.js'
 
 import wpBall from '../../../images/wp-ball.jpg'
-import { useAuth } from '../../context/hooks/useAuth.js'
+import PersonCard from '../../components/PersonCard.jsx'
 import ROLE from '../../../../shared/utils/role.js'
 
 import styles from '../../styles/groups/groupMembers.module.css'
