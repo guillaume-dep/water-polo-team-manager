@@ -27,7 +27,7 @@
 .responseLabel {
     flex-shrink: 0;
     color: var(--text-secondary);
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     font-weight: 600;
 }
 
@@ -42,10 +42,10 @@
 }
 
 .responseButton {
-    flex: 0 0 28px;
-    width: 28px;
-    height: 28px;
-    padding: 5px;
+    flex: 0 0 34px;
+    width: 34px;
+    height: 34px;
+    padding: 4px;
 
     display: flex;
     align-items: center;
