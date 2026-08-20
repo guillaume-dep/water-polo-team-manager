@@ -1,12 +1,13 @@
 import { useParams, NavLink } from 'react-router-dom'
-import { getGroup } from '../../api/groups.js'
+import { getGroup, getJoinRequests } from '../../api/groups.js'
 import { useEffect, useState } from 'react'
 import PersonCard from '../../components/PersonCard.jsx'
 
 import wpBall from '../../../images/wp-ball.jpg'
-import styles from '../../styles/groups/groupMembers.module.css'
 import { useAuth } from '../../context/hooks/useAuth.js'
 import ROLE from '../../../../shared/utils/role.js'
+
+import styles from '../../styles/groups/groupMembers.module.css'
 
 const GroupMembers = () => {
     const groupId = useParams().id
@@ -14,18 +15,17 @@ const GroupMembers = () => {
 
     const [group, setGroup] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [numberOfRequests, setNumberOfRequests] = useState(0)
 
     const isCoach = user.role === ROLE.COACH
+
     useEffect(() => {
         const fetchGroup = async () => {
             try {
                 const data = await getGroup(groupId)
                 setGroup(data)
             } catch (err) {
-                console.error(
-                    'Error occured while retrieving group',
-                    err
-                )
+                console.error('Error occured while retrieving group', err)
             } finally {
                 setIsLoading(false)
             }
@@ -33,6 +33,21 @@ const GroupMembers = () => {
 
         fetchGroup()
     }, [groupId])
+
+    useEffect(() => {
+        const fetchNumberOfRequests = async () => {
+            try {
+                const requests = await getJoinRequests(groupId)
+                setNumberOfRequests(requests?.length || 0)
+            } catch (err) {
+                console.error("Error occured while retrieving number of requests", err)
+            }
+        }
+
+        if (isCoach) {
+            fetchNumberOfRequests()
+        }
+    }, [groupId, isCoach])
 
     if (isLoading) {
         return (
@@ -72,9 +87,11 @@ const GroupMembers = () => {
                     <div className={styles.groupMainInfo}>
                         <h1 className={styles.groupTitle}>{group.name}</h1>
 
-                        {isCoach && <span className={styles.codeTag}>
-                            Code - {group.code}
-                        </span>}
+                        {isCoach && (
+                            <span className={styles.codeTag}>
+                                Code - {group.code}
+                            </span>
+                        )}
 
                         <p className={styles.coachName}>
                             Coach : {group.coach?.name || 'Non assigné'}
@@ -91,23 +108,25 @@ const GroupMembers = () => {
                             </span>
                         </div>
 
-                        {isCoach && <NavLink
-                            to={`/groups/${groupId}/pending-requests`}
-                            className={styles.actionBtn}
-                        >
-                            <span>Demandes</span>
-                            <svg
-                                className={styles.arrowIcon}
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                        {isCoach && (
+                            <NavLink
+                                to={`/groups/${groupId}/pending-requests`}
+                                className={`${styles.actionBtn} ${numberOfRequests === 0 ? styles.emptyRequestsBtn : ''}`}
                             >
-                                <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                        </NavLink>}
+                                <span>Demandes ({numberOfRequests})</span>
+                                <svg
+                                    className={styles.arrowIcon}
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </NavLink>
+                        )}
                     </div>
 
                     {group.members.length === 0 ? (

@@ -170,6 +170,21 @@
     transform: scale(0.98);
 }
 
+.emptyRequestsBtn {
+    opacity: 0.6;
+    background-color: var(--bg-light, #f3f4f6);
+    color: var(--information2);
+    border-color: var(--border-color, #e5e7eb);
+}
+
+.emptyRequestsBtn .arrowIcon {
+    color: var(--information2)
+}
+
+.emptyRequestsBtn:hover {
+    opacity: 0.85;
+}
+
 /* =========================
    Liste & Cartes Joueurs
    ========================= */
