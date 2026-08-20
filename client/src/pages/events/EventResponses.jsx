@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import PersonCard from '../../components/PersonCard.jsx'
 import { getResponses } from '../../api/responses.js'
+
+import PersonCard from '../../components/PersonCard.jsx'
 import RESPONSE_TYPE from '../../../../shared/utils/responseType.js'
 
 import styles from '../../styles/events/eventResponses.module.css'
