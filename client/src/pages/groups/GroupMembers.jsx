@@ -1,5 +1,5 @@
 import { useParams, NavLink, useNavigate } from 'react-router-dom'
-import { getGroup, getJoinRequests, deleteGroup } from '../../api/groups.js'
+import { getGroup, getJoinRequests, deleteGroup, leaveGroup } from '../../api/groups.js'
 import { useEffect, useState } from 'react'
 import PersonCard from '../../components/PersonCard.jsx'
 
@@ -19,6 +19,7 @@ const GroupMembers = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [isDeleting, setIsDeleting] = useState(false)
+    const [isLeaving, setIsLeaving] = useState(false)
 
     const isCoach = user.role === ROLE.COACH
 
@@ -35,6 +36,22 @@ const GroupMembers = () => {
             console.error("Error occured while deleting the group", error)
         } finally {
             setIsDeleting(false)
+        }
+    }
+
+    const handleLeaveGroup = async () => {
+        if (!window.confirm("Es-tu sûr de vouloir quitter ce groupe ?")) {
+            return
+        }
+
+        try {
+            setIsLeaving(true)
+            await leaveGroup(groupId)
+            navigate('/groups')
+        } catch (error) {
+            console.error("Error occured while leaving the group", error)
+        } finally {
+            setIsLeaving(false)
         }
     }
 
@@ -119,8 +136,8 @@ const GroupMembers = () => {
                         </div>
                     </div>
 
-                    {isCoach && (
-                        <div className={styles.deleteBtnContainer}>
+                    <div className={styles.deleteBtnContainer}>
+                        {isCoach ? (
                             <button
                                 type="button"
                                 onClick={handleDeleteGroup}
@@ -145,8 +162,32 @@ const GroupMembers = () => {
                                     <line x1="14" y1="11" x2="14" y2="17" />
                                 </svg>
                             </button>
-                        </div>
-                    )}
+                        ) : (
+                            <button
+                                type="button"
+                                onClick={handleLeaveGroup}
+                                disabled={isLeaving}
+                                className={styles.deleteBtn}
+                                title="Quitter le groupe"
+                                aria-label="Quitter le groupe"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className={styles.deleteIcon}
+                                >
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                    <polyline points="16 17 21 12 16 7" />
+                                    <line x1="21" y1="12" x2="9" y2="12" />
+                                </svg>
+                            </button>
+                        )}
+                    </div>
                 </header>
 
                 <section className={styles.section}>
