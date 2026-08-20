@@ -87,15 +87,15 @@
 }
 
 .badgePresent {
-    background-color: var(--success, #10b981);
+    background-color: var(--present);
 }
 
 .badgeUncertain {
-    background-color: var(--warning, #f59e0b);
+    background-color: var(--uncertain);
 }
 
 .badgeAbsent {
-    background-color: var(--absent, #ef4444);
+    background-color: var(--absent);
 }
 
 /* Liste des cartes */
@@ -135,13 +135,13 @@
 }
 
 .accepted {
-    color: var(--success, #10b981);
+    color: var(--present);
 }
 
 .rejected {
-    color: var(--absent, #ef4444);
+    color: var(--absent);
 }
 
 .uncertain {
-    color: var(--warning, #f59e0b);
+    color: var(--uncertain);
 }

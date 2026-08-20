@@ -45,7 +45,7 @@ const Home = () => {
 
                     <div className={styles.eventsList}>
                         {isLoading ? (
-                            <p className={styles.loadingText}>Chargement de vos événements...</p>
+                            <p className={styles.loadingText}>Chargement de tes événements...</p>
                         ) : events.length === 0 ? (
                             <p className={styles.emptyText}>Aucun événement prévu pour le moment.</p>
                         ) : (

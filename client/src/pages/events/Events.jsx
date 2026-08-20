@@ -87,7 +87,7 @@ const Events = () => {
                         className={`${styles.filterButton} ${activeFilter === FILTERS.RECENT ? styles.filterActive : ''}`}
                         onClick={() => setActiveFilter(FILTERS.RECENT)}
                     >
-                        Plus récent
+                        À venir
                     </button>
 
                     <button
@@ -95,7 +95,7 @@ const Events = () => {
                         className={`${styles.filterButton} ${activeFilter === FILTERS.OLDEST ? styles.filterActive : ''}`}
                         onClick={() => setActiveFilter(FILTERS.OLDEST)}
                     >
-                        Plus ancien
+                        Ancien
                     </button>
 
                     {!isCoach && (<button
@@ -110,7 +110,7 @@ const Events = () => {
 
             <div className={styles.eventsList}>
                 {isDataLoading ? (
-                    <p className={styles.loadingText}>Chargement de vos événements...</p>
+                    <p className={styles.loadingText}>Chargement de tes événements...</p>
                 ) : filteredEvents.length === 0 ? (
                     <p className={styles.emptyText}>{emptyMessage}</p>
                 ) : (
