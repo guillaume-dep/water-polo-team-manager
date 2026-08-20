@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import EventResponse from '../pages/events/EventResponse.jsx'
 import { useAuth } from '../context/hooks/useAuth.js'
 import { deleteEvent } from '../api/events.js'
 import { formatEventDate } from '../utils/date.js'
+
+import EventResponse from '../pages/events/EventResponse.jsx'
 import ROLE from '../../../shared/utils/role.js'
 import EVENT_TYPE from '../../../shared/utils/eventType.js'
 

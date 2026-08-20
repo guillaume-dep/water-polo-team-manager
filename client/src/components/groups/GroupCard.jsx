@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+
 import styles from '../../styles/groups/groupCard.module.css'
 
 const GroupCard = ({ groups, isLoading }) => {
@@ -62,7 +63,6 @@ const GroupCard = ({ groups, isLoading }) => {
                             </p>
                         </div>
 
-                        {/* Flèche d'indication de lien */}
                         <div className={styles.arrowContainer}>
                             <svg
                                 className={styles.arrowIcon}

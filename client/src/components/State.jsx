@@ -1,7 +1,7 @@
 import styles from '../styles/state.module.css'
 
 const State = ({ type, message }) => {
-    // Vérifie que le type passé existe bien dans nos styles
+
     if (!['success', 'info', 'warning', 'error'].includes(type)) return null;
 
     return (
