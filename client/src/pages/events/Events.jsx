@@ -5,14 +5,9 @@ import { useAuth } from '../../context/hooks/useAuth.js'
 
 import EventCard from '../../components/EventCard.jsx'
 import ROLE from '../../../../shared/utils/role.js'
+import FILTERS from '../../utils/filters.js'
 
 import styles from '../../styles/events/events.module.css'
-
-const FILTERS = {
-    RECENT: 'recent',
-    OLDEST: 'oldest',
-    UNANSWERED: 'unanswered'
-}
 
 const Events = () => {
     const { user } = useAuth()
