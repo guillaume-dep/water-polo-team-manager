@@ -141,3 +141,5 @@ export const EventCard = ({ event, onDelete }) => {
         </div>
     )
 }
+
+export default EventCard

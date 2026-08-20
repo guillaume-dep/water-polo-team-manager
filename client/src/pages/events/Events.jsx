@@ -1,5 +1,6 @@
 import { useEvents } from '../../hooks/useEvents.js'
-import { EventCard } from '../../components/EventCard.jsx'
+
+import EventCard from '../../components/EventCard.jsx'
 
 import styles from '../../styles/events/events.module.css'
 

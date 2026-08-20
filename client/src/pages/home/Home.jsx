@@ -1,8 +1,9 @@
-import { isCookie, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useEvents } from '../../hooks/useEvents.js'
-import { EventCard } from '../../components/EventCard.jsx'
 import { useAuth } from '../../context/hooks/useAuth.js'
+
 import ROLE from '../../../../shared/utils/role.js'
+import EventCard from '../../components/EventCard.jsx'
 
 import styles from '../../styles/home/home.module.css'
 

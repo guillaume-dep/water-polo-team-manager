@@ -1,23 +1,26 @@
 import { Routes, Route } from 'react-router-dom'
-import Test from './pages/Test'
 
-import Register from './pages/auth/Register.jsx'
 import Login from './pages/auth/Login.jsx'
-import Home from './pages/home/Home.jsx'
-import Groups from './pages/groups/Groups.jsx'
-import CreateGroup from './pages/groups/CreateGroup.jsx'
-import JoinGroup from './pages/groups/JoinGroup.jsx'
-
-import Events from './pages/events/Events.jsx'
-import CreateEvent from './pages/events/CreateEvent.jsx'
-import EventResponses from './pages/events/EventResponses.jsx'
-
-import Profile from './pages/profile/Profile.jsx'
+import Register from './pages/auth/Register.jsx'
 
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import ProtectedLayout from './components/ProtectedLayout.jsx'
-import PendingRequests from './pages/groups/PendingRequests.jsx'
+
+import Home from './pages/home/Home.jsx'
+
+import Groups from './pages/groups/Groups.jsx'
+import CreateGroup from './pages/groups/CreateGroup.jsx'
+import JoinGroup from './pages/groups/JoinGroup.jsx'
 import GroupMembers from './pages/groups/GroupMembers.jsx'
+
+import PendingRequests from './pages/groups/PendingRequests.jsx'
+
+
+import Events from './pages/events/Events.jsx'
+import EventResponses from './pages/events/EventResponses.jsx'
+import CreateEvent from './pages/events/CreateEvent.jsx'
+
+import Profile from './pages/profile/Profile.jsx'
 
 const App = () => {
   return (

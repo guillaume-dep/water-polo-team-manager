@@ -1,7 +1,8 @@
-import PersonCard from "../../components/PersonCard.jsx"
-import { useAuth } from "../../context/hooks/useAuth"
+import { useAuth } from "../../context/hooks/useAuth.js"
 import { logout } from "../../api/auth.js"
+
 import ROLE from "../../../../shared/utils/role.js"
+import PersonCard from "../../components/PersonCard.jsx"
 
 import styles from "../../styles/profile/profile.module.css"
 
@@ -31,7 +32,6 @@ const Profile = () => {
         <main className={styles.container}>
             <h1 className={styles.title}>Mon compte</h1>
 
-            {/* Bloc 1 : Informations */}
             <section className={styles.infoCard}>
                 <div className={styles.cardWrapper}>
                     <PersonCard person={user} showEmail={true} />
@@ -43,7 +43,6 @@ const Profile = () => {
                 </div>
             </section>
 
-            {/* Bloc 2 : Déconnexion */}
             <section className={styles.logoutCard}>
                 <button
                     onClick={handleLogout}

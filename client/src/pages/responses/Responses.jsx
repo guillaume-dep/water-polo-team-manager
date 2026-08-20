@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+
 import styles from '../../styles/responses/responses.module.css'
 
 const Responses = ({
@@ -54,7 +55,6 @@ const Responses = ({
 
                 <div className={styles.responses}>
 
-                    {/* Présent */}
                     <button
                         type="button"
                         disabled={disabled}
@@ -77,7 +77,6 @@ const Responses = ({
                         </svg>
                     </button>
 
-                    {/* Absent */}
                     <button
                         type="button"
                         disabled={disabled}
@@ -99,7 +98,6 @@ const Responses = ({
                         </svg>
                     </button>
 
-                    {/* Incertain */}
                     <button
                         type="button"
                         disabled={disabled}
