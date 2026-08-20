@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { createEvent } from "../../api/events"
-import { getMyGroups } from "../../api/groups"
-import State from '../../components/State.jsx'
 import { useGroups } from "../../hooks/useGroups"
 import { useNavigate } from "react-router-dom"
+
+import State from '../../components/State.jsx'
 
 import styles from '../../styles/events/createEvent.module.css'
 
@@ -67,7 +67,6 @@ const CreateEvent = () => {
 
             <form onSubmit={handleSubmit} className={styles.form}>
 
-                {/* Nom */}
                 <div className={styles.formGroup}>
                     <label htmlFor="name" className={styles.label}>
                         Nom
@@ -83,7 +82,6 @@ const CreateEvent = () => {
                     />
                 </div>
 
-                {/* Date */}
                 <div className={styles.formGroup}>
                     <label htmlFor="date" className={styles.label}>
                         Date
@@ -98,7 +96,6 @@ const CreateEvent = () => {
                     />
                 </div>
 
-                {/* Lieu */}
                 <div className={styles.formGroup}>
                     <label htmlFor="location" className={styles.label}>
                         Lieu
@@ -114,7 +111,6 @@ const CreateEvent = () => {
                     />
                 </div>
 
-                {/* Type d'événement */}
                 <div className={styles.formGroup}>
                     <label htmlFor="eventType" className={styles.label}>
                         Type d'événement
@@ -132,7 +128,6 @@ const CreateEvent = () => {
                     </select>
                 </div>
 
-                {/* Groupe */}
                 <div className={styles.formGroup}>
                     <label htmlFor="group" className={styles.label}>
                         Groupe associé
@@ -156,7 +151,6 @@ const CreateEvent = () => {
                     </select>
                 </div>
 
-                {/* Bouton de soumission */}
                 <button
                     type="submit"
                     disabled={isSubmitting || isLoading}
