@@ -1,5 +1,5 @@
-import { useParams, NavLink } from 'react-router-dom'
-import { getGroup, getJoinRequests } from '../../api/groups.js'
+import { useParams, NavLink, useNavigate } from 'react-router-dom'
+import { getGroup, getJoinRequests, deleteGroup } from '../../api/groups.js'
 import { useEffect, useState } from 'react'
 import PersonCard from '../../components/PersonCard.jsx'
 
@@ -12,12 +12,31 @@ import styles from '../../styles/groups/groupMembers.module.css'
 const GroupMembers = () => {
     const groupId = useParams().id
     const { user } = useAuth()
+    const navigate = useNavigate()
 
     const [group, setGroup] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [numberOfRequests, setNumberOfRequests] = useState(0)
 
+    const [isLoading, setIsLoading] = useState(true)
+    const [isDeleting, setIsDeleting] = useState(false)
+
     const isCoach = user.role === ROLE.COACH
+
+    const handleDeleteGroup = async () => {
+        if (!window.confirm("Es-tu sûr de vouloir supprimer ce groupe ? Cette action est irréversible.")) {
+            return
+        }
+
+        try {
+            setIsDeleting(true)
+            await deleteGroup(groupId)
+            navigate('/groups')
+        } catch (error) {
+            console.error("Error occured while deleting the group", error)
+        } finally {
+            setIsDeleting(false)
+        }
+    }
 
     useEffect(() => {
         const fetchGroup = async () => {
@@ -78,25 +97,56 @@ const GroupMembers = () => {
         <main className={styles.page}>
             <div className={styles.container}>
                 <header className={styles.headerCard}>
-                    <img
-                        src={wpBall}
-                        alt="Ballon de water-polo"
-                        className={styles.groupBallImage}
-                    />
+                    <div className={styles.headerCardContent}>
+                        <img
+                            src={wpBall}
+                            alt="Ballon de water-polo"
+                            className={styles.groupBallImage}
+                        />
 
-                    <div className={styles.groupMainInfo}>
-                        <h1 className={styles.groupTitle}>{group.name}</h1>
+                        <div className={styles.groupMainInfo}>
+                            <h1 className={styles.groupTitle}>{group.name}</h1>
 
-                        {isCoach && (
-                            <span className={styles.codeTag}>
-                                Code - {group.code}
-                            </span>
-                        )}
+                            {isCoach && (
+                                <span className={styles.codeTag}>
+                                    Code - {group.code}
+                                </span>
+                            )}
 
-                        <p className={styles.coachName}>
-                            Coach : {group.coach?.name || 'Non assigné'}
-                        </p>
+                            <p className={styles.coachName}>
+                                Coach : {group.coach?.name || 'Non assigné'}
+                            </p>
+                        </div>
                     </div>
+
+                    {isCoach && (
+                        <div className={styles.deleteBtnContainer}>
+                            <button
+                                type="button"
+                                onClick={handleDeleteGroup}
+                                disabled={isDeleting}
+                                className={styles.deleteBtn}
+                                title="Supprimer le groupe"
+                                aria-label="Supprimer le groupe"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className={styles.deleteIcon}
+                                >
+                                    <polyline points="3 6 5 6 21 6" />
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                </svg>
+                            </button>
+                        </div>
+                    )}
                 </header>
 
                 <section className={styles.section}>

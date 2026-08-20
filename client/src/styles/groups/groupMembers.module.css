@@ -22,17 +22,55 @@
    ========================= */
 
 .headerCard {
-    width: 100%;
-    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    background-color: var(--white-bg, #ffffff);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.headerCardContent {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-3);
+    gap: var(--space-4);
+    padding: var(--space-4);
+    flex: 1;
+}
 
-    background-color: #ffffff;
-    border-radius: var(--radius-lg, 12px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    border: 1px solid var(--border-color, #e5e7eb);
+/* Container du bouton avec bordure séparatrice verticale */
+.deleteBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--space-3);
+    border-left: 1px solid var(--border-color, #e5e7eb);
+}
+
+.deleteBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--text-primary, #6b7280);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.deleteBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.deleteIcon {
+    width: 20px;
+    height: 20px;
 }
 
 /* Ballon grand et rond */
@@ -172,7 +210,7 @@
 
 .emptyRequestsBtn {
     opacity: 0.6;
-    background-color: var(--bg-light, #f3f4f6);
+    background-color: #e3e7f0;
     color: var(--information2);
     border-color: var(--border-color, #e5e7eb);
 }

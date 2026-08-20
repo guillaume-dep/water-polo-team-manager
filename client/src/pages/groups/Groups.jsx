@@ -4,11 +4,17 @@ import { NavLink } from "react-router-dom"
 import ROLE from "../../../../shared/utils/role.js"
 import { useAuth } from "../../context/hooks/useAuth.js"
 import styles from '../../styles/groups/groups.module.css'
+import { useState } from "react"
+import { deleteGroup } from "../../api/groups.js"
 
 const Groups = () => {
     const { user } = useAuth()
     const { groups, isLoading } = useGroups()
     const isCoach = user.role === ROLE.COACH
+
+    const handleOnDelete = (groups) => {
+
+    }
 
     return (
         <main className={styles.container}>
