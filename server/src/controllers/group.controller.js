@@ -4,6 +4,8 @@ import ROLE from "../../../shared/utils/role.js";
 import { findGroupById } from "../utils/dbFinder.js";
 import { checkIsMember, checkIsCoach, checkIsMemberOrCoach } from "../utils/logicChecker.js";
 import AppError from "../utils/AppError.js"
+import Events from "../models/event.model.js";
+import Responses from "../models/response.model.js";
 
 export const searchGroupByCode = async (req, res) => {
     try {
@@ -134,7 +136,7 @@ export const getGroup = async (req, res) => {
         const group = await findGroupById(req.params.id)
         checkIsMemberOrCoach(group, req.user.id)
 
-        /* Same object as group but with real documents instead of ids*/
+        /* Same object as group but with real documents (only name and email) instead of ids*/
         const populated = await group.populate([
             { path: 'coach', select: 'name email' },
             { path: 'members', select: 'name email' }
@@ -177,8 +179,20 @@ export const getMyGroups = async (req, res) => {
 
 export const leaveGroup = async (req, res) => {
     try {
+
+        /* filter = id */
         const group = await findGroupById(req.params.id)
         checkIsMember(group, req.user.id)
+
+        /* filterObject, projectionObjects */
+        const events = await Events.find({ group: group._id }, { _id: 1 }) /* include id field; 0 = exclude */
+        const eventIds = events.map((event) => event._id)
+
+        /* filter */
+        await Responses.deleteMany({
+            user: req.user.id,
+            event: { $in: eventIds }
+        })
 
         group.members.pull(req.user.id)
         await group.save()
