@@ -3,6 +3,7 @@ import { acceptJoinRequest, getJoinRequests, rejectJoinRequest } from '../../api
 import { useEffect, useState } from 'react'
 
 import PersonCard from '../../components/PersonCard.jsx'
+import BackButton from '../../components/BackButton.jsx'
 
 import styles from '../../styles/groups/pendingRequests.module.css'
 
@@ -70,7 +71,10 @@ const PendingRequests = () => {
     if (personRequests.length === 0) {
         return (
             <main className={styles.page}>
-                <h1 className={styles.title}>Demandes en attente</h1>
+                <div className={styles.header}>
+                    <BackButton />
+                    <h1 className={styles.title}>Demandes en attente</h1>
+                </div>
                 <p className={styles.infoText}>Aucune demande en attente.</p>
             </main>
         )
@@ -78,7 +82,10 @@ const PendingRequests = () => {
 
     return (
         <main className={styles.page}>
-            <h1 className={styles.title}>Demandes en attente</h1>
+            <div className={styles.header}>
+                <BackButton />
+                <h1 className={styles.title}>Demandes en attente</h1>
+            </div>
 
             <div className={styles.requestsList}>
                 {personRequests.map((person) => (
@@ -91,7 +98,6 @@ const PendingRequests = () => {
                         </div>
 
                         <div className={styles.actions}>
-
                             <button
                                 type="button"
                                 onClick={() => handleAcceptRequest(person._id)}

@@ -6,11 +6,13 @@
     width: 38px;
     height: 38px;
     padding: 0;
+    margin-left: 0.4rem;
+    /* Ajuste la valeur (ex: 8px, 12px, 1rem...) */
 
-    background-color: var(--bg-light, #f3f4f6);
+    background-color: #e3e7f0;
     border: none;
     border-radius: 50%;
-    color: var(--text-primary, #111827);
+    color: var(--information2, #111827);
 
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.15s ease;

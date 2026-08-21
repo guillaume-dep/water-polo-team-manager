@@ -6,12 +6,36 @@
     box-sizing: border-box;
 }
 
-.title {
-    font-size: var(--text-2xl);
+.header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-2, 0.75rem);
+    width: 100%;
+    margin-bottom: var(--space-3, 1rem);
+}
+
+.header .title {
+    grid-column: 2;
+    font-size: var(--text-2xl, 24px);
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--information2);
     margin: 0;
     text-align: center;
+}
+
+.header button {
+    position: absolute;
+    left: 0;
+}
+
+.title {
+    font-size: var(--text-2xl, 24px);
+    font-weight: 700;
+    color: var(--information2);
+    margin: 0;
+    text-align: center;
+    width: 100%;
 }
 
 .requestsList {
