@@ -1,8 +1,41 @@
 import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../context/hooks/useAuth'
+import { useEffect, useState } from 'react'
+import { getJoinRequests } from '../../api/groups'
+
+import ROLE from '../../../../shared/utils/role'
 
 import styles from '../../styles/groups/groupCard.module.css'
 
 const GroupCard = ({ groups, isLoading }) => {
+
+    const { user } = useAuth()
+    const isCoach = user.role === ROLE.COACH
+
+    const [groupsWithRequests, setGroupWithRequests] = useState({})
+
+    useEffect(() => {
+        const fetchGroupWithRequests = async () => {
+            if (!isCoach || groups.length === 0) return
+
+            const requestsMap = {}
+
+            await Promise.all(
+                groups.map(async (group) => {
+                    try {
+                        const requests = await getJoinRequests(group._id)
+                        requestsMap[group._id] = requests.length > 0
+                    } catch (error) {
+                        console.error("Error occured while retrieving group join requests", error)
+                        requestsMap[group._id] = false
+                    }
+                })
+            )
+            setGroupWithRequests(requestsMap)
+        }
+        fetchGroupWithRequests()
+    }, [groups, isCoach])
+
 
     const renderGroups = () => {
         if (isLoading) {
@@ -30,6 +63,12 @@ const GroupCard = ({ groups, isLoading }) => {
                         to={`/groups/${group._id}/members`}
                         className={styles.groupCard}
                     >
+                        {groupsWithRequests[group._id] && (
+                            <span
+                                className={styles.requestBadge}
+                                title="Nouvelle demande pour rejoindre le groupe"
+                            />
+                        )}
                         <div className={styles.groupIconContainer}>
                             <svg
                                 className={styles.groupIcon}
