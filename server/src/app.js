@@ -12,6 +12,7 @@ import groupRouter from './routes/group.route.js'
 import eventRouter from './routes/event.route.js'
 import responseRouter from './routes/response.route.js'
 
+/* --- CORS --- */
 const app = express()
 const allowedOrigins = [
     process.env.CLIENT_URL,
