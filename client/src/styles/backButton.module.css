@@ -1,0 +1,31 @@
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+    padding: 0;
+
+    background-color: var(--bg-light, #f3f4f6);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-primary, #111827);
+
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.backButton:hover {
+    background-color: var(--border-color, #e5e7eb);
+    transform: translateX(-2px);
+}
+
+.backButton:active {
+    transform: scale(0.95);
+}
+
+.backButton svg {
+    width: 20px;
+    height: 20px;
+}
