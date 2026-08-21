@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dbConnection from "../config/database.js";
+
 import Events from "./event.model.js";
+
 import Responses from "./response.model.js";
 
 /**

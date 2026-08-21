@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dbConnection from "../config/database.js";
+
 import EVENT_TYPE from "../../../shared/utils/eventType.js";
+
 import Responses from "./response.model.js";
 
 const eventSchema = new mongoose.Schema({

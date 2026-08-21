@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import dbConnection from "../config/database.js";
+
 import ROLE from "../../../shared/utils/role.js";
+
 import Groups from "./group.model.js";
 import Responses from "./response.model.js";
 
