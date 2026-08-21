@@ -12,6 +12,7 @@ const GroupCard = ({ groups, isLoading }) => {
     const isCoach = user.role === ROLE.COACH
 
     const [groupsWithRequests, setGroupWithRequests] = useState({})
+    const [copiedGroupId, setCopiedGroupId] = useState(null)
 
     useEffect(() => {
         const fetchGroupWithRequests = async () => {
@@ -40,29 +41,21 @@ const GroupCard = ({ groups, isLoading }) => {
         fetchGroupWithRequests()
     }, [groups, isCoach])
 
-    const handleShare = async (event, group) => {
+    const handleCopyCode = async (event, group) => {
         event.preventDefault()
         event.stopPropagation()
 
-        const shareText = `Rejoins le groupe "${group.name}" avec le code : ${group.code}`
-        const shareData = {
-            title: `Rejoindre le groupe ${group.name}`,
-            text: shareText
-        }
-
         try {
-            if (navigator.share) {
-                await navigator.share(shareData)
-            } else if (navigator.clipboard?.writeText) {
-                await navigator.clipboard.writeText(shareText)
+            if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(group.code)
             } else {
+                window.prompt('Copiez le code manuellement :', group.code)
+            }
 
-                window.prompt('Copiez le code manuellement :', shareText)
-            }
+            setCopiedGroupId(group._id)
+            setTimeout(() => setCopiedGroupId(null), 2000)
         } catch (error) {
-            if (error.name !== 'AbortError') {
-                console.error("Error occured while sharing the group", error)
-            }
+            console.error("Error occured while copying the code", error)
         }
     }
 
@@ -122,16 +115,22 @@ const GroupCard = ({ groups, isLoading }) => {
                                     <h3>{group.name}</h3>
 
                                     <div className={styles.codeContainer}>
-                                        <span className={styles.codeTag}>
-                                            Code - {group.code}
+                                        <span
+                                            className={`${styles.codeTag} ${copiedGroupId === group._id ? styles.codeTagCopied : ''
+                                                }`}
+                                        >
+                                            {copiedGroupId === group._id
+                                                ? 'Copié !'
+                                                : `Code - ${group.code}`}
                                         </span>
 
                                         <button
                                             type="button"
-                                            onClick={(event) => handleShare(event, group)}
-                                            className={styles.shareButton}
-                                            title="Partager le code du groupe"
-                                            aria-label="Partager le code du groupe"
+                                            onClick={(event) => handleCopyCode(event, group)}
+                                            className={`${styles.shareButton} ${copiedGroupId === group._id ? styles.shareButtonCopied : ''
+                                                }`}
+                                            title="Copier le code du groupe"
+                                            aria-label="Copier le code du groupe"
                                         >
                                             <svg
                                                 viewBox="0 0 24 24"
@@ -141,11 +140,14 @@ const GroupCard = ({ groups, isLoading }) => {
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
                                             >
-                                                <circle cx="18" cy="5" r="3" />
-                                                <circle cx="6" cy="12" r="3" />
-                                                <circle cx="18" cy="19" r="3" />
-                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                                {copiedGroupId === group._id ? (
+                                                    <polyline points="20 6 9 17 4 12" />
+                                                ) : (
+                                                    <>
+                                                        <rect x="9" y="9" width="13" height="13" rx="2" />
+                                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                                    </>
+                                                )}
                                             </svg>
                                         </button>
                                     </div>
