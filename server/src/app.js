@@ -32,7 +32,7 @@ app.use(cors({
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
-app.use(limiter)
+//app.use(limiter)
 app.use(helmet())
 
 /* --- Router + Middlewares --- */
