@@ -90,14 +90,6 @@ const Events = () => {
                         À venir
                     </button>
 
-                    <button
-                        type="button"
-                        className={`${styles.filterButton} ${activeFilter === FILTERS.OLDEST ? styles.filterActive : ''}`}
-                        onClick={() => setActiveFilter(FILTERS.OLDEST)}
-                    >
-                        Ancien
-                    </button>
-
                     {!isCoach && (<button
                         type="button"
                         className={`${styles.filterButton} ${activeFilter === FILTERS.UNANSWERED ? styles.filterActive : ''}`}

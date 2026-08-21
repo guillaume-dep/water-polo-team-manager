@@ -10,10 +10,6 @@ const Responses = ({
     const [comment, setComment] = useState('')
 
     const handleStatusClick = (status) => {
-        console.log('1. CLICK', status)
-        console.log('2. onResponseChange =', onResponseChange)
-        console.log('3. disabled =', disabled)
-
         if (disabled || !onResponseChange) return
 
         onResponseChange(status, comment)
