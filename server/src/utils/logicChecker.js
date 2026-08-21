@@ -62,7 +62,7 @@ export const checkUserEmail = (email) => {
 
 export const checkUserPassword = (password) => {
     if (!password) throw new AppError("Password is required", 400)
-    if (password.length < 2) throw new AppError("Password must be at least 8 characters", 400)
+    if (password.length < 8) throw new AppError("Password must be at least 8 characters", 400)
 }
 
 export const checkUserRole = (role) => {
