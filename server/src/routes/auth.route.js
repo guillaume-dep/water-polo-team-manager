@@ -1,6 +1,6 @@
 import express from 'express'
-import { register, login, logout, getUserData, updateUserData, updatePassword, deleteAccount } from '../controllers/auth.controller.js';
 import validToken from '../middlewares/validToken.middleware.js';
+import { register, login, logout, getUserData, updateUserData, updatePassword, deleteAccount } from '../controllers/auth.controller.js';
 
 const router = express.Router()
 

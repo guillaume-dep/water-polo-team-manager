@@ -1,8 +1,9 @@
 import express from "express"
 import validToken from "../middlewares/validToken.middleware.js"
 import requireRole from "../middlewares/requireRole.middleware.js"
-import ROLE from "../../../shared/utils/role.js"
 import { createResponse, updateResponse, getResponses, getMyResponse } from "../controllers/response.controller.js"
+
+import ROLE from "../../../shared/utils/role.js"
 
 const router = express.Router({ mergeParams: true })
 

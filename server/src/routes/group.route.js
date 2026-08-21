@@ -1,8 +1,9 @@
 import express from 'express'
 import validToken from '../middlewares/validToken.middleware.js'
 import requireRole from '../middlewares/requireRole.middleware.js'
-import ROLE from '../../../shared/utils/role.js'
 import { searchGroupByCode, createGroup, getGroup, joinGroup, getJoinRequests, acceptJoinRequest, rejectJoinRequest, getMyGroups, leaveGroup, deleteGroup } from '../controllers/group.controller.js'
+
+import ROLE from '../../../shared/utils/role.js'
 
 const router = express.Router()
 
