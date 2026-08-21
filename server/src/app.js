@@ -28,15 +28,15 @@ app.use(cors({
     },
     credentials: true
 }))
-console.log(JSON.stringify(process.env.CLIENT_URL))
+
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
-// app.use(limiter)
+app.use(limiter)
 app.use(helmet())
 
 /* --- Router + Middlewares --- */
 
-//app.use('/auth', authLimiter)
+app.use('/auth', authLimiter)
 app.use('/auth', authRouter)
 app.use('/groups', groupRouter)
 app.use('/groups/:id/events', eventRouter)
