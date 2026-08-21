@@ -8,7 +8,6 @@ import ROLE from '../../../../shared/utils/role'
 import styles from '../../styles/groups/groupCard.module.css'
 
 const GroupCard = ({ groups, isLoading }) => {
-
     const { user } = useAuth()
     const isCoach = user.role === ROLE.COACH
 
@@ -26,16 +25,46 @@ const GroupCard = ({ groups, isLoading }) => {
                         const requests = await getJoinRequests(group._id)
                         requestsMap[group._id] = requests.length > 0
                     } catch (error) {
-                        console.error("Error occured while retrieving group join requests", error)
+                        console.error(
+                            "Error occured while retrieving group join requests",
+                            error
+                        )
                         requestsMap[group._id] = false
                     }
                 })
             )
+
             setGroupWithRequests(requestsMap)
         }
+
         fetchGroupWithRequests()
     }, [groups, isCoach])
 
+    const handleShare = async (event, group) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const shareText = `Rejoins le groupe "${group.name}" avec le code : ${group.code}`
+        const shareData = {
+            title: `Rejoindre le groupe ${group.name}`,
+            text: shareText
+        }
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData)
+            } else if (navigator.clipboard?.writeText) {
+                await navigator.clipboard.writeText(shareText)
+            } else {
+
+                window.prompt('Copiez le code manuellement :', shareText)
+            }
+        } catch (error) {
+            if (error.name !== 'AbortError') {
+                console.error("Error occured while sharing the group", error)
+            }
+        }
+    }
 
     const renderGroups = () => {
         if (isLoading) {
@@ -69,6 +98,7 @@ const GroupCard = ({ groups, isLoading }) => {
                                 title="Nouvelle demande pour rejoindre le groupe"
                             />
                         )}
+
                         <div className={styles.groupIconContainer}>
                             <svg
                                 className={styles.groupIcon}
@@ -91,9 +121,34 @@ const GroupCard = ({ groups, isLoading }) => {
                                 <div className={styles.titleAndTag}>
                                     <h3>{group.name}</h3>
 
-                                    <span className={styles.codeTag}>
-                                        Code - {group.code}
-                                    </span>
+                                    <div className={styles.codeContainer}>
+                                        <span className={styles.codeTag}>
+                                            Code - {group.code}
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            onClick={(event) => handleShare(event, group)}
+                                            className={styles.shareButton}
+                                            title="Partager le code du groupe"
+                                            aria-label="Partager le code du groupe"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            >
+                                                <circle cx="18" cy="5" r="3" />
+                                                <circle cx="6" cy="12" r="3" />
+                                                <circle cx="18" cy="19" r="3" />
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 

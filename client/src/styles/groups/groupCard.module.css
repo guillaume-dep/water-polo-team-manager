@@ -168,6 +168,37 @@
     line-height: 1.2;
 }
 
+.codeContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.shareButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+
+    color: inherit;
+    cursor: pointer;
+}
+
+.shareButton svg {
+    width: 18px;
+    height: 18px;
+}
+
+.shareButton:hover {
+    opacity: 0.7;
+}
+
 /* =========================
    États de chargement / vide
    ========================= */

@@ -142,15 +142,12 @@ export const getGroup = async (req, res) => {
             { path: 'members', select: 'name email' }
         ])
 
-        const isCoach = group.coach._id.toString() === req.user.id
         const response = {
             name: populated.name,
             coach: populated.coach,
             members: populated.members,
+            code: populated.code
         }
-
-        /* Share the code if it's the coach of the group */
-        if (isCoach) response.code = populated.code
 
         res.json(response)
     }
