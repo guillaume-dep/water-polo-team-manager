@@ -1,5 +1,6 @@
-import Responses from "../responses/Responses"
 import { useEventResponse } from "../../hooks/useEventResponse"
+
+import Responses from "../responses/Responses.jsx"
 
 const EventResponse = ({ event, updateResponsesMap }) => {
     const {

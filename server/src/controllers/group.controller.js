@@ -1,9 +1,11 @@
-import Groups from "../models/group.model.js"
 import crypto from "crypto";
-import ROLE from "../../../shared/utils/role.js";
 import { findGroupById } from "../utils/dbFinder.js";
 import { checkIsMember, checkIsCoach, checkIsMemberOrCoach } from "../utils/logicChecker.js";
+
 import AppError from "../utils/AppError.js"
+import ROLE from "../../../shared/utils/role.js";
+
+import Groups from "../models/group.model.js"
 import Events from "../models/event.model.js";
 import Responses from "../models/response.model.js";
 

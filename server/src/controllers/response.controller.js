@@ -1,7 +1,9 @@
-import AppError from "../utils/AppError.js"
-import Responses from "../models/response.model.js"
 import { findEventById, findGroupById } from "../utils/dbFinder.js"
 import { checkIsMember, checkIsMemberOrCoach, checkEventInGroup, checkResponseData } from "../utils/logicChecker.js"
+
+import AppError from "../utils/AppError.js"
+
+import Responses from "../models/response.model.js"
 
 export const createResponse = async (req, res) => {
     try {

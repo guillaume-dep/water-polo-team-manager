@@ -1,8 +1,10 @@
 import bcrypt from 'bcrypt'
-import Users from "../models/user.model.js"
-import AppError from "../utils/AppError.js"
 import { generateToken, setTokenCookie } from '../utils/jwt.js';
 import { checkUserData, checkUserEmail, checkUserPassword } from '../utils/logicChecker.js';
+
+import AppError from "../utils/AppError.js"
+
+import Users from "../models/user.model.js"
 
 /**
  * route : auth/register 
