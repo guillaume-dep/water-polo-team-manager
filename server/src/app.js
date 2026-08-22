@@ -32,7 +32,7 @@ app.use(cors({
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
-//app.use(limiter)
+app.use(limiter)
 app.use(helmet())
 
 /* --- Router + Middlewares --- */
@@ -42,8 +42,5 @@ app.use('/auth', authRouter)
 app.use('/groups', groupRouter)
 app.use('/groups/:id/events', eventRouter)
 app.use('/groups/:id/events/:eventId/responses', responseRouter)
-app.get('/debug', (req, res) => {
-    res.json(req.cookies);
-});
 
 export default app
