@@ -81,23 +81,24 @@ const Events = () => {
             <div className={styles.headerContainer}>
                 <h1 className={styles.title}>Tous les événements</h1>
 
-                <div className={styles.filterGroup}>
-                    <button
-                        type="button"
-                        className={`${styles.filterButton} ${activeFilter === FILTERS.RECENT ? styles.filterActive : ''}`}
-                        onClick={() => setActiveFilter(FILTERS.RECENT)}
-                    >
-                        À venir
-                    </button>
+                {!isCoach &&
+                    <div className={styles.filterGroup}>
+                        <button
+                            type="button"
+                            className={`${styles.filterButton} ${activeFilter === FILTERS.RECENT ? styles.filterActive : ''}`}
+                            onClick={() => setActiveFilter(FILTERS.RECENT)}
+                        >
+                            À venir
+                        </button>
 
-                    {!isCoach && (<button
-                        type="button"
-                        className={`${styles.filterButton} ${activeFilter === FILTERS.UNANSWERED ? styles.filterActive : ''}`}
-                        onClick={() => setActiveFilter(FILTERS.UNANSWERED)}
-                    >
-                        Non répondu
-                    </button>)}
-                </div>
+                        <button
+                            type="button"
+                            className={`${styles.filterButton} ${activeFilter === FILTERS.UNANSWERED ? styles.filterActive : ''}`}
+                            onClick={() => setActiveFilter(FILTERS.UNANSWERED)}
+                        >
+                            Non répondu
+                        </button>
+                    </div>}
             </div>
 
             <div className={styles.eventsList}>

@@ -29,7 +29,7 @@ const CreateGroup = () => {
 
             setTimeout(() => {
                 navigate('/groups')
-            }, 2500)
+            }, 1000)
 
         } catch (err) {
             console.error(
