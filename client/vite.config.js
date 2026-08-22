@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react'
-import manifest from './manifest.json'
+import manifest from './public/manifest.json' with { type: 'json' }
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -29,7 +29,3 @@ export default defineConfig({
     })
   ],
 })
-
-/* 
-urlPattern: ({ url }) => url.origin === import.meta.env.VITE_API_URL
-*/

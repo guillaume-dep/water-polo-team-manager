@@ -1,6 +1,7 @@
 {
-  "name": "Water-polo-team-manager",
+  "name": "Water Polo Team Manager",
   "short_name": "WpEasy",
+  "description": "Gestion d'équipe de water-polo",
   "icons": [
     {
       "src": "icons/icon-48x48.png",
@@ -51,10 +52,16 @@
       "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000"
+  "background_color": "#f7f7f7",
+  "theme_color": "#cc2936"
 }
