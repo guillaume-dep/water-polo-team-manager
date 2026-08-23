@@ -28,21 +28,9 @@ Ce projet implémente les fonctionnalités principales d'une application de gest
 
 ## Vidéo de présentation de l'application
 
-* Parcours complet : création d'un compte, création d'un groupe, création d'un événement, réponse d'un joueur, validation d'une demande d'adhésion par le coach.
+* Parcours complet : création d'un compte, création d'un groupe, création d'un événement, demande d'un joueur à rejoindre un groupe, validation d'une demande d'adhésion par le coach, réponse d'un joueur à l'événement. 
 
-*(lien vidéo à insérer)*
-
-## Écran d'accueil
-
-* Vue d'ensemble des prochains événements du joueur/coach connecté
-
-*(capture à insérer)*
-
-## Écran de réponses à un événement
-
-* Vue coach listant les réponses de chaque membre, avec statut et commentaire
-
-*(capture à insérer)*
+Lien : [Vidéo de présentation](https://youtube.com/shorts/Cg0XlENvHnc?feature=share)
 
 ---
 
@@ -106,14 +94,14 @@ flowchart TD
         A[Express<br/>API REST]
     end
 
-    subgraph DATA["Base de données MongoDB Atlas"]
+    subgraph DATA["Base de données"]
         M[Mongoose]
         DB[(MongoDB)]
     end
 
     U -->|HTTPS| F
     F -->|Axios / requête HTTP| A
-    A -->|Réponse HTTP + headers CORS| F
+    A -->|Réponse HTTP| F
     A -->|Mongoose| M
     M --> DB
 ```
