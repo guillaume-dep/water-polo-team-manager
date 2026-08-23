@@ -158,4 +158,5 @@ vite.config.ts.timestamp-*
 server/src/requests/
 *.env
 README_claude.md
+README_claude2.md
 resumeNotions.md
