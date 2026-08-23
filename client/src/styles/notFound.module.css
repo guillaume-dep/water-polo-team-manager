@@ -12,8 +12,7 @@
 }
 
 .code {
-    font-size: 2.5rem;
-    /* Taille réduite */
+    font-size: 4rem;
     color: var(--text-primary);
     margin-bottom: var(--space-1);
     line-height: 1;
