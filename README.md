@@ -30,7 +30,7 @@ Ce projet implémente les fonctionnalités principales d'une application de gest
 
 * Parcours complet : création d'un compte, création d'un groupe, création d'un événement, demande d'un joueur à rejoindre un groupe, validation d'une demande d'adhésion par le coach, réponse d'un joueur à l'événement. 
 
-Lien : [Vidéo de présentation](https://youtube.com/shorts/Cg0XlENvHnc?feature=share)
+Lien : [Vidéo de présentation](https://youtube.com/shorts/m_eRyhGbFgc?feature=share)
 
 ---
 
