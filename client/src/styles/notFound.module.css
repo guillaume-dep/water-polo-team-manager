@@ -3,24 +3,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 60vh;
-    padding: var(--space-4);
+    height: 100vh;
+    max-height: 100%;
+    padding: var(--space-2);
     text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .code {
-    font-size: 4rem;
+    font-size: 2.5rem;
+    /* Taille réduite */
     color: var(--text-primary);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-1);
+    line-height: 1;
 }
 
 .message {
     color: var(--text-secondary);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-2);
 }
 
 .homeLink {
-    padding: var(--space-2) var(--space-4);
+    padding: var(--space-1) var(--space-3);
     background-color: var(--text-primary);
     color: var(--white-text);
     border-radius: var(--radius-md);
