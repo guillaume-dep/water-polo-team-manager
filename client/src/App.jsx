@@ -21,6 +21,7 @@ import EventResponses from './pages/events/EventResponses.jsx'
 import CreateEvent from './pages/events/CreateEvent.jsx'
 
 import Profile from './pages/profile/Profile.jsx'
+import NotFound from './pages/NotFound.jsx'
 
 const App = () => {
   return (
@@ -46,6 +47,7 @@ const App = () => {
 
 
           <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Route>
 

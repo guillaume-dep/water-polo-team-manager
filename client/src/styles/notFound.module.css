@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: var(--space-4);
+    text-align: center;
+}
+
+.code {
+    font-size: 4rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.message {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-4);
+}
+
+.homeLink {
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--text-primary);
+    color: var(--white-text);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+}
