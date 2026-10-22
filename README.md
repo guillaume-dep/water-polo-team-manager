@@ -37,9 +37,13 @@ Ce projet implémente les fonctionnalités principales d'une application de gest
 
 ## Vidéo de présentation de l'application
 
-* Parcours complet : création d'un compte, création d'un groupe, création d'un événement, demande d'un joueur à rejoindre un groupe, validation d'une demande d'adhésion par le coach, réponse d'un joueur à l'événement. 
+Parcours partiel : création d'un compte, création d'un groupe, création d'un événement, demande d'un joueur à rejoindre un groupe, validation d'une demande d'adhésion par le coach, réponse d'un joueur à l'événement. 
 
-Lien : [Vidéo de présentation](https://youtube.com/shorts/m_eRyhGbFgc?feature=share)
+* Lien : [Vidéo de présentation](https://youtube.com/shorts/m_eRyhGbFgc?feature=share)
+
+Mise à jour du 22/10/2026 :
+
+* Le coach renseigne des informations supplémentaires par événement (heure de rendez-vous, adversaire pour les matchs, notes), enregistrées automatiquement. 
 
 ---
 
