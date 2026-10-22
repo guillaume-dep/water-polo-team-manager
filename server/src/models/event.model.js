@@ -12,6 +12,10 @@ const eventSchema = new mongoose.Schema({
     group: { type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: true },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     eventType: { type: String, enum: Object.values(EVENT_TYPE), required: true },
+    meetingTime: { type: String, trim: true, maxlength: 30 },
+    opponent: { type: String, trim: true, maxlength: 30 },
+    notes: { type: String, trim: true, maxlength: 500 }
+
 }, { timestamps: true });
 
 eventSchema.pre('findOneAndDelete', async function () {
