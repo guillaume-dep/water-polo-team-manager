@@ -44,6 +44,12 @@ export const EventCard = ({ event, onDelete, updateResponsesMap }) => {
         }
     }
 
+    const eventPath = `/groups/${event.group._id}/events/${event._id}`
+    const destination = isCoach
+        ? `${eventPath}/additional-information`
+        : `${eventPath}/responses`
+    const buttonLabel = isCoach ? "Voir les informations" : "Voir les réponses"
+
     return (
         <div className={styles.eventCard}>
             <div className={styles.eventDate}>
@@ -75,10 +81,10 @@ export const EventCard = ({ event, onDelete, updateResponsesMap }) => {
                 <div className={styles.actionsContainer}>
                     <button
                         type="button"
-                        onClick={() => navigate(`/groups/${event.group._id}/events/${event._id}/additional-information`)}
+                        onClick={() => navigate(destination)}
                         className={styles.moreButton}
-                        title="Voir les réponses"
-                        aria-label="Voir les réponses"
+                        title={buttonLabel}
+                        aria-label={buttonLabel}
                     >
                         <svg
                             className={styles.arrowIcon}
