@@ -1,7 +1,7 @@
 import express from 'express'
 import validToken from '../middlewares/validToken.middleware.js'
 import requireRole from '../middlewares/requireRole.middleware.js'
-import { createEvent, getEventsFromGroup, getEvent, updateEvent, deleteEvent } from '../controllers/event.controller.js'
+import { createEvent, getEventsFromGroup, getEvent, updateEvent, deleteEvent, addEventInformation } from '../controllers/event.controller.js'
 
 import ROLE from '../../../shared/utils/role.js'
 
@@ -11,6 +11,7 @@ router.post('/', validToken, requireRole(ROLE.COACH), createEvent)
 router.get('/', validToken, getEventsFromGroup)
 router.get('/:eventId', validToken, getEvent)
 router.put('/:eventId', validToken, requireRole(ROLE.COACH), updateEvent)
+router.patch('/:eventId', validToken, requireRole(ROLE.COACH), addEventInformation)
 router.delete('/:eventId', validToken, requireRole(ROLE.COACH), deleteEvent)
 
 export default router
