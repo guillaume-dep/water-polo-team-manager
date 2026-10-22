@@ -2,6 +2,15 @@
 
 Ce projet implémente les fonctionnalités principales d'une application de gestion de l'organisation d'un club customisée à mon club local de water-polo.
 
+## Stack technique
+
+- **Frontend :** React · Vite
+- **Backend :** Node.js · Express
+- **Base de données :** MongoDB · Mongoose
+- **Authentification :** JWT · cookies httpOnly
+- **API :** REST
+- **Type d'application :** PWA
+
 ## Gestion du projet
 
 * Application de gestion d'équipe de water-polo :
