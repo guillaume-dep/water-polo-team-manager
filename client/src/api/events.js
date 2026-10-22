@@ -41,6 +41,12 @@ export const updateEvent = async (
     return res.data;
 };
 
+/* PATCH call to add additional information about an event */
+export const addEventInformation = async (groupId, eventId, information) => {
+    const res = await api.patch(`/groups/${groupId}/events/${eventId}`, information)
+    return res.data
+}
+
 /* DELETE call to delete an event */
 export const deleteEvent = async (groupId, eventId) => {
     const res = await api.delete(`/groups/${groupId}/events/${eventId}`);
