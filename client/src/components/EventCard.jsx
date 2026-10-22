@@ -75,7 +75,7 @@ export const EventCard = ({ event, onDelete, updateResponsesMap }) => {
                 <div className={styles.actionsContainer}>
                     <button
                         type="button"
-                        onClick={() => navigate(`/groups/${event.group._id}/events/${event._id}/responses`)}
+                        onClick={() => navigate(`/groups/${event.group._id}/events/${event._id}/additional-information`)}
                         className={styles.moreButton}
                         title="Voir les réponses"
                         aria-label="Voir les réponses"

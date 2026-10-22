@@ -22,6 +22,7 @@ import CreateEvent from './pages/events/CreateEvent.jsx'
 
 import Profile from './pages/profile/Profile.jsx'
 import NotFound from './pages/NotFound.jsx'
+import EventSuppInformation from './pages/events/EventSuppInformation.jsx'
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
 
           <Route path="/events" element={<Events />} />
           <Route path="/groups/:id/events/:eventId/responses" element={<EventResponses />} />
+          <Route path="/groups/:id/events/:eventId/additional-information" element={<EventSuppInformation />} />
           <Route path="/create-event" element={<CreateEvent />} />
 
 

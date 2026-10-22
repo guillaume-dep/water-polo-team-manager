@@ -51,7 +51,7 @@ export const getEvent = async (req, res) => {
         checkIsMemberOrCoach(group, req.user.id)
         let event = await findEventById(req.params.eventId)
         checkEventInGroup(group, event)
-        event = event.populate('group', 'name')
+        event = await event.populate('group', 'name')
 
         res.json(event)
     }
