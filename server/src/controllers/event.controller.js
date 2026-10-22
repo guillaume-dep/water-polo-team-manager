@@ -2,6 +2,8 @@ import Events from "../models/event.model.js"
 import { findEventById, findGroupById } from "../utils/dbFinder.js";
 import { checkIsCoach, checkIsMemberOrCoach, checkEventInGroup, checkEventData } from "../utils/logicChecker.js"
 
+const SUPP_FIELDS = ['meetingTime', 'opponent', 'notes']
+
 export const createEvent = async (req, res) => {
     try {
         const { name, date, location, eventType } = req.body
@@ -90,6 +92,29 @@ export const updateEvent = async (req, res) => {
         res.json(event)
     }
     catch (err) {
+        res.status(err.status || 500).json({ message: err.message })
+    }
+}
+
+
+export const addEventInformation = async (req, res) => {
+    try {
+        const event = await findEventById(req.params.eventId)
+        const group = await findGroupById(req.params.id)
+
+        checkIsCoach(group, req.user.id)
+        checkEventInGroup(group, event)
+
+        for (const field of SUPP_FIELDS) {
+            const bodyField = req.body[field]
+            if (bodyField !== undefined) {
+                event[field] = bodyField
+            }
+        }
+
+        await event.save()
+        res.json(event)
+    } catch (err) {
         res.status(err.status || 500).json({ message: err.message })
     }
 }
