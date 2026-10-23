@@ -31,7 +31,7 @@ const CreateEvent = () => {
             await createEvent(
                 groupId,
                 name,
-                date,
+                new Date(date).toISOString(),
                 location,
                 eventType
             )
