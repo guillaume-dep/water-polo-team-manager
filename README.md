@@ -41,17 +41,20 @@ Parcours partiel : création d'un compte, création d'un groupe, création d'un 
 
 * Lien : [Vidéo de présentation](https://youtube.com/shorts/m_eRyhGbFgc?feature=share)
 
-Mise à jour du 22/10/2026 :
+### Mise à jour du 22/10/2026 :
 
-* Le coach renseigne des informations supplémentaires par événement (heure de rendez-vous, adversaire pour les matchs, notes), enregistrées automatiquement. Les joueurs les consultent en lecture seule.
+Le coach peut renseigner des informations supplémentaires pour chaque événement :
 
-Vu du coach : 
+- heure de rendez-vous
+- adversaire (pour les matchs)
+- notes
 
-![coachView](./images/coachView.png)
+Elles sont enregistrées automatiquement. Les joueurs les consultent en lecture seule.
 
-Vu du joueur : 
+| Vue du coach | Vue du joueur |
+| :---: | :---: |
+| <img src="./images/coachView.png" alt="Vue du coach" width="300"> | <img src="./images/playerView.png" alt="Vue du joueur" width="300"> |
 
-![playerView](./images/playerView.png)
 ---
 
 ### Installation des dépendances et lancement en développement
