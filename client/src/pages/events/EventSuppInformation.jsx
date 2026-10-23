@@ -108,7 +108,7 @@ const EventSuppInformation = () => {
 
     if (isLoading) {
         return (
-            <main className={styles.container}>
+            <main className={styles.statusContainer}>
                 <p className={styles.loadingText}>Chargement de l'événement...</p>
             </main>
         )
@@ -116,7 +116,7 @@ const EventSuppInformation = () => {
 
     if (!event) {
         return (
-            <main className={styles.container}>
+            <main className={styles.statusContainer}>
                 <p className={styles.errorText} role="alert">{error}</p>
             </main>
         )
