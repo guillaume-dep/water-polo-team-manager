@@ -49,7 +49,6 @@ const EventSuppInformation = () => {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
 
-    /* Auto-save : enregistre le champ à la perte du focus s'il a changé */
     const handleBlur = async (e) => {
         const { name } = e.target
         if (form[name] === (event[name] ?? '')) return
@@ -67,6 +66,45 @@ const EventSuppInformation = () => {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' && e.target.tagName === 'INPUT') e.target.blur()
     }
+
+    const renderEditableFields = () =>
+        visibleFields.map(({ name, label, maxLength, multiline }) => {
+            /* the field can either be a text area or an input, enable \n*/
+            const Field = multiline ? 'textarea' : 'input'
+            return (
+                <div key={name} className={styles.infoItem}>
+                    <label className={styles.infoLabel} htmlFor={name}>
+                        {label}
+                    </label>
+                    <Field
+                        id={name}
+                        name={name}
+                        className={`${styles.input} ${multiline ? styles.textarea : ''}`}
+                        value={form[name]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        onKeyDown={handleKeyDown}
+                        maxLength={maxLength}
+                    />
+                </div>
+            )
+        })
+
+    const renderReadOnlyFields = () => (
+        <>
+            {visibleFields.map(({ name, label }) =>
+                event[name] ? (
+                    <div key={name} className={styles.infoItem}>
+                        <span className={styles.infoLabel}>{label}</span>
+                        <span className={styles.infoValue}>{event[name]}</span>
+                    </div>
+                ) : null
+            )}
+            {!hasInformation && (
+                <p className={styles.emptyText}>Aucune information supplémentaire.</p>
+            )}
+        </>
+    )
 
     if (isLoading) {
         return (
@@ -122,42 +160,7 @@ const EventSuppInformation = () => {
             </Link>
 
             <div className={styles.infoList}>
-                {isCoach ? (
-                    visibleFields.map(({ name, label, maxLength, multiline }) => {
-                        const Field = multiline ? 'textarea' : 'input'
-                        return (
-                            <div key={name} className={styles.infoItem}>
-                                <label className={styles.infoLabel} htmlFor={name}>
-                                    {label}
-                                </label>
-                                <Field
-                                    id={name}
-                                    name={name}
-                                    className={`${styles.input} ${multiline ? styles.textarea : ''}`}
-                                    value={form[name]}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    onKeyDown={handleKeyDown}
-                                    maxLength={maxLength}
-                                />
-                            </div>
-                        )
-                    })
-                ) : (
-                    <>
-                        {visibleFields.map(({ name, label }) =>
-                            event[name] ? (
-                                <div key={name} className={styles.infoItem}>
-                                    <span className={styles.infoLabel}>{label}</span>
-                                    <span className={styles.infoValue}>{event[name]}</span>
-                                </div>
-                            ) : null
-                        )}
-                        {!hasInformation && (
-                            <p className={styles.emptyText}>Aucune information supplémentaire.</p>
-                        )}
-                    </>
-                )}
+                {isCoach ? renderEditableFields() : renderReadOnlyFields()}
             </div>
 
             {error && <p className={styles.errorText} role="alert">{error}</p>}

@@ -44,10 +44,7 @@ export const EventCard = ({ event, onDelete, updateResponsesMap }) => {
         }
     }
 
-    const eventPath = `/groups/${event.group._id}/events/${event._id}`
-    const destination = isCoach
-        ? `${eventPath}/additional-information`
-        : `${eventPath}/responses`
+    const destination = `/groups/${event.group._id}/events/${event._id}/additional-information`
     const buttonLabel = isCoach ? "Voir les informations" : "Voir les réponses"
 
     return (
